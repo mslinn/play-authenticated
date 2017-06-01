@@ -1,0 +1,7 @@
+@(user: User)
+
+<table>
+    <tr><th>uuid</th><td>@user.uuid</td></tr>
+    <tr><th>email</th><td>@user.email</td></tr>
+</table>
+<a href="@controllers.routes.Account.logout()">Logout</a>
