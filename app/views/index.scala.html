@@ -1,7 +1,10 @@
 @(message: String)
-
-@main("Welcome to Play") {
-
-    @play20.welcome(message)
-
+@import controllers.routes.{Account => AccountRoutes}
+@main("Experimenting With Play Authentication") {
+  <ul>
+    <li><a href="@AccountRoutes.myAccount()">Accounts</a></li>
+    <li><a href="@AccountRoutes.signup()">signup</a></li>
+    <li><a href="@AccountRoutes.login()">login</a></li>
+    <li><a href="@AccountRoutes.logout()">logout</a></li>
+  </ul>
 }

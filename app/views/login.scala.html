@@ -4,19 +4,19 @@
 <h1>Login</h1>
 
 @flash.get("alert").map { message =>
-    <div class="alert-message warning">
-        <strong>@message</strong>
-    </div>
+  <div class="alert-message warning">
+    <strong>@message</strong>
+  </div>
 }
 
 @form(action = controllers.routes.Account.performLogin()) {
-    <fieldset>
-        @inputText(loginForm("email"))
-        @inputText(loginForm("password"))
-    </fieldset>
-    <div class="actions">
-        <input type="submit" value="Login" class="btn primary"> or
-        <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
-    </div>
+  <fieldset>
+    @inputText(loginForm("email"))
+    @inputText(loginForm("password"))
+  </fieldset>
+  <div class="actions">
+    <input type="submit" value="Login" class="btn primary"> or
+    <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
+  </div>
 }
 

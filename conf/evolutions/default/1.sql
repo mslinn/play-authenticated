@@ -1,15 +1,15 @@
 # --- !Ups
 
-CREATE TABLE user (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE "user" (
+  id BIGSERIAL PRIMARY KEY,
   uuid varchar(255) NOT NULL,
   email varchar(255) DEFAULT NULL,
-  password varchar(255) DEFAULT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY uuid (uuid),
-  UNIQUE KEY email (email)
-) DEFAULT CHARSET=utf8;
+  password varchar(255) DEFAULT NULL
+);
+
+CREATE UNIQUE INDEX unique_uuid_user ON "user" (uuid);
+CREATE INDEX index_email_user ON "user" (email);
 
 # --- !Downs
 
-DROP TABLE user;
+DROP TABLE "user";
