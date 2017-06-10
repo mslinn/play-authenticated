@@ -9,8 +9,9 @@ scalaVersion := "2.11.11"
 libraryDependencies ++= Seq(
   jdbc,
   evolutions,
-  "com.typesafe.play" %% "anorm" % "2.5.3",
   cache,
   ws,
+  "com.h2database" %  "h2"         % "1.4.192" withSources(),
+  "io.getquill"    %% "quill-jdbc" % "1.2.1"   withSources(),
   specs2 % Test
 )
