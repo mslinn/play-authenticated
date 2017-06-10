@@ -24,7 +24,8 @@ class Account @Inject()(
 
   def saveUser = Action { implicit request =>
     signupForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(views.html.signup(formWithErrors)),
+      formWithErrors =>
+        BadRequest(views.html.signup(formWithErrors)),
       userData => {
         users.create(userData.email, userData.userId, userData.password) match {
           case (k, _) if k=="success" =>

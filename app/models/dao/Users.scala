@@ -36,7 +36,7 @@ class Users @Inject() (db: Database) {
         "error" -> s"UserID $userId is already in use."
       } else {
         SQL"""insert into "user" (email, userId, password) values ($email, $userId, $password)""".executeInsert()
-        "success" -> s"Created user: $userId"
+        "success" -> s"Created user $userId"
       }
     }
   }
