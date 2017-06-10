@@ -1,30 +1,13 @@
 package models.dao
 
+import io.getquill.H2JdbcContext
 import javax.inject.Inject
-import io.getquill.{Escape, H2JdbcContext, NamingStrategy, SnakeCase}
 import models._
 import play.api.db.Database
 import scala.language.postfixOps
 
-trait ModifiedSnakeCase extends NamingStrategy with Escape with SnakeCase {
-  override def table(s: String): String   = {
-    val x = super.default(s)
-    val y = if (x.startsWith("_")) x.substring(1) else x
-    s""""$y""""
-  }
-
-  override def column(s: String): String  = {
-    val x = super.default(s)
-    if (x.startsWith("_")) x.substring(1) else x
-  }
-
-  override def default(s: String): String = super.default(s)
-}
-
-object ModifiedSnakeCase extends ModifiedSnakeCase
-
 class Users @Inject() (db: Database) {
-  lazy val ctx = new H2JdbcContext[ModifiedSnakeCase]("ctx")
+  lazy val ctx = new H2JdbcContext[ModifiedSnakeCase]("quill")
   import ctx._
 
   def findByUserId(userId: String): Option[User] = {
