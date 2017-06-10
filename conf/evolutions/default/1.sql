@@ -2,12 +2,12 @@
 
 CREATE TABLE "user" (
   id BIGSERIAL PRIMARY KEY,
-  uuid varchar(255) NOT NULL,
-  email varchar(255) DEFAULT NULL,
-  password varchar(255) DEFAULT NULL
+  user_id varchar(255) NOT NULL,
+  email varchar(255) NOT NULL,
+  password varchar(255) NOT NULL
 );
 
-CREATE UNIQUE INDEX unique_uuid_user ON "user" (uuid);
+CREATE UNIQUE INDEX unique_user_id_user ON "user" (user_id);
 CREATE INDEX index_email_user ON "user" (email);
 
 # --- !Downs

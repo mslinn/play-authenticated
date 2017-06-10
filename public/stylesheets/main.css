@@ -1,0 +1,29 @@
+fieldset {
+  background-color: antiquewhite;
+}
+
+.actions {
+  margin-top: 1em;
+}
+
+.alert-message {
+  border: 2px solid black;
+  display: block;
+  font-size: large;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 2px solid transparent;
+}
+
+.warning {
+  border-color: red;
+  color: white;
+  background-color: crimson;
+}

@@ -1,22 +1,26 @@
 @import helper._
 @(loginForm: Form[LoginData])(implicit messages: Messages, flash: Flash)
 
-<h1>Login</h1>
+@main("Log In") {
+  @flash.get("alert").map { error =>
+    <div class="alert-message warning">
+      <strong>@error</strong>
+    </div>
+  }
+  @loginForm.errors("alert").map { error =>
+    <div class="alert-message warning">
+      <strong>@error.key</strong>: @error.messages.mkString(", ")
+    </div>
+  }
 
-@flash.get("alert").map { message =>
-  <div class="alert-message warning">
-    <strong>@message</strong>
-  </div>
+  @form(action = controllers.routes.Account.performLogin()) {
+    <fieldset>
+      @inputText(loginForm("userId"))
+      @inputPassword(loginForm("password"))
+    </fieldset>
+    <div class="actions">
+      <input type="submit" value="Login" class="btn primary"> or
+      <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
+    </div>
+  }
 }
-
-@form(action = controllers.routes.Account.performLogin()) {
-  <fieldset>
-    @inputText(loginForm("email"))
-    @inputText(loginForm("password"))
-  </fieldset>
-  <div class="actions">
-    <input type="submit" value="Login" class="btn primary"> or
-    <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
-  </div>
-}
-

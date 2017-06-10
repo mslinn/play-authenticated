@@ -1,10 +1,11 @@
 package models
 
+// TODO hash password
 case class User(
   id: Option[Long],
-  uuid: String,
-  email: Option[String],
-  password: Option[String]
+  userId: String,
+  email: String,
+  password: String
 ) {
-  def checkPassword(password: String): Boolean = this.password.contains(password)
+  def passwordMatches(password: String): Boolean = this.password == password
 }
