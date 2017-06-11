@@ -4,8 +4,8 @@
 
 GET     /               controllers.ApplicationController.index
 
-GET     /signup         controllers.AuthenticationController.signup
-POST    /signup         controllers.AuthenticationController.saveUser
+GET     /signUp         controllers.AuthenticationController.signUp
+POST    /signUp         controllers.AuthenticationController.saveUser
 
 GET     /account        controllers.AuthenticationController.showAccountDetails
 

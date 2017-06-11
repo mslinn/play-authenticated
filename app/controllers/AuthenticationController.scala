@@ -17,7 +17,7 @@ class MyUnauthorizedHandler @Inject() (implicit
       import forms.Forms
       import views.html.login
       implicit val req = request
-      Unauthorized(login(Forms.loginForm.withError("alert", "Invalid login credentials. Please try logging in again.")))
+      Unauthorized(login(Forms.loginForm.withError("error", "Invalid login credentials. Please try logging in again.")))
     }
 }
 
@@ -35,23 +35,27 @@ class AuthenticationController @Inject()(
     Ok(views.html.showAccountDetails(request.user))
   }
 
-  def signup = Action { implicit request =>
-    Ok(views.html.signup(signupForm))
+  def signUp = Action { implicit request =>
+    val form = request.session
+      .get("error")
+      .map(error => signUpForm.withError("error", error))
+      .getOrElse(signUpForm)
+    Ok(views.html.signup(form))
   }
 
   def saveUser = Action { implicit request =>
-    signupForm.bindFromRequest.fold(
+    signUpForm.bindFromRequest.fold(
       formWithErrors =>
         BadRequest(views.html.signup(formWithErrors)),
       userData => {
         users.create(userData.email, userData.userId, userData.password) match {
           case (k, _) if k=="success" =>
             Redirect(routes.AuthenticationController.showAccountDetails())
-              .withSession(("userId", userData.userId))
+              .withSession("userId" -> userData.userId)
 
           case (k, v) =>
-            Redirect(routes.AuthenticationController.login())
-              .flashing(k -> v)
+            Redirect(routes.AuthenticationController.signUp())
+              .withSession(k -> v)
         }
       }
     )

@@ -5,7 +5,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 
 object Forms {
-  val signupForm = Form(
+  val signUpForm = Form(
     mapping(
       "email"    -> email,
       "userId"   -> nonEmptyText,

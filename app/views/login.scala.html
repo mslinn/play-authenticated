@@ -3,7 +3,7 @@
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
 @main(ApplicationController.title) {
-  @loginForm.errors("alert").map { error =>
+  @loginForm.errors("error").map { error =>
     <div class="alert-message text-warning bg-warning spaceBelow">
       <b>@error.messages.mkString(", ")</b>
     </div>

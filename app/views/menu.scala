@@ -15,7 +15,7 @@ object menu {
     Html(s"""<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
             |  <ul class="nav navbar-nav">
             |    ${listItem(AppRoutes.index(), "Front page")}
-            |    ${listItem(AccountRoutes.signup(), "Sign up")}
+            |    ${listItem(AccountRoutes.signUp(), "Sign up")}
             |    ${listItem(AccountRoutes.login(), "Log in")}
             |    ${listItem(AccountRoutes.showAccountDetails(), "Account Information")}
             |    ${listItem(AccountRoutes.logout(), "Log out")}

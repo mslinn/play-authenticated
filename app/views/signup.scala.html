@@ -5,12 +5,17 @@
 @(signupForm: Form[SignupData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main(ApplicationController.title) {
   @form(action = controllers.routes.AuthenticationController.saveUser()) {
+    @signupForm.errors("error").map { error =>
+      <div class="alert-message text-warning bg-warning spaceBelow">
+        <b>@error.messages.mkString(", ")</b>
+      </div>
+    }
     @Html(inputter(signupForm("email"),    maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),   maybePlaceholder=Some("Desired user ID")))
     @Html(inputter(signupForm("password"), maybePlaceholder=Some("Password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
-      <a href="@controllers.routes.AuthenticationController.signup()" class="btn btn-default">Cancel</a>
+      <a href="@controllers.routes.AuthenticationController.signUp()" class="btn btn-default">Cancel</a>
     </div>
   }
 }
