@@ -8,7 +8,7 @@ class Users {
   lazy val ctx = new H2JdbcContext[TableNameSnakeCase]("quill")
   import ctx._
 
-  protected def queryById(id: Option[Long]): Quoted[EntityQuery[User]] = quote { query[User].filter(_.id == lift(id)) }
+  def findAll: Vector[User] = run { quote { query[User] } }.toVector
 
   def findById(id: Option[Long]): Option[User] = run { queryById(id) }.headOption
 
@@ -32,4 +32,6 @@ class Users {
     run { queryById(user.id).delete }
     ()
   }
+
+  protected def queryById(id: Option[Long]): Quoted[EntityQuery[User]] = quote { query[User].filter(_.id == lift(id)) }
 }

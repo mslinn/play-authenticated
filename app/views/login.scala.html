@@ -1,3 +1,4 @@
+@import authentication.LoginData
 @import helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
@@ -9,7 +10,7 @@
   }
   @form(action = controllers.routes.Account.performLogin()) {
     @Html(inputter(loginForm("userId"), maybePlaceholder=Some("User ID")))
-    @Html(inputter(loginForm("password"), maybePlaceholder=Some("Password")))
+    @Html(inputter(loginForm("password"), maybePlaceholder=Some("Password"), isPassword=true))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Login" class="btn btn-primary">
       <a href="@controllers.routes.Account.login()" class="btn btn-default">Cancel</a>

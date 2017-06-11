@@ -1,6 +1,6 @@
 package forms
 
-import models._
+import authentication.{LoginData, SignupData}
 import play.api.data.Form
 import play.api.data.Forms._
 
