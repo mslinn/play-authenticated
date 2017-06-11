@@ -39,13 +39,13 @@ javacOptions ++= Seq(
 resolvers += "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
 
 libraryDependencies ++= Seq(
-  jdbc,
-  evolutions,
+  jdbc, // todo delete this when evolutions are no longer required
+  evolutions, // todo delete this when application.conf is consolidated
+  "com.h2database"   %  "h2"              % "1.4.192" withSources(),
   "com.micronautics" %% "html-form-scala" % "0.1.9"   withSources(),
   "net.codingwell"   %% "scala-guice"     % "4.1.0"   withSources(),
-  "org.webjars"      %% "webjars-play"    % "2.5.0-4",
   "org.webjars"      %  "bootstrap"       % "3.3.7-1",
-  "com.h2database"   %  "h2"              % "1.4.192" withSources(),
+  "org.webjars"      %% "webjars-play"    % "2.5.0-4",
   "io.getquill"      %% "quill-jdbc"      % "1.2.1"   withSources(),
   specs2 % Test
 )
