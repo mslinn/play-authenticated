@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(implicit flash: Flash, request: RequestHeader, webJarAssets: WebJarAssets)
+@(title: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,13 +20,13 @@
       <div class="container">
         @menu(request)
         <div class="container-fluid">
-          @flash.get("success").map { msg =>
-            <div class="alert-message text-success bg-success">
+          @request.flash.get("success").map { msg =>
+            <div class="alert-message text-success bg-success spaceBelow">
               <strong>@msg</strong>
             </div>
           }
-          @flash.get("alert").map { error =>
-            <div class="alert-message text-warning bg-warning">
+          @request.flash.get("alert").map { error =>
+            <div class="alert-message text-warning bg-warning spaceBelow">
               <strong>@error</strong>
             </div>
           }

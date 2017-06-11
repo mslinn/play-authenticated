@@ -2,14 +2,14 @@ package controllers
 
 import javax.inject.Inject
 import forms.Forms._
-import models.Authenticated
+import models.Authentication
 import models.dao.Users
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, Controller}
 
 class Account @Inject()(
-  authenticated: Authenticated,
-  users: Users
+                         authenticated: Authentication,
+                         users: Users
 )(implicit
   val messagesApi: MessagesApi,
   webJarAssets: WebJarAssets
@@ -47,13 +47,17 @@ class Account @Inject()(
   }
 
   def performLogin = Action { implicit request =>
+    import views.html.{login => loginView}
     loginForm.bindFromRequest.fold(
       formWithErrors =>
-        BadRequest(views.html.login(formWithErrors)),
+        BadRequest(loginView(formWithErrors)),
       userData => {
-        val user  = users.findByUserId(userData.userId).filter(user => user.passwordMatches(userData.password))
-        user.map(u => Redirect(routes.Account.myAccount()).withSession(("userId", u.userId)))
-          .getOrElse(Unauthorized(views.html.login(loginForm.withError("alert", "Bad credentials"))))
+        val user = users.findByUserId(userData.userId).filter(_.passwordMatches(userData.password))
+        user
+          .map { u => Redirect(routes.Account.myAccount()).withSession(("userId", u.userId)) }
+          .getOrElse {
+            Unauthorized(loginView(loginForm.withError("alert", "Invalid login credentials. Please try logging in again.")))
+          }
       }
     )
   }

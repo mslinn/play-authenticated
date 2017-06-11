@@ -1,3 +1,18 @@
+code {
+  background-color: inherit;
+  border: 0;
+  color: #017101;
+  font-family: "DejaVu Sans Serif Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 100%;
+  font-weight: 400;
+  padding: 0;
+  white-space: normal;
+}
+
+a, a code, code a, a tt, tt a {
+  color: #026ca2;
+}
+
 .actions {
   margin-top: 1em;
 }
@@ -9,6 +24,10 @@
 .lyrics {
   font-size: 12pt;
   line-height: 18pt;
+}
+
+.spaceBelow {
+  margin-bottom: 1em;
 }
 
 .right {

@@ -42,6 +42,7 @@ libraryDependencies ++= Seq(
   jdbc,
   evolutions,
   "com.micronautics" %% "html-form-scala" % "0.1.9"   withSources(),
+  "net.codingwell"   %% "scala-guice"     % "4.1.0"   withSources(),
   "org.webjars"      %% "webjars-play"    % "2.5.0-4",
   "org.webjars"      %  "bootstrap"       % "3.3.7-1",
   "com.h2database"   %  "h2"              % "1.4.192" withSources(),

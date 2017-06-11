@@ -1,10 +1,10 @@
 @import helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
-@(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, flash: Flash, webJarAssets: WebJarAssets)
+@(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
 @main(ApplicationController.title) {
   @loginForm.errors("alert").map { error =>
-    <div class="alert-message text-warning bg-warning">
-      <strong>@error.key</strong>: @error.messages.mkString(", ")
+    <div class="alert-message text-warning bg-warning spaceBelow">
+      <b>@error.messages.mkString(", ")</b>
     </div>
   }
   @form(action = controllers.routes.Account.performLogin()) {
