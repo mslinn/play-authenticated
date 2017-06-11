@@ -1,4 +1,4 @@
-@(message: String)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(message: String)(implicit flash: Flash, request: RequestHeader, webJarAssets: WebJarAssets)
 @import controllers.routes.{Account => AccountRoutes}
 @main(message) {
   <div class="right">

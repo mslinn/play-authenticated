@@ -1,26 +1,18 @@
 @import helper._
+@import views.html.htmlForm.bootstrap3.HtmlForm._
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, flash: Flash, webJarAssets: WebJarAssets)
-
 @main("Log In") {
-  @flash.get("alert").map { error =>
-    <div class="alert-message warning">
-      <strong>@error</strong>
-    </div>
-  }
   @loginForm.errors("alert").map { error =>
-    <div class="alert-message warning">
+    <div class="alert-message text-warning bg-warning">
       <strong>@error.key</strong>: @error.messages.mkString(", ")
     </div>
   }
-
   @form(action = controllers.routes.Account.performLogin()) {
-    <fieldset>
-      @inputText(loginForm("userId"))
-      @inputPassword(loginForm("password"))
-    </fieldset>
-    <div class="actions">
-      <input type="submit" value="Login" class="btn primary"> or
-      <a href="@controllers.routes.ApplicationController.index()" class="btn">Cancel</a>
+    @Html(inputter(loginForm("userId"), maybePlaceholder=Some("User ID")))
+    @Html(inputter(loginForm("password"), maybePlaceholder=Some("Password")))
+    <div class="actions btn-group" role="group">
+      <input type="submit" value="Login" class="btn btn-primary">
+      <a href="@controllers.routes.ApplicationController.index()" class="btn btn-default">Cancel</a>
     </div>
   }
 }

@@ -1,16 +1,15 @@
 @import helper._
 @import controllers.WebJarAssets
-@(signupForm: Form[SignupData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
+@import views.html.htmlForm.bootstrap3.HtmlForm._
+@(signupForm: Form[SignupData])(implicit flash: Flash, messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Sign Up") {
   @form(action = controllers.routes.Account.saveUser()) {
-    <fieldset>
-      @inputText(signupForm("email"))
-      @inputText(signupForm("userId"))
-      @inputPassword(signupForm("password"))
-    </fieldset>
-    <div class="actions">
-      <input type="submit" value="Signup" class="btn primary"> or
-      <a href="@controllers.routes.ApplicationController.index()" class="btn">Cancel</a>
+    @Html(inputter(signupForm("email"), maybePlaceholder=Some("email"), isEmail=true))
+    @Html(inputter(signupForm("userId"), maybePlaceholder=Some("Desired user ID")))
+    @Html(inputter(signupForm("password"), maybePlaceholder=Some("Password")))
+    <div class="actions btn-group" role="group">
+      <input type="submit" value="Signup" class="btn btn-primary">
+      <a href="@controllers.routes.ApplicationController.index()" class="btn btn-default">Cancel</a>
     </div>
   }
 }

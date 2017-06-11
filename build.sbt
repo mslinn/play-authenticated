@@ -36,13 +36,16 @@ javacOptions ++= Seq(
   "-g:vars"
 )
 
+resolvers += "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
+
 libraryDependencies ++= Seq(
   jdbc,
   evolutions,
-  "org.webjars"    %% "webjars-play" % "2.5.0-4",
-  "org.webjars"    %  "bootstrap"    % "3.3.7-1",
-  "com.h2database" %  "h2"           % "1.4.192" withSources(),
-  "io.getquill"    %% "quill-jdbc"   % "1.2.1"   withSources(),
+  "com.micronautics" %% "html-form-scala" % "0.1.9"   withSources(),
+  "org.webjars"      %% "webjars-play"    % "2.5.0-4",
+  "org.webjars"      %  "bootstrap"       % "3.3.7-1",
+  "com.h2database"   %  "h2"              % "1.4.192" withSources(),
+  "io.getquill"      %% "quill-jdbc"      % "1.2.1"   withSources(),
   specs2 % Test
 )
 

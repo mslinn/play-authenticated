@@ -1,9 +1,9 @@
 @import controllers.WebJarAssets
-@(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(user: User)(implicit flash: Flash, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Account Details") {
   <table>
     <tr><th><code>userId</code></th><td><code>@user.userId</code></td></tr>
     <tr><th>email</th><td><code><a href="mailto:@user.email">@user.email</a></code></td></tr>
   </table>
-  <p><a href="@controllers.routes.Account.logout()">Log out</a></p>
+  <p><a href="@controllers.routes.Account.logout()" class="btn btn-primary">Log out</a></p>
 }

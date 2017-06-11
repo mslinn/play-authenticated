@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(title: String)(content: Html)(implicit flash: Flash, request: RequestHeader, webJarAssets: WebJarAssets)
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,13 +12,24 @@
     <body>
       <header class="jumbotron subhead" id="overview">
         <div class="container">
-          <img src="@routes.Assets.at("images/favicon.jpg")" style="float: right; width: 100px; margin-top: 20px;"><h1>@title</h1>
+          <!--img src="@routes.Assets.at("images/favicon.jpg")" style="float: right; width: 100px; margin-top: 20px;"-->
+          <h1>@title</h1>
           <p><a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a></p>
         </div>
       </header>
       <div class="container">
         @menu(request)
         <div class="container-fluid">
+          @flash.get("success").map { msg =>
+            <div class="alert-message text-success bg-success">
+              <strong>@msg</strong>
+            </div>
+          }
+          @flash.get("alert").map { error =>
+            <div class="alert-message text-warning bg-warning">
+              <strong>@error</strong>
+            </div>
+          }
           @content
         </div>
       </div>
