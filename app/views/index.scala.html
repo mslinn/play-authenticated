@@ -1,10 +1,16 @@
-@(message: String)
+@(message: String)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 @import controllers.routes.{Account => AccountRoutes}
 @main(message) {
-  <ul>
-    <li><a href="@AccountRoutes.signup()">Sign up</a></li>
-    <li><a href="@AccountRoutes.login()">Log in</a></li>
-    <li><a href="@AccountRoutes.myAccount()">Accounts</a></li>
-    <li><a href="@AccountRoutes.logout()">Log out</a></li>
-  </ul>
+  <div class="right">
+    <img src='@routes.Assets.at("images/favicon.jpg")' />
+    <p style="text-align: center; margin-top: 6px">Bob Marley (who did not write the song!)</p>
+  </div>
+  <p class="lyrics">Here's a little song I wrote<br/>
+  You might want to sing it note for note<br/>
+  Don't worry, be happy<br/>
+  In every life we have some trouble<br/>
+  But when you worry you make it double<br/>
+  Don't worry, be happy<br/>
+  Don't worry, be happy now.</p>
+  <p>-- Bobby McFerrin</p>
 }

@@ -9,8 +9,10 @@ import play.api.mvc.{Action, Controller}
 
 class Account @Inject()(
   authenticated: Authenticated,
-  val messagesApi: MessagesApi,
   users: Users
+)(implicit
+  val messagesApi: MessagesApi,
+  webJarAssets: WebJarAssets
 ) extends Controller with I18nSupport {
   import authenticated._
 
@@ -18,7 +20,7 @@ class Account @Inject()(
     Ok(views.html.myAccount(request.user))
   }
 
-  def signup = Action {
+  def signup = Action { implicit request =>
     Ok(views.html.signup(signupForm))
   }
 

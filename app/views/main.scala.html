@@ -1,14 +1,26 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>@title</title>
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <script src="@routes.Assets.at("javascripts/jquery-3.2.1.min.js")"></script>
-  </head>
-  <body>
-    <h1>@title</h1>
-    @content
-  </body>
+    <head>
+      <title>@title</title>
+      <link rel="shortcut icon" type="image/jpg" href="@routes.Assets.at("images/favicon.jpg")">
+      <script src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
+      <script src='@routes.WebJarAssets.at(webJarAssets.locate("bootstrap.min.js"))'></script>
+      <link href='@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))' rel="stylesheet" />
+      <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    </head>
+    <body>
+      <header class="jumbotron subhead" id="overview">
+        <div class="container">
+          <img src="@routes.Assets.at("images/favicon.jpg")" style="float: right; width: 100px; margin-top: 20px;"><h1>@title</h1>
+          <p><a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a></p>
+        </div>
+      </header>
+      <div class="container">
+        @menu(request)
+        <div class="container-fluid">
+          @content
+        </div>
+      </div>
+    </body>
 </html>

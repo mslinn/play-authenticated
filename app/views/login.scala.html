@@ -1,5 +1,5 @@
 @import helper._
-@(loginForm: Form[LoginData])(implicit messages: Messages, flash: Flash)
+@(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, flash: Flash, webJarAssets: WebJarAssets)
 
 @main("Log In") {
   @flash.get("alert").map { error =>
@@ -20,7 +20,7 @@
     </fieldset>
     <div class="actions">
       <input type="submit" value="Login" class="btn primary"> or
-      <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
+      <a href="@controllers.routes.ApplicationController.index()" class="btn">Cancel</a>
     </div>
   }
 }

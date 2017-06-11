@@ -1,4 +1,5 @@
-@(user: User)
+@import controllers.WebJarAssets
+@(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Account Details") {
   <table>
     <tr><th><code>userId</code></th><td><code>@user.userId</code></td></tr>

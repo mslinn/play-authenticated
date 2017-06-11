@@ -1,5 +1,6 @@
 @import helper._
-@(signupForm: Form[SignupData])(implicit messages: Messages)
+@import controllers.WebJarAssets
+@(signupForm: Form[SignupData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Sign Up") {
   @form(action = controllers.routes.Account.saveUser()) {
     <fieldset>
@@ -9,7 +10,7 @@
     </fieldset>
     <div class="actions">
       <input type="submit" value="Signup" class="btn primary"> or
-      <a href="@controllers.routes.Application.index()" class="btn">Cancel</a>
+      <a href="@controllers.routes.ApplicationController.index()" class="btn">Cancel</a>
     </div>
   }
 }
