@@ -1,5 +1,4 @@
-@(message: String)(implicit flash: Flash, request: RequestHeader, webJarAssets: WebJarAssets)
-@import controllers.routes.{Account => AccountRoutes}
+@(message: String)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 @main(message) {
   <div class="right">
     <img src='@routes.Assets.at("images/favicon.png")' />

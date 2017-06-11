@@ -4,15 +4,15 @@
 
 GET     /               controllers.ApplicationController.index
 
-GET     /signup         controllers.Account.signup
-POST    /signup         controllers.Account.saveUser
+GET     /signup         controllers.AuthenticationController.signup
+POST    /signup         controllers.AuthenticationController.saveUser
 
-GET     /account        controllers.Account.myAccount
+GET     /account        controllers.AuthenticationController.showAccountDetails
 
-GET     /logout         controllers.Account.logout
+GET     /logout         controllers.AuthenticationController.logout
 
-GET     /login          controllers.Account.login
-POST    /login          controllers.Account.performLogin
+GET     /login          controllers.AuthenticationController.login
+POST    /login          controllers.AuthenticationController.performLogin
 
 
 # Map static resources from the /public folder to the /assets URL path

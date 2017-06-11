@@ -1,6 +1,6 @@
 package views.html
 
-import controllers.routes.{Account => AccountRoutes}
+import controllers.routes.{AuthenticationController => AccountRoutes}
 import controllers.routes.{ApplicationController => AppRoutes}
 import play.api.mvc.{Call, RequestHeader}
 import play.twirl.api.Html
@@ -17,7 +17,7 @@ object menu {
             |    ${listItem(AppRoutes.index(), "Front page")}
             |    ${listItem(AccountRoutes.signup(), "Sign up")}
             |    ${listItem(AccountRoutes.login(), "Log in")}
-            |    ${listItem(AccountRoutes.myAccount(), "Account Information")}
+            |    ${listItem(AccountRoutes.showAccountDetails(), "Account Information")}
             |    ${listItem(AccountRoutes.logout(), "Log out")}
             |  </ul>
             |</nav>""".stripMargin)

@@ -21,18 +21,18 @@ class MyUnauthorizedHandler @Inject() (implicit
     }
 }
 
-class Account @Inject()(
-  authenticated: Authentication,
+class AuthenticationController @Inject()(
+  authentication: Authentication,
   unauthorizedHandler: UnauthorizedHandler,
   users: Users
 )(implicit
   val messagesApi: MessagesApi,
   webJarAssets: WebJarAssets
 ) extends Controller with I18nSupport {
-  import authenticated._
+  import authentication._
 
-  def myAccount = SecuredAction { implicit request =>
-    Ok(views.html.myAccount(request.user))
+  def showAccountDetails = SecuredAction { implicit request =>
+    Ok(views.html.showAccountDetails(request.user))
   }
 
   def signup = Action { implicit request =>
@@ -46,11 +46,11 @@ class Account @Inject()(
       userData => {
         users.create(userData.email, userData.userId, userData.password) match {
           case (k, _) if k=="success" =>
-            Redirect(routes.Account.myAccount())
+            Redirect(routes.AuthenticationController.showAccountDetails())
               .withSession(("userId", userData.userId))
 
           case (k, v) =>
-            Redirect(routes.Account.login())
+            Redirect(routes.AuthenticationController.login())
               .flashing(k -> v)
         }
       }
@@ -69,7 +69,7 @@ class Account @Inject()(
       userData => {
         val user = users.findByUserId(userData.userId).filter(_.passwordMatches(userData.password))
         user
-          .map { u => Redirect(routes.Account.myAccount()).withSession(("userId", u.userId)) }
+          .map { u => Redirect(routes.AuthenticationController.showAccountDetails()).withSession(("userId", u.userId)) }
           .getOrElse {
             unauthorizedHandler.onUnauthorized(request)
           }
@@ -78,7 +78,7 @@ class Account @Inject()(
   }
 
   def logout = Action { implicit request =>
-    Redirect(routes.Account.login())
+    Redirect(routes.AuthenticationController.login())
       .withNewSession
       .flashing("alert" -> "You've been logged out. Log in again below:")
   }

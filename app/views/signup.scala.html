@@ -4,13 +4,13 @@
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(signupForm: Form[SignupData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main(ApplicationController.title) {
-  @form(action = controllers.routes.Account.saveUser()) {
+  @form(action = controllers.routes.AuthenticationController.saveUser()) {
     @Html(inputter(signupForm("email"),    maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),   maybePlaceholder=Some("Desired user ID")))
     @Html(inputter(signupForm("password"), maybePlaceholder=Some("Password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
-      <a href="@controllers.routes.Account.signup()" class="btn btn-default">Cancel</a>
+      <a href="@controllers.routes.AuthenticationController.signup()" class="btn btn-default">Cancel</a>
     </div>
   }
 }

@@ -8,12 +8,12 @@
       <b>@error.messages.mkString(", ")</b>
     </div>
   }
-  @form(action = controllers.routes.Account.performLogin()) {
+  @form(action = controllers.routes.AuthenticationController.performLogin()) {
     @Html(inputter(loginForm("userId"), maybePlaceholder=Some("User ID")))
     @Html(inputter(loginForm("password"), maybePlaceholder=Some("Password"), isPassword=true))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Login" class="btn btn-primary">
-      <a href="@controllers.routes.Account.login()" class="btn btn-default">Cancel</a>
+      <a href="@controllers.routes.AuthenticationController.login()" class="btn btn-default">Cancel</a>
     </div>
   }
 }
