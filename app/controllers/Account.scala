@@ -59,6 +59,6 @@ class Account @Inject()(
   }
 
   def logout = Action { implicit request =>
-    Redirect(routes.Account.login()).withNewSession.flashing("alert" -> "You've been logged out")
+    Redirect(routes.Account.login()).withNewSession.flashing("alert" -> "You've been logged out. Log in again below:")
   }
 }
