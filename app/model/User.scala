@@ -6,10 +6,6 @@ case class Email(value: String) extends AnyVal {
   override def toString: String = value
 }
 
-case class Id(value: Long) extends AnyVal {
-  override def toString: String = value.toString
-}
-
 case class EncryptedPassword(value: String) extends AnyVal {
   override def toString: String = value
 }
@@ -24,12 +20,16 @@ case class UserId(value: String) extends AnyVal {
   override def toString: String = value
 }
 
+trait HasId extends IdImplicitLike {
+  val id: Option[Id] = None
+}
+
 case class User(
   userId: UserId,
   email: Email,
   password: EncryptedPassword,
-  id: Option[Id]=None
-) {
+  override val id: Option[Id]=None
+) extends HasId {
   def passwordMatches(clearTextPassword: ClearTextPassword): Boolean = {
     val result = PasswordHasher.matches(clearTextPassword, password)
     result

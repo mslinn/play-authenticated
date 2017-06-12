@@ -1,11 +1,11 @@
 package model.dao
 
 import io.getquill.H2JdbcContext
-import model.{Email, EncryptedPassword, Id, User, UserId}
+import model.{Email, EncryptedPassword, Id, IdDecoder, User, UserId}
 import scala.language.postfixOps
 
-class Users {
-  lazy val ctx = new H2JdbcContext[TableNameSnakeCase]("quill")
+class Users extends IdDecoder {
+  lazy val ctx: H2JdbcContext[TableNameSnakeCase] = new H2JdbcContext[TableNameSnakeCase]("quill")
   import ctx._
 
   def findAll: Vector[User] = run { quote { query[User] } }.toVector

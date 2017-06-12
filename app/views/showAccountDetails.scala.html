@@ -14,8 +14,8 @@
       @users.findAll.map { user =>
         <tr>
           <td>@user.id</td>
-          <td>@user.userId</td>
-          <td>@user.email</td>
+          <td><code>@user.userId</code></td>
+          <td><code><a href="mailto:@user.email">@user.email</a></code></td>
         </tr>
       }
     </table>
