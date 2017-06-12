@@ -2,10 +2,21 @@ package model
 
 import auth.PasswordHasher
 
-case class Email(value: String) extends AnyVal
-case class Id(value: Long) extends AnyVal
-case class Password(value: String) extends AnyVal
-case class UserId(value: String) extends AnyVal
+case class Email(value: String) extends AnyVal {
+  override def toString: String = value
+}
+
+case class Id(value: Long) extends AnyVal {
+  override def toString: String = value.toString
+}
+
+case class Password(value: String) extends AnyVal {
+  override def toString: String = value
+}
+
+case class UserId(value: String) extends AnyVal {
+  override def toString: String = value
+}
 
 case class User(
   userId: UserId,
