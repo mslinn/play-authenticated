@@ -44,6 +44,8 @@ libraryDependencies ++= Seq(
   "com.h2database"   %  "h2"              % "1.4.192" withSources(),
   "com.micronautics" %% "html-form-scala" % "0.1.9"   withSources(),
   "net.codingwell"   %% "scala-guice"     % "4.1.0"   withSources(),
+  "de.svenkubiak"    %  "jBCrypt"         % "0.4.1"    withSources(),
+//  "org.mindrot"      %  "jbcrypt"         % "0.4"     withSources(),
   "org.webjars"      %  "bootstrap"       % "3.3.7-1",
   "org.webjars"      %% "webjars-play"    % "2.5.0-4",
   "io.getquill"      %% "quill-jdbc"      % "1.2.1"   withSources(),

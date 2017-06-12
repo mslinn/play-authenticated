@@ -1,4 +1,4 @@
-package models.dao
+package model.dao
 
 import io.getquill.{Escape, NamingStrategy, SnakeCase}
 

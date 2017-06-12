@@ -1,25 +1,15 @@
-package controllers
+package controllers.authentication
 
+import auth.AuthForms._
+import auth.{Authentication, SignUpData, UnauthorizedHandler}
+import controllers.WebJarAssets
+import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import javax.inject.Inject
-import authentication.{Authentication, UnauthorizedHandler}
-import forms.Forms._
-import models.dao.Users
+import model.dao.Users
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
-
-class MyUnauthorizedHandler @Inject() (implicit
-  val messagesApi: MessagesApi,
-  webJarAssets: WebJarAssets
-) extends UnauthorizedHandler with I18nSupport {
-  override val onUnauthorized: RequestHeader => Result =
-    request => {
-      import forms.Forms
-      import views.html.login
-      implicit val req = request
-      Unauthorized(login(Forms.loginForm.withError("error", "Invalid login credentials. Please try logging in again.")))
-    }
-}
 
 class AuthenticationController @Inject()(
   authentication: Authentication,
@@ -36,7 +26,7 @@ class AuthenticationController @Inject()(
   }
 
   def signUp = Action { implicit request =>
-    val form = request.session
+    val form: Form[SignUpData] = request.session
       .get("error")
       .map(error => signUpForm.withError("error", error))
       .getOrElse(signUpForm)
@@ -50,11 +40,11 @@ class AuthenticationController @Inject()(
       userData => {
         users.create(userData.email, userData.userId, userData.password) match {
           case (k, _) if k=="success" =>
-            Redirect(routes.AuthenticationController.showAccountDetails())
+            Redirect(AuthRoutes.showAccountDetails())
               .withSession("userId" -> userData.userId)
 
           case (k, v) =>
-            Redirect(routes.AuthenticationController.signUp())
+            Redirect(AuthRoutes.signUp())
               .withSession(k -> v)
         }
       }
@@ -70,13 +60,15 @@ class AuthenticationController @Inject()(
     loginForm.bindFromRequest.fold(
       formWithErrors =>
         BadRequest(loginView(formWithErrors)),
-      userData => {
-        val user = users.findByUserId(userData.userId).filter(_.passwordMatches(userData.password))
-        user
-          .map { u => Redirect(routes.AuthenticationController.showAccountDetails()).withSession(("userId", u.userId)) }
+      loginData => {
+        val maybeUser = users.findByUserId(loginData.userId)
+        val result: Result = maybeUser
+          .filter(_.passwordMatches(loginData.password))
+          .map { u => Redirect(AuthRoutes.showAccountDetails()).withSession(("userId", u.userId)) }
           .getOrElse {
             unauthorizedHandler.onUnauthorized(request)
           }
+        result
       }
     )
   }
@@ -86,4 +78,17 @@ class AuthenticationController @Inject()(
       .withNewSession
       .flashing("alert" -> "You've been logged out. Log in again below:")
   }
+}
+
+class MyUnauthorizedHandler @Inject() (implicit
+  val messagesApi: MessagesApi,
+  webJarAssets: WebJarAssets
+) extends UnauthorizedHandler with I18nSupport {
+  override val onUnauthorized: RequestHeader => Result =
+    request => {
+      import auth.AuthForms
+      import views.html.login
+      implicit val req = request
+      Unauthorized(login(AuthForms.loginForm.withError("error", "Invalid login credentials. Please try logging in again.")))
+    }
 }

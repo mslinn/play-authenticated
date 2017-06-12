@@ -1,7 +1,8 @@
 package views.html
 
-import controllers.routes.{AuthenticationController => AccountRoutes}
 import controllers.routes.{ApplicationController => AppRoutes}
+import controllers.authentication.routes.{AuthenticationController => AccountRoutes}
+import controllers.authentication.routes.{PasswordController => PasswordRoutes}
 import play.api.mvc.{Call, RequestHeader}
 import play.twirl.api.Html
 
@@ -18,6 +19,7 @@ object menu {
             |    ${listItem(AccountRoutes.signUp(), "Sign up")}
             |    ${listItem(AccountRoutes.login(), "Log in")}
             |    ${listItem(AccountRoutes.showAccountDetails(), "Account Information")}
+            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change Password")}
             |    ${listItem(AccountRoutes.logout(), "Log out")}
             |  </ul>
             |</nav>""".stripMargin)

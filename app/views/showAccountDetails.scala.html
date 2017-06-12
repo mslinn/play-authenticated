@@ -1,9 +1,10 @@
-@import controllers.WebJarAssets
+@import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
+@import model.User
 @(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
-@main(ApplicationController.title) {
+@main("Account Information") {
   <table class="table table-bordered" style="width: initial">
     <tr><th>User ID</th><td><code>@user.userId</code></td></tr>
     <tr><th>EMail</th><td><code><a href="mailto:@user.email">@user.email</a></code></td></tr>
   </table>
-  <p><a href="@controllers.routes.AuthenticationController.logout()" class="btn btn-primary">Log out</a></p>
+  <p><a href="@AuthRoutes.logout()" class="btn btn-primary">Log out</a></p>
 }

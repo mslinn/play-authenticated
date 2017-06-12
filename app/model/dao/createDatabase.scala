@@ -1,8 +1,8 @@
-package models.dao
+package model.dao
 
 import java.io.File
 import io.getquill.H2JdbcContext
-import models.User
+import model.User
 import scala.language.postfixOps
 
 object createDatabase {

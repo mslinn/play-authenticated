@@ -13,6 +13,42 @@ a, a code, code a, a tt, tt a {
   color: #026ca2;
 }
 
+meter {
+  /* Reset the default appearance */
+  margin: 0 auto 0;
+  width: 100%;
+  height: 10px;
+
+  /* Applicable only to Firefox */
+  background: none;
+  background-color: rgba(0,0,0,0.1);
+}
+
+meter::-webkit-meter-bar {
+  background: none;
+  background-color: rgba(0,0,0,0.1);
+}
+
+meter[value="0"]::-webkit-meter-optimum-value,
+meter[value="1"]::-webkit-meter-optimum-value { background: red; }
+meter[value="2"]::-webkit-meter-optimum-value { background: orange; }
+meter[value="3"]::-webkit-meter-optimum-value { background: yellow; }
+meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+
+meter::-webkit-meter-even-less-good-value { background: red; }
+meter::-webkit-meter-suboptimum-value { background: orange; }
+meter::-webkit-meter-optimum-value { background: green; }
+
+meter[value="1"]::-moz-meter-bar,
+meter[value="1"]::-moz-meter-bar { background: red; }
+meter[value="2"]::-moz-meter-bar { background: orange; }
+meter[value="3"]::-moz-meter-bar { background: yellow; }
+meter[value="4"]::-moz-meter-bar { background: green; }
+
+meter::-webkit-meter-optimum-value {
+  transition: width .4s ease-out;
+}
+
 .actions {
   margin-top: 1em;
 }
@@ -26,8 +62,32 @@ a, a code, code a, a tt, tt a {
   line-height: 18pt;
 }
 
-.spaceBelow {
+.spaceAboveNone, .inputLabel.spaceAboveNone, .spaceAboveNone.inputLabel {
+  margin-top: 0;
+}
+
+.spaceAboveSmall {
+  margin-top: 1em;
+}
+
+.spaceBelowSmall {
   margin-bottom: 1em;
+}
+
+.spaceAbove {
+  margin-top: 2em;
+}
+
+.spaceBelow {
+  margin-bottom: 2em;
+}
+
+.spaceAboveBig {
+  margin-top: 5em;
+}
+
+.spaceBelowBig {
+  margin-bottom: 5em;
 }
 
 .right {

@@ -1,5 +1,5 @@
-@(message: String)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
-@main(message) {
+@()(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@main("") {
   <div class="right">
     <img src='@routes.Assets.at("images/favicon.png")' />
     <p style="text-align: center; margin-top: 6px">Bob Marley (who did not write the song!)</p>

@@ -1,18 +1,14 @@
-package authentication
+package auth
 
 import controllers.WebJarAssets
 import javax.inject.Inject
-import models.User
-import models.dao.Users
+import model.User
+import model.dao.Users
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, BodyParser, Request, RequestHeader, Result, WrappedRequest}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.Security.AuthenticatedBuilder
 import scala.concurrent.Future
-
-case class LoginData(userId: String, password: String)
-
-case class SignupData(email: String, userId: String, password: String)
 
 trait UnauthorizedHandler {
   /** Default value is the standard Play unauthorized page */

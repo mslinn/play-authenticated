@@ -4,16 +4,24 @@
 
 GET     /               controllers.ApplicationController.index
 
-GET     /signUp         controllers.AuthenticationController.signUp
-POST    /signUp         controllers.AuthenticationController.saveUser
+GET     /signUp         controllers.authentication.AuthenticationController.signUp
+POST    /signUp         controllers.authentication.AuthenticationController.saveUser
 
-GET     /account        controllers.AuthenticationController.showAccountDetails
+GET     /account        controllers.authentication.AuthenticationController.showAccountDetails
 
-GET     /logout         controllers.AuthenticationController.logout
+GET     /logout         controllers.authentication.AuthenticationController.logout
 
-GET     /login          controllers.AuthenticationController.login
-POST    /login          controllers.AuthenticationController.performLogin
+GET     /login          controllers.authentication.AuthenticationController.login
+POST    /login          controllers.authentication.AuthenticationController.performLogin
 
+#GET         /password/forgot                 controllers.authentication.PasswordController.showForgetPasswordView
+#POST        /password/forgot                 controllers.authentication.PasswordController.submitForgetPassword
+#GET         /password/reset/:token           controllers.authentication.PasswordController.showResetPasswordView(token: model.persistence.Id)
+#POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.persistence.Id)
+GET         /password/change                 controllers.authentication.PasswordController.showChangePasswordView
+POST        /password/change                 controllers.authentication.PasswordController.submitNewPassword
+#GET         /account/email/:email            controllers.authentication.AccountController.send(email: String)
+#GET         /account/activate/:token         controllers.authentication.AccountController.activate(token: model.persistence.Id)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file   controllers.Assets.at(path="/public", file)

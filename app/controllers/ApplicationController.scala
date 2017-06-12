@@ -13,6 +13,6 @@ class ApplicationController @Inject() (implicit
   webJarAssets: WebJarAssets
 ) extends Controller with I18nSupport {
   def index() = Action { implicit request =>
-    Ok(views.html.index(ApplicationController.title))
+    Ok(views.html.index())
   }
 }

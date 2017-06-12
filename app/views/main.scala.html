@@ -1,8 +1,8 @@
-@(title: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(subtitle: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
 <!DOCTYPE html>
 <html>
     <head>
-      <title>@title</title>
+      <title>@subtitle</title>
       <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
       <script src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
       <script src='@routes.WebJarAssets.at(webJarAssets.locate("bootstrap.min.js"))'></script>
@@ -11,10 +11,9 @@
     </head>
     <body>
       <header class="jumbotron subhead" id="overview">
+        <div class="right" style="padding-top: 60px; margin-right: 3em; font-size: larger"><a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a></div>
         <div class="container">
-          <!--img src="@routes.Assets.at("images/favicon.png")" style="float: right; width: 100px; margin-top: 20px;"-->
-          <h1>@title</h1>
-          <p><a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a></p>
+          <h1>@ApplicationController.title<small><br/>@subtitle</small></h1>
         </div>
       </header>
       <div class="container">

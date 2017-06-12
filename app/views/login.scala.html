@@ -1,19 +1,20 @@
-@import authentication.LoginData
+@import auth.LoginData
+@import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 @import helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
-@main(ApplicationController.title) {
+@main("Log In") {
   @loginForm.errors("error").map { error =>
     <div class="alert-message text-warning bg-warning spaceBelow">
       <b>@error.messages.mkString(", ")</b>
     </div>
   }
-  @form(action = controllers.routes.AuthenticationController.performLogin()) {
+  @form(action = AuthRoutes.performLogin()) {
     @Html(inputter(loginForm("userId"), maybePlaceholder=Some("User ID")))
     @Html(inputter(loginForm("password"), maybePlaceholder=Some("Password"), isPassword=true))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Login" class="btn btn-primary">
-      <a href="@controllers.routes.AuthenticationController.login()" class="btn btn-default">Cancel</a>
+      <a href="@AuthRoutes.login()" class="btn btn-default">Cancel</a>
     </div>
   }
 }

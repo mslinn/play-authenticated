@@ -1,7 +1,7 @@
-package models.dao
+package model.dao
 
 import io.getquill.H2JdbcContext
-import models._
+import model.User
 import scala.language.postfixOps
 
 class Users {

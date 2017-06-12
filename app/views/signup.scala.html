@@ -1,10 +1,12 @@
-@import authentication.SignupData
-@import helper._
+@import auth.SignUpData
+@import auth.AuthForms.changePasswordForm
 @import controllers.WebJarAssets
+@import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
+@import helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
-@(signupForm: Form[SignupData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
-@main(ApplicationController.title) {
-  @form(action = controllers.routes.AuthenticationController.saveUser()) {
+@(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
+@main("Sign Up") {
+  @form(action = AuthRoutes.saveUser()) {
     @signupForm.errors("error").map { error =>
       <div class="alert-message text-warning bg-warning spaceBelow">
         <b>@error.messages.mkString(", ")</b>
@@ -12,10 +14,10 @@
     }
     @Html(inputter(signupForm("email"),    maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),   maybePlaceholder=Some("Desired user ID")))
-    @Html(inputter(signupForm("password"), maybePlaceholder=Some("Password")))
+    @passwordStrength(changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
-      <a href="@controllers.routes.AuthenticationController.signUp()" class="btn btn-default">Cancel</a>
+      <a href="@controllers.authentication.routes.AuthenticationController.signUp()" class="btn btn-default">Cancel</a>
     </div>
   }
 }
