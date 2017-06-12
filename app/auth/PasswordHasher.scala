@@ -19,6 +19,7 @@
 
 package auth
 
+import model.Password
 import org.mindrot.jbcrypt.BCrypt
 
 /** Implementation of the password hasher based on BCrypt.
@@ -27,23 +28,9 @@ object PasswordHasher {
   /* The log2 of the number of rounds of hashing to apply. */
   val logRounds: Int = 10
 
-  /**
-   * Hashes a password.
-   *
-   * This implementation does not return the salt separately because it is embedded in the hashed password.
-   * Other implementations might need to return it so it gets saved in the backing store.
-   *
-   * @param plainPassword The password to hash.
-   * @return A PasswordInfo containing the hashed password.
-   */
-  def hash(plainPassword: String): String = BCrypt.hashpw(plainPassword, BCrypt.gensalt(logRounds))
+  def hash(plainText: String): Password =
+    Password(BCrypt.hashpw(plainText, BCrypt.gensalt(logRounds)))
 
-  /**
-   * Checks if a password matches the hashed version.
-   *
-   * @param passwordInfo The password retrieved from the backing store.
-   * @param suppliedPassword The password supplied by the user trying to log in.
-   * @return True if the password matches, false otherwise.
-   */
-  def matches(password: String, suppliedPassword: String): Boolean = BCrypt.checkpw(suppliedPassword, password)
+  def matches(password: Password, suppliedPassword: Password): Boolean =
+    BCrypt.checkpw(suppliedPassword.value, password.value)
 }

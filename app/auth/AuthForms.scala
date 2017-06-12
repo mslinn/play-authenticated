@@ -1,37 +1,38 @@
 package auth
 
+import model.{Email, Password, UserId}
 import play.api.data.Form
 import play.api.data.Forms._
 
-case class ChangePasswordData(newPassword: String)
+case class ChangePasswordData(newPassword: Password)
 
-case class LoginData(userId: String, password: String)
+case class LoginData(userId: UserId, password: Password)
 
 object SignUpData {
-  def encrypt(email: String, userId: String, password: String) =
-    SignUpData(email=email, userId=userId, password=PasswordHasher.hash(password))
+  def encrypt(email: Email, userId: UserId, password: Password) =
+    SignUpData(email=email, userId=userId, password=PasswordHasher.hash(password.value))
 }
 
-case class SignUpData(email: String, userId: String, password: String)
+case class SignUpData(email: Email, userId: UserId, password: Password)
 
-object AuthForms {
+object AuthForms extends FormFormatterLike {
   val changePasswordForm: Form[ChangePasswordData] = Form(mapping(
-      "new-password"     -> nonEmptyText
+      "new-password" -> passwordMapping
     )(ChangePasswordData.apply)(ChangePasswordData.unapply)
   )
 
   val loginForm: Form[LoginData] = Form(
     mapping(
-      "userId"   -> nonEmptyText,
-      "password" -> nonEmptyText
+      "userId"   -> userId,
+      "password" -> passwordMapping
     )(LoginData.apply)(LoginData.unapply)
   )
 
   val signUpForm: Form[SignUpData] = Form(
     mapping(
-      "email"    -> email,
-      "userId"   -> nonEmptyText,
-      "password" -> nonEmptyText
+      "email"    -> eMail,
+      "userId"   -> userId,
+      "password" -> passwordMapping
     )(SignUpData.encrypt)(SignUpData.unapply)
   )
 }

@@ -2,7 +2,7 @@ package auth
 
 import controllers.WebJarAssets
 import javax.inject.Inject
-import model.User
+import model.{Id, Password, User, UserId}
 import model.dao.Users
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, BodyParser, Request, RequestHeader, Result, WrappedRequest}
@@ -20,14 +20,16 @@ class DefaultUnauthorizedHandler extends UnauthorizedHandler
 
 object Authentication {
   def parseUserFromCookie(implicit users: Users, request: RequestHeader): Option[User] =
-    request.session.get("userId").flatMap(users.findByUserId)
+    request.session
+      .get("userId")
+      .flatMap(id => users.findByUserId(UserId(id)))
 
   def parseUserFromQueryString(implicit users: Users, request: RequestHeader): Option[User] = {
-    val query = request.queryString.map { case (k, v) => k -> v.mkString }
-    val userId = query.get("userId")
-    val password = query.get("password")
+    val query: Map[String, String] = request.queryString.map { case (k, v) => k -> v.mkString }
+    val userId: Option[UserId] = query.get("userId").map(UserId.apply)
+    val password: Option[Password] = query.get("password").map(Password.apply)
     (userId, password) match {
-      case (Some(e), Some(p)) => users.findByUserId(e).filter(user => user.passwordMatches(p))
+      case (Some(u), Some(p)) => users.findByUserId(u).filter(_.passwordMatches(p))
       case _ => None
     }
   }

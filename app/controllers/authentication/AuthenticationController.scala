@@ -41,7 +41,7 @@ class AuthenticationController @Inject()(
         users.create(userData.email, userData.userId, userData.password) match {
           case (k, _) if k=="success" =>
             Redirect(AuthRoutes.showAccountDetails())
-              .withSession("userId" -> userData.userId)
+              .withSession("userId" -> userData.userId.value)
 
           case (k, v) =>
             Redirect(AuthRoutes.signUp())
@@ -64,7 +64,7 @@ class AuthenticationController @Inject()(
         val maybeUser = users.findByUserId(loginData.userId)
         val result: Result = maybeUser
           .filter(_.passwordMatches(loginData.password))
-          .map { u => Redirect(AuthRoutes.showAccountDetails()).withSession(("userId", u.userId)) }
+          .map { u => Redirect(AuthRoutes.showAccountDetails()).withSession(("userId", u.userId.value)) }
           .getOrElse {
             unauthorizedHandler.onUnauthorized(request)
           }

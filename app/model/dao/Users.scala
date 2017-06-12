@@ -1,7 +1,7 @@
 package model.dao
 
 import io.getquill.H2JdbcContext
-import model.User
+import model.{Email, Id, Password, User, UserId}
 import scala.language.postfixOps
 
 class Users {
@@ -10,18 +10,20 @@ class Users {
 
   def findAll: Vector[User] = run { quote { query[User] } }.toVector
 
-  def findById(id: Option[Long]): Option[User] = run { queryById(id) }.headOption
+  def findById(id: Option[Id]): Option[User] = run { queryById(id) }.headOption
 
-  def findByUserId(userId: String): Option[User] = run { query[User].filter(_.userId == lift(userId)) }.headOption
+  def findByUserId(userId: UserId): Option[User] =
+    run { query[User].filter(_.userId == lift(userId)) }.headOption
 
-  def create(email: String, userId: String, password: String): (String, String) = {
+  def create(email: Email, userId: UserId, password: Password): (String, String) = {
     if (findByUserId(userId).isDefined) {
       "error" -> s"UserID $userId is already in use."
     } else {
-      val q = quote {
-        query[User].insert(lift(User(email=email, userId=userId, password=password))).returning(_.id)
-      }
-      val returnedIds: Option[Long] = run(q)
+      run { quote {
+        query[User]
+          .insert(lift(User(email=email, userId=userId, password=password)))
+          .returning(_.id.map(_.value))
+      } }
       "success" -> s"Created user $userId"
     }
   }
@@ -33,5 +35,6 @@ class Users {
     ()
   }
 
-  protected def queryById(id: Option[Long]): Quoted[EntityQuery[User]] = quote { query[User].filter(_.id == lift(id)) }
+  protected def queryById(id: Option[Id]): Quoted[EntityQuery[User]] =
+    quote { query[User].filter(_.id == lift(id)) }
 }

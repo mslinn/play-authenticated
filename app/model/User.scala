@@ -2,11 +2,16 @@ package model
 
 import auth.PasswordHasher
 
+case class Email(value: String) extends AnyVal
+case class Id(value: Long) extends AnyVal
+case class Password(value: String) extends AnyVal
+case class UserId(value: String) extends AnyVal
+
 case class User(
-  userId: String,
-  email: String,
-  password: String,
-  id: Option[Long]=None
+  userId: UserId,
+  email: Email,
+  password: Password,
+  id: Option[Id]=None
 ) {
-  def passwordMatches(password: String): Boolean = this.password == PasswordHasher.hash(password)
+  def passwordMatches(clearText: Password): Boolean = this.password == PasswordHasher.hash(clearText.value)
 }

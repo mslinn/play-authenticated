@@ -34,7 +34,7 @@ class PasswordController @Inject()(
     changePasswordForm.bindFromRequest.fold(
       formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
       changePasswordData => {
-        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
+        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword.value)
         users.update(request.user.copy(password = hashedPassword))
         Redirect(PasswordRoutes.showChangePasswordView())
           .flashing("success" -> Messages("password.changed"))
