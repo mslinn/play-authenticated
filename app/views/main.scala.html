@@ -22,7 +22,7 @@
         @menu(request)
         <div class="container-fluid">
           @request.flash.data.map { case (key, msg) =>
-            <div class="alert-message text-@key bg-@key spaceBelow">
+            <div class="alert-message text-@key spaceBelow">
               <strong>@msg</strong>
             </div>
           }

@@ -16,12 +16,12 @@ object menu {
   def apply(implicit request: RequestHeader) =
     Html(s"""<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
             |  <ul class="nav navbar-nav">
-            |    ${listItem(AppRoutes.index(), "Front page")}
-            |    ${listItem(AccountRoutes.signUp(), "Sign up")}
-            |    ${listItem(AccountRoutes.login(), "Log in")}
-            |    ${listItem(AccountRoutes.showAccountDetails(), "Account Information")}
-            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change EncryptedPassword")}
-            |    ${listItem(AccountRoutes.logout(), "Log out")}
+            |    ${listItem(AppRoutes.index(),                       "Front page")}
+            |    ${listItem(AccountRoutes.signUp(),                  "Sign up")}
+            |    ${listItem(AccountRoutes.login(),                   "Log in")}
+            |    ${listItem(AccountRoutes.showAccountDetails(),      "Account Information")}
+            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change Password")}
+            |    ${listItem(AccountRoutes.logout(),                  "Log out")}
             |  </ul>
             |</nav>""".stripMargin)
 }
