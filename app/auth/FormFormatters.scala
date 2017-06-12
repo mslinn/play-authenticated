@@ -1,9 +1,6 @@
 package auth
 
-import java.util.concurrent.atomic.AtomicInteger
-import currency.Currency
-import model.{Email, Id, Password, UserId}
-import org.joda.time.Days
+import model.{ClearTextPassword, Email, EncryptedPassword, Id, UserId}
 import play.api.data.Forms.of
 import play.api.data.format.Formats.doubleFormat
 import play.api.data.format.Formatter
@@ -13,7 +10,7 @@ import play.api.data.{FormError, Mapping}
   * To use, either mix in the `forms.FormatterLike` trait or import the `forms.Formatters` object. */
 trait FormFormatterLike {
   implicit val emailFormat = new Formatter[Email] {
-    /** @param key indicates the name of the form field to convert from String to EMail
+    /** @param key indicates the name of the form field to convert from String to Email
       * @param data is a Map of field name -> value */
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Email] =
       data
@@ -36,20 +33,20 @@ trait FormFormatterLike {
     def unbind(key: String, value: Id): Map[String, String] = Map(key -> value.toString)
   }
 
-  implicit val passwordFormat = new Formatter[Password] {
-    /** @param key indicates the name of the form field to convert from String to EMail
+  implicit val clearTextPasswordFormat = new Formatter[ClearTextPassword] {
+    /** @param key indicates the name of the form field to convert from String to ClearTextPassword
       * @param data is a Map of field name -> value */
-    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Password] =
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], ClearTextPassword] =
       data
         .get(key)
-        .map(Password.apply)
+        .map(ClearTextPassword.apply)
         .toRight(Seq(FormError(key, "error.required", Nil)))
 
-    def unbind(key: String, value: Password): Map[String, String] = Map(key -> value.value)
+    def unbind(key: String, value: ClearTextPassword): Map[String, String] = Map(key -> value.value)
   }
 
   implicit val userIdFormat = new Formatter[UserId] {
-    /** @param key indicates the name of the form field to convert from String to EMail
+    /** @param key indicates the name of the form field to convert from String to UserId
       * @param data is a Map of field name -> value */
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], UserId] =
       data
@@ -60,11 +57,11 @@ trait FormFormatterLike {
     def unbind(key: String, value: UserId): Map[String, String] = Map(key -> value.value)
   }
 
-  val eMail: Mapping[Email]              = of[Email]
-  val double: Mapping[Double]            = of(doubleFormat)
-  val id: Mapping[Id]                    = of[Id]
-  val passwordMapping: Mapping[Password] = of[Password]
-  val userId: Mapping[UserId]            = of[UserId]
+  val eMail: Mapping[Email]                                = of[Email]
+  val double: Mapping[Double]                              = of(doubleFormat)
+  val id: Mapping[Id]                                      = of[Id]
+  val clearTextPasswordMapping: Mapping[ClearTextPassword] = of[ClearTextPassword]
+  val userId: Mapping[UserId]                              = of[UserId]
 }
 
 object FormFormatters extends FormFormatterLike

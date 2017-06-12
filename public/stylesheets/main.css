@@ -62,6 +62,11 @@ meter::-webkit-meter-optimum-value {
   line-height: 18pt;
 }
 
+.right {
+  float: right;
+  margin-left: 1em;
+}
+
 .spaceAboveNone, .inputLabel.spaceAboveNone, .spaceAboveNone.inputLabel {
   margin-top: 0;
 }
@@ -90,7 +95,6 @@ meter::-webkit-meter-optimum-value {
   margin-bottom: 5em;
 }
 
-.right {
-  float: right;
-  margin-left: 1em;
+.text-error {
+  color: #a94442;
 }

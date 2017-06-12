@@ -1,7 +1,7 @@
 package controllers.authentication
 
-import auth.AuthForms._
 import auth.{Authentication, SignUpData, UnauthorizedHandler}
+import auth.AuthForms._
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import javax.inject.Inject
@@ -13,10 +13,10 @@ import play.api.mvc.{Action, Controller, RequestHeader, Result}
 
 class AuthenticationController @Inject()(
   authentication: Authentication,
-  unauthorizedHandler: UnauthorizedHandler,
-  users: Users
+  unauthorizedHandler: UnauthorizedHandler
 )(implicit
   val messagesApi: MessagesApi,
+  users: Users,
   webJarAssets: WebJarAssets
 ) extends Controller with I18nSupport {
   import authentication._
@@ -38,7 +38,7 @@ class AuthenticationController @Inject()(
       formWithErrors =>
         BadRequest(views.html.signup(formWithErrors)),
       userData => {
-        users.create(userData.email, userData.userId, userData.password) match {
+        users.create(userData.email, userData.userId, userData.clearTextPassword.encrypt) match {
           case (k, _) if k=="success" =>
             Redirect(AuthRoutes.showAccountDetails())
               .withSession("userId" -> userData.userId.value)
@@ -76,7 +76,7 @@ class AuthenticationController @Inject()(
   def logout = Action { implicit request =>
     Redirect(routes.AuthenticationController.login())
       .withNewSession
-      .flashing("alert" -> "You've been logged out. Log in again below:")
+      .flashing("warning" -> "You've been logged out. Log in again below:")
   }
 }
 

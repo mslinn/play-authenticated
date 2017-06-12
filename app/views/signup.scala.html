@@ -7,17 +7,13 @@
 @(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Sign Up") {
   @form(action = AuthRoutes.saveUser()) {
-    @signupForm.errors("error").map { error =>
-      <div class="alert-message text-warning bg-warning spaceBelow">
-        <b>@error.messages.mkString(", ")</b>
-      </div>
-    }
+    @alertsFromForm(signupForm)
     @Html(inputter(signupForm("email"),    maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),   maybePlaceholder=Some("Desired user ID")))
     @passwordStrength(changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
-      <a href="@controllers.authentication.routes.AuthenticationController.signUp()" class="btn btn-default">Cancel</a>
+      <a href="@AuthRoutes.signUp()" class="btn btn-default">Cancel</a>
     </div>
   }
 }

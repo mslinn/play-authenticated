@@ -1,7 +1,7 @@
 package model.dao
 
 import io.getquill.H2JdbcContext
-import model.{Email, Id, Password, User, UserId}
+import model.{Email, EncryptedPassword, Id, User, UserId}
 import scala.language.postfixOps
 
 class Users {
@@ -15,7 +15,7 @@ class Users {
   def findByUserId(userId: UserId): Option[User] =
     run { query[User].filter(_.userId == lift(userId)) }.headOption
 
-  def create(email: Email, userId: UserId, password: Password): (String, String) = {
+  def create(email: Email, userId: UserId, password: EncryptedPassword): (String, String) = {
     if (findByUserId(userId).isDefined) {
       "error" -> s"UserID $userId is already in use."
     } else {

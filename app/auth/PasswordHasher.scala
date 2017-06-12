@@ -19,18 +19,18 @@
 
 package auth
 
-import model.Password
+import model.{ClearTextPassword, EncryptedPassword}
 import org.mindrot.jbcrypt.BCrypt
 
-/** Implementation of the password hasher based on BCrypt.
+/** Implementation of a password hasher based on BCrypt.
   * @see [[http://www.mindrot.org/files/jBCrypt/jBCrypt-0.2-doc/BCrypt.html#gensalt(int) gensalt]] */
 object PasswordHasher {
   /* The log2 of the number of rounds of hashing to apply. */
   val logRounds: Int = 10
 
-  def hash(plainText: String): Password =
-    Password(BCrypt.hashpw(plainText, BCrypt.gensalt(logRounds)))
+  def hash(plainText: ClearTextPassword): EncryptedPassword =
+    EncryptedPassword(BCrypt.hashpw(plainText.value, BCrypt.gensalt(logRounds)))
 
-  def matches(password: Password, suppliedPassword: Password): Boolean =
-    BCrypt.checkpw(suppliedPassword.value, password.value)
+  def matches(clearTextPassword: ClearTextPassword, encryptedPassword: EncryptedPassword): Boolean =
+    BCrypt.checkpw(clearTextPassword.value, encryptedPassword.value)
 }

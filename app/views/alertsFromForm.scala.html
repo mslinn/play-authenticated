@@ -1,0 +1,6 @@
+@(form: Form[_])(implicit messages: play.api.i18n.Messages)
+@form.errors.map { error =>
+  <div class="alerts-message text-@error.key spaceBelow">
+    <b>@error.key</b>: @error.messages.map(m => Messages(m)).mkString(", ")
+  </div>
+}

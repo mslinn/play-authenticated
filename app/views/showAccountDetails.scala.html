@@ -1,10 +1,34 @@
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 @import model.User
-@(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
-@main("Account Information") {
+@import model.dao.Users
+@(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets, users: Users)
+@main("User Information") {
+  <h2>This User</h2>
   <table class="table table-bordered" style="width: initial">
-    <tr><th>User ID</th><td><code>@user.userId</code></td></tr>
-    <tr><th>EMail</th><td><code><a href="mailto:@user.email">@user.email</a></code></td></tr>
+    <tr>
+      <th>User ID</th>
+      <td><code>@user.userId</code></td>
+    </tr>
+    <tr>
+      <th>EMail</th>
+      <td><code><a href="mailto:@user.email">@user.email</a></code></td>
+    </tr>
   </table>
   <p><a href="@AuthRoutes.logout()" class="btn btn-primary">Log out</a></p>
+
+  <h2>All Users</h2>
+  <table class="table table-bordered table-responsive table-striped table-hover" style="width: initial">
+    <tr>
+      <th>ID</th>
+      <th>User ID</th>
+      <th>EMail</th>
+    </tr>
+    @users.findAll.map { user =>
+      <tr>
+        <td>@user.id</td>
+        <td>@user.userId</td>
+        <td>@user.email</td>
+      </tr>
+    }
+  </table>
 }

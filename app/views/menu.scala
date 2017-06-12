@@ -9,7 +9,8 @@ import play.twirl.api.Html
 object menu {
   protected def listItem(call: Call, linkText: String)(implicit request: RequestHeader): String = {
     val uri = call.url
-    if (uri == request.uri) s"""<li class="active"><a href="#">$linkText</a></li>""" else s"""<li><a href="$uri">$linkText</a></li>"""
+    if (uri == request.uri) s"""<li class="active"><a href="#">$linkText</a></li>"""
+    else s"""<li><a href="$uri">$linkText</a></li>"""
   }
 
   def apply(implicit request: RequestHeader) =
@@ -19,7 +20,7 @@ object menu {
             |    ${listItem(AccountRoutes.signUp(), "Sign up")}
             |    ${listItem(AccountRoutes.login(), "Log in")}
             |    ${listItem(AccountRoutes.showAccountDetails(), "Account Information")}
-            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change Password")}
+            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change EncryptedPassword")}
             |    ${listItem(AccountRoutes.logout(), "Log out")}
             |  </ul>
             |</nav>""".stripMargin)

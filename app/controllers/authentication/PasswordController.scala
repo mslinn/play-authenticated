@@ -23,7 +23,7 @@ class PasswordController @Inject()(
 ) extends Controller with I18nSupport {
   import authentication._
 
-  /** Displays the `Change Password` page. */
+  /** Displays the `Change EncryptedPassword` page. */
   def showChangePasswordView = SecuredAction { implicit request =>
     implicit val maybeUser = Some(request.user)
     Ok(changePassword(changePasswordForm, request.user))
@@ -34,7 +34,7 @@ class PasswordController @Inject()(
     changePasswordForm.bindFromRequest.fold(
       formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
       changePasswordData => {
-        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword.value)
+        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
         users.update(request.user.copy(password = hashedPassword))
         Redirect(PasswordRoutes.showChangePasswordView())
           .flashing("success" -> Messages("password.changed"))

@@ -10,7 +10,13 @@ case class Id(value: Long) extends AnyVal {
   override def toString: String = value.toString
 }
 
-case class Password(value: String) extends AnyVal {
+case class EncryptedPassword(value: String) extends AnyVal {
+  override def toString: String = value
+}
+
+case class ClearTextPassword(value: String) extends AnyVal {
+  def encrypt: EncryptedPassword = PasswordHasher.hash(this)
+
   override def toString: String = value
 }
 
@@ -21,8 +27,11 @@ case class UserId(value: String) extends AnyVal {
 case class User(
   userId: UserId,
   email: Email,
-  password: Password,
+  password: EncryptedPassword,
   id: Option[Id]=None
 ) {
-  def passwordMatches(clearText: Password): Boolean = this.password == PasswordHasher.hash(clearText.value)
+  def passwordMatches(clearTextPassword: ClearTextPassword): Boolean = {
+    val result = PasswordHasher.matches(clearTextPassword, password)
+    result
+  }
 }

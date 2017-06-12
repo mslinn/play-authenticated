@@ -11,7 +11,9 @@
     </head>
     <body>
       <header class="jumbotron subhead" id="overview">
-        <div class="right" style="padding-top: 60px; margin-right: 3em; font-size: larger"><a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a></div>
+        <div class="right" style="padding-top: 60px; margin-right: 3em; font-size: larger">
+          <a href="https://github.com/mslinn/play-authenticated" target="_blank" rel="noopener noreferrer">GitHub project</a>
+        </div>
         <div class="container">
           <h1>@ApplicationController.title<small><br/>@subtitle</small></h1>
         </div>
@@ -19,14 +21,9 @@
       <div class="container">
         @menu(request)
         <div class="container-fluid">
-          @request.flash.get("success").map { msg =>
-            <div class="alert-message text-success bg-success spaceBelow">
+          @request.flash.data.map { case (key, msg) =>
+            <div class="alert-message text-@key bg-@key spaceBelow">
               <strong>@msg</strong>
-            </div>
-          }
-          @request.flash.get("alert").map { error =>
-            <div class="alert-message text-warning bg-warning spaceBelow">
-              <strong>@error</strong>
             </div>
           }
           @content

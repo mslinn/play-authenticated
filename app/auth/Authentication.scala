@@ -2,7 +2,7 @@ package auth
 
 import controllers.WebJarAssets
 import javax.inject.Inject
-import model.{Id, Password, User, UserId}
+import model.{ClearTextPassword, User, UserId}
 import model.dao.Users
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, BodyParser, Request, RequestHeader, Result, WrappedRequest}
@@ -27,7 +27,7 @@ object Authentication {
   def parseUserFromQueryString(implicit users: Users, request: RequestHeader): Option[User] = {
     val query: Map[String, String] = request.queryString.map { case (k, v) => k -> v.mkString }
     val userId: Option[UserId] = query.get("userId").map(UserId.apply)
-    val password: Option[Password] = query.get("password").map(Password.apply)
+    val password: Option[ClearTextPassword] = query.get("clearTextPassword").map(ClearTextPassword.apply)
     (userId, password) match {
       case (Some(u), Some(p)) => users.findByUserId(u).filter(_.passwordMatches(p))
       case _ => None

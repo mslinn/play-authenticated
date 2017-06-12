@@ -16,12 +16,12 @@ POST    /login          controllers.authentication.AuthenticationController.perf
 
 #GET         /password/forgot                 controllers.authentication.PasswordController.showForgetPasswordView
 #POST        /password/forgot                 controllers.authentication.PasswordController.submitForgetPassword
-#GET         /password/reset/:token           controllers.authentication.PasswordController.showResetPasswordView(token: model.persistence.Id)
-#POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.persistence.Id)
+#GET         /password/reset/:token           controllers.authentication.PasswordController.showResetPasswordView(token: model.Id)
+#POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.Id)
 GET         /password/change                 controllers.authentication.PasswordController.showChangePasswordView
 POST        /password/change                 controllers.authentication.PasswordController.submitNewPassword
 #GET         /account/email/:email            controllers.authentication.AccountController.send(email: String)
-#GET         /account/activate/:token         controllers.authentication.AccountController.activate(token: model.persistence.Id)
+#GET         /account/activate/:token         controllers.authentication.AccountController.activate(token: model.Id)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file   controllers.Assets.at(path="/public", file)
