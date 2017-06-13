@@ -20,8 +20,8 @@ POST    /login          controllers.authentication.AuthenticationController.perf
 #POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.Id)
 GET         /password/change                 controllers.authentication.PasswordController.showChangePasswordView
 POST        /password/change                 controllers.authentication.PasswordController.submitNewPassword
-#GET         /account/email/:email            controllers.authentication.AccountController.send(email: String)
-#GET         /account/activate/:token         controllers.authentication.AccountController.activate(token: model.Id)
+GET         /account/email/:userId           controllers.authentication.AuthenticationController.send(userId: model.UserId)
+GET         /account/activate/:token         controllers.authentication.AuthenticationController.activate(token: model.Id)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file   controllers.Assets.at(path="/public", file)

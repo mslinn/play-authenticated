@@ -7,7 +7,7 @@ import controllers.WebJarAssets
 import controllers.authentication.routes.{PasswordController => PasswordRoutes}
 import model.dao.Users
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
-import play.api.mvc.{Controller, WrappedRequest}
+import play.api.mvc.Controller
 import views.html.changePassword
 import views.html.htmlForm.CSRFHelper
 import scala.concurrent.ExecutionContext

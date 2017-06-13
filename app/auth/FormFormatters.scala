@@ -1,6 +1,6 @@
 package auth
 
-import model.{ClearTextPassword, Email, EncryptedPassword, Id, UserId}
+import model.{ClearTextPassword, EMail, EncryptedPassword, Id, UserId}
 import play.api.data.Forms.of
 import play.api.data.format.Formats.doubleFormat
 import play.api.data.format.Formatter
@@ -9,20 +9,20 @@ import play.api.data.{FormError, Mapping}
 /** Play Framework form field mapping formatters.
   * To use, either mix in the `forms.FormatterLike` trait or import the `forms.Formatters` object. */
 trait FormFormatterLike {
-  implicit val emailFormat = new Formatter[Email] {
-    /** @param key indicates the name of the form field to convert from String to Email
+  implicit val emailFormat = new Formatter[EMail] {
+    /** @param key indicates the name of the form field to convert from String to EMail
       * @param data is a Map of field name -> value */
-    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Email] =
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], EMail] =
       data
         .get(key)
-        .map(Email.apply)
+        .map(EMail.apply)
         .toRight(Seq(FormError(key, "error.required", Nil)))
 
-    def unbind(key: String, value: Email): Map[String, String] = Map(key -> value.value)
+    def unbind(key: String, value: EMail): Map[String, String] = Map(key -> value.value)
   }
 
   implicit val idFormat = new Formatter[Id] {
-    /** @param key indicates the name of the form field to convert from String to Id
+    /** @param key indicates the name of the form field to convert from String to EMail
       * @param data is a Map of field name -> value */
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Id] =
       data
@@ -57,7 +57,7 @@ trait FormFormatterLike {
     def unbind(key: String, value: UserId): Map[String, String] = Map(key -> value.value)
   }
 
-  val eMail: Mapping[Email]                                = of[Email]
+  val eMail: Mapping[EMail]                                = of[EMail]
   val double: Mapping[Double]                              = of(doubleFormat)
   val id: Mapping[Id]                                      = of[Id]
   val clearTextPasswordMapping: Mapping[ClearTextPassword] = of[ClearTextPassword]

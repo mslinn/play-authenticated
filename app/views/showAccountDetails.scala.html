@@ -9,12 +9,14 @@
       <tr>
         <th>ID</th>
         <th>User ID</th>
+        <th>Name</th>
         <th>EMail</th>
       </tr>
       @users.findAll.map { user =>
         <tr>
           <td>@user.id</td>
           <td><code>@user.userId</code></td>
+          <td>@user.fullName</td>
           <td><code><a href="mailto:@user.email">@user.email</a></code></td>
         </tr>
       }
@@ -26,6 +28,10 @@
     <tr>
       <th>User ID</th>
       <td><code>@user.userId</code></td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td>@user.fullName</td>
     </tr>
     <tr>
       <th>EMail</th>

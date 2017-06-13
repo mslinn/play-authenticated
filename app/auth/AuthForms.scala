@@ -1,6 +1,6 @@
 package auth
 
-import model.{ClearTextPassword, Email, UserId}
+import model.{ClearTextPassword, EMail, UserId}
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -8,7 +8,13 @@ case class ChangePasswordData(newPassword: ClearTextPassword)
 
 case class LoginData(userId: UserId, password: ClearTextPassword)
 
-case class SignUpData(email: Email, userId: UserId, clearTextPassword: ClearTextPassword)
+case class SignUpData(
+  email: EMail,
+  userId: UserId,
+  clearTextPassword: ClearTextPassword,
+  firstName: String,
+  lastName: String
+)
 
 object AuthForms extends FormFormatterLike {
   val changePasswordForm: Form[ChangePasswordData] = Form(mapping(
@@ -25,9 +31,11 @@ object AuthForms extends FormFormatterLike {
 
   val signUpForm: Form[SignUpData] = Form(
     mapping(
-      "email"    -> eMail,
-      "userId"   -> userId,
-      "password" -> clearTextPasswordMapping
+      "email"     -> eMail,
+      "userId"    -> userId,
+      "password"  -> clearTextPasswordMapping,
+      "firstName" -> nonEmptyText,
+      "lastName"  -> nonEmptyText
     )(SignUpData.apply)(SignUpData.unapply)
   )
 }

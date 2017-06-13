@@ -1,16 +1,19 @@
 # --- !Ups
 
 CREATE TABLE auth_token(
-  user_id BIGINT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
   expiry TIMESTAMP DEFAULT now(),
-  id BIGSERIAL PRIMARY KEY
+  user_id BIGINT NOT NULL
 );
 
 CREATE TABLE "user" (
-  id BIGSERIAL PRIMARY KEY,
-  user_id varchar(255) NOT NULL,
+  activated boolean default false,
   email varchar(255) NOT NULL,
-  password varchar(255) NOT NULL
+  first_name varchar(255) not null,
+  id BIGSERIAL PRIMARY KEY,
+  last_name varchar(255) not null,
+  password varchar(255) NOT NULL,
+  user_id varchar(255) NOT NULL
 );
 
 CREATE UNIQUE INDEX unique_user_id_user ON "user" (user_id);

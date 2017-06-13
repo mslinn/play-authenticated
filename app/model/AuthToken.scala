@@ -11,14 +11,14 @@ object AuthToken extends IdImplicitLike {
   def nextId: Id = random.nextLong.toId
 }
 
-/** A token to authenticate a user against an endpoint for a short time period.
- * @param id The unique token ID.
- * @param userID The unique ID of the user the token is associated with.
- * @param expiry The date-time the token expires. */
+/** A token to authenticate a user for a short time.
+ * @param id Unique token ID.
+ * @param uid The unique ID of the user the token is associated with.
+ * @param expiry The DateTime the token expires. */
 case class AuthToken(
-  userID: Id,
+  uid: Id,
   expiry: DateTime,
-  override val id: Option[Id] = Some(AuthToken.nextId)
-) extends HasId {
-  override def toString = s"AuthToken: userID=$userID, expiry: ${ AuthToken.fmt.print(expiry) }, id='${ id.mkString }'"
+  id: Id = AuthToken.nextId
+) {
+  override def toString = s"AuthToken: uid=$uid, expiry: ${ AuthToken.fmt.print(expiry) }, id='$id'"
 }

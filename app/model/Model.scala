@@ -2,10 +2,6 @@ package model
 
 import auth.PasswordHasher
 
-case class Email(value: String) extends AnyVal {
-  override def toString: String = value
-}
-
 case class EncryptedPassword(value: String) extends AnyVal {
   override def toString: String = value
 }
@@ -24,12 +20,18 @@ trait HasId extends IdImplicitLike {
   val id: Option[Id] = None
 }
 
+/** @param activated set when the user clicks on a link in an activation email */
 case class User(
   userId: UserId,
-  email: Email,
+  email: EMail,
+  firstName: String,
+  lastName: String,
   password: EncryptedPassword,
+  activated: Boolean = false,
   override val id: Option[Id]=None
 ) extends HasId {
+  lazy val fullName: String = s"$firstName $lastName"
+
   def passwordMatches(clearTextPassword: ClearTextPassword): Boolean = {
     val result = PasswordHasher.matches(clearTextPassword, password)
     result

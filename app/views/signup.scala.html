@@ -8,6 +8,8 @@
 @main("Sign Up") {
   @form(action = AuthRoutes.saveUser()) {
     @alertsFromForm(signupForm)
+    @Html(inputter(signupForm("firstName"),   maybePlaceholder=Some("First name")))
+    @Html(inputter(signupForm("lastName"),   maybePlaceholder=Some("Last name")))
     @Html(inputter(signupForm("email"),    maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),   maybePlaceholder=Some("Desired user ID")))
     @passwordStrength(changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))

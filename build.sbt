@@ -1,8 +1,13 @@
+import play.sbt.routes.RoutesKeys.routesImport
+
 name := "play-authenticated"
 organization := "com.micronautics"
 version := "0.1.0"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .settings(routesImport += "model.PlayUserIdBinders._")
+  .settings(routesImport += "model.PlayIdBinders._")
 
 scalaVersion := "2.11.11"
 
@@ -36,18 +41,22 @@ javacOptions ++= Seq(
   "-g:vars"
 )
 
-resolvers += "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
+resolvers ++= List(
+  "micronautics/play on bintray"  at "http://dl.bintray.com/micronautics/play",
+  "micronautics/scala on bintray" at "http://dl.bintray.com/micronautics/scala"
+)
 
 libraryDependencies ++= Seq(
-  jdbc, // todo delete this when evolutions are no longer required
   evolutions, // todo delete this when application.conf is consolidated
-  "com.h2database"   %  "h2"              % "1.4.192" withSources(),
-  "com.micronautics" %% "html-form-scala" % "0.1.9"   withSources(),
-  "net.codingwell"   %% "scala-guice"     % "4.1.0"   withSources(),
-  "de.svenkubiak"    %  "jBCrypt"         % "0.4.1"   withSources(),
-  "org.webjars"      %  "bootstrap"       % "3.3.7-1",
-  "org.webjars"      %% "webjars-play"    % "2.5.0-4",
-  "io.getquill"      %% "quill-jdbc"      % "1.2.1"   withSources(),
+  jdbc, // todo delete this when evolutions are no longer required
+  "com.h2database"    %  "h2"              % "1.4.192" withSources(),
+  "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),
+  "com.micronautics"  %% "html-email"      % "0.1.0"   withSources(),
+  "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
+  "de.svenkubiak"     %  "jBCrypt"         % "0.4.1"   withSources(),
+  "org.webjars"       %  "bootstrap"       % "3.3.7-1",
+  "org.webjars"       %% "webjars-play"    % "2.5.0-4",
+  "io.getquill"       %% "quill-jdbc"      % "1.2.1"   withSources(),
   specs2 % Test
 )
 

@@ -22,17 +22,6 @@ trait IdImplicitLike {
 
 object IdImplicits extends IdImplicitLike
 
-trait IdDecoder {
-  val ctx: H2JdbcContext[TableNameSnakeCase]
-  import ctx._
-
-  implicit val idDecoder: Decoder[Id] =
-    decoder(java.sql.Types.BIGINT, (index, row) => Id(row.getLong(index)))
-
-  implicit val idEncoder: Encoder[Id] =
-    encoder(java.sql.Types.BIGINT, (index, value, row) => row.setLong(index, value.value))
-}
-
 object Id extends IdImplicitLike {
   def isValid(value: Long): Boolean = try {
     Id(value)

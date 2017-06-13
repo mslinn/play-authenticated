@@ -1,10 +1,10 @@
 package model.dao
 
 import io.getquill.H2JdbcContext
-import model.{Email, EncryptedPassword, Id, IdDecoder, User, UserId}
+import model.{EMail, EncryptedPassword, Id, User, UserId}
 import scala.language.postfixOps
 
-class Users extends IdDecoder {
+class Users extends Implicits {
   lazy val ctx: H2JdbcContext[TableNameSnakeCase] = new H2JdbcContext[TableNameSnakeCase]("quill")
   import ctx._
 
@@ -15,13 +15,13 @@ class Users extends IdDecoder {
   def findByUserId(userId: UserId): Option[User] =
     run { query[User].filter(_.userId == lift(userId)) }.headOption
 
-  def create(email: Email, userId: UserId, password: EncryptedPassword): (String, String) = {
+  def create(email: EMail, userId: UserId, password: EncryptedPassword, firstName: String, lastName: String): (String, String) = {
     if (findByUserId(userId).isDefined) {
       "error" -> s"UserID $userId is already in use."
     } else {
       run { quote {
         query[User]
-          .insert(lift(User(email=email, userId=userId, password=password)))
+          .insert(lift(User(email=email, firstName=firstName, lastName=lastName, userId=userId, password=password)))
           .returning(_.id.map(_.value))
       } }
       "success" -> s"Created user $userId"
