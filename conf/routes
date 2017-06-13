@@ -1,6 +1,4 @@
-# Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
 
 GET     /               controllers.ApplicationController.index
 
@@ -15,14 +13,14 @@ GET     /logout         controllers.authentication.AuthenticationController.logo
 GET     /login          controllers.authentication.AuthenticationController.login
 POST    /login          controllers.authentication.AuthenticationController.performLogin
 
-#GET         /password/forgot                 controllers.authentication.PasswordController.showForgetPasswordView
-#POST        /password/forgot                 controllers.authentication.PasswordController.submitForgetPassword
-#GET         /password/reset/:token           controllers.authentication.PasswordController.showResetPasswordView(token: model.Id)
-#POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.Id)
-GET         /password/change                 controllers.authentication.AuthenticationController.showChangePasswordView
-POST        /password/change                 controllers.authentication.AuthenticationController.submitNewPassword
-GET         /account/email/:userId           controllers.authentication.AuthenticationController.send(userId: model.UserId)
-GET         /account/activate/:token         controllers.authentication.AuthenticationController.activate(token: model.Id)
+GET     /password/forgot         controllers.authentication.AuthenticationController.showForgetPasswordView
+POST    /password/forgot         controllers.authentication.AuthenticationController.submitForgetPassword
+GET     /password/reset/:token   controllers.authentication.AuthenticationController.showResetPasswordView(token: model.Id)
+POST    /password/reset/:token   controllers.authentication.AuthenticationController.submitResetPassword(token: model.Id)
+GET     /password/change         controllers.authentication.AuthenticationController.showChangePasswordView
+POST    /password/change         controllers.authentication.AuthenticationController.submitNewPassword
+GET     /account/email/:userId   controllers.authentication.AuthenticationController.send(userId: model.UserId)
+GET     /account/activate/:token controllers.authentication.AuthenticationController.activate(token: model.Id)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file   controllers.Assets.at(path="/public", file)

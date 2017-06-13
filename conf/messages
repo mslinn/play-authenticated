@@ -47,7 +47,7 @@ new.password = New password
 
 remember.me = Remember my login on this computer
 or.use.social = Or use your existing account on one of the following services to sign in:
-forgot.password.info = Please enter your email address and we will send you an email with further instructions to reset your password.
+forgot.password.info = Please enter your user Id and we will send an email to the associated email address with instructions to reset your password.
 strong.password.info = Strong passwords include numbers, letters and punctuation marks.
 current.password.invalid = The entered password is invalid. Please enter the correct password!
 activate.account.text1 = You can''t log in yet. We previously sent an activation email to you at:

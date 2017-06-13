@@ -12,8 +12,9 @@ import model.{AuthToken, EMail, Id, User, UserId}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
-import views.html.{changePassword, login}
+import play.api.mvc.{Action, Controller, RequestHeader, Result, WrappedRequest}
+import play.twirl.api.Html
+import views.html.{changePassword, forgotPassword, login, resetPassword}
 import views.html.htmlForm.CSRFHelper
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -211,7 +212,7 @@ class AuthenticationController @Inject()(
           user.id.map { id =>
             val (key, value, maybeAuthToken) = AuthTokens.create(uid=id)
             maybeAuthToken.map { authToken =>
-              val urlStr = routes.AuthenticationController.activate(authToken.id).absoluteURL()
+              val urlStr = AuthRoutes.activate(authToken.id).absoluteURL()
               AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr))
               successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
             } getOrElse {
@@ -224,6 +225,95 @@ class AuthenticationController @Inject()(
       }
     }
     result
+  }
+
+  /** Displays the `Forgot Password` page. */
+  def showForgetPasswordView = Action.async { implicit request =>
+    Future.successful(Ok(forgotPassword(AuthForms.forgotPasswordForm)))
+  }
+
+  /** Sends an email with password reset instructions to the given address if it exists in the database.
+    * If any failure, enforce security by not showing the user any existing `userIds`. */
+  def submitForgetPassword = Action.async { implicit request =>
+    Future {
+      AuthForms.forgotPasswordForm.bindFromRequest.fold(
+        formWithErrors => BadRequest(forgotPassword(formWithErrors)),
+        forgotPasswordData => {
+          users.findByUserId(forgotPasswordData.userId) match {
+            case Some(user) =>
+              val (key, value, maybeAuthToken) = AuthTokens.create(user.id.get)
+              maybeAuthToken.map { authToken =>
+                val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
+                EMail.send(
+                  to = user.email,
+                  subject = Messages("email.reset.password.subject")
+                ) {
+                  s"""<html>
+                     |<body>
+                     |  <p>${ messagesApi("email.reset.password.hello", user.fullName) }</p>
+                     |  <p>${ Html(messagesApi("email.reset.password.html.text", url)) }</p>
+                     |</body>
+                     |</html>
+                     |""".stripMargin
+                }
+                Redirect(AuthRoutes.login())
+                  .flashing("success" -> Messages("reset.email.sent"))
+              }.getOrElse {
+                Redirect(AuthRoutes.login())
+                  .flashing(key -> value)
+              }
+
+            case None =>
+              Redirect(AuthRoutes.login())
+                .flashing("error" -> "No user is associated with that userId")
+          }
+        }
+      )
+    }
+  }
+
+  /** Displays the `Reset Password` page.
+   * @param tokenId The token id that identifies a user. */
+  def showResetPasswordView(tokenId: Id) = Action.async { implicit request =>
+    Future {
+      AuthTokens.findById(tokenId) match {
+        case Some(_) =>
+          Ok(resetPassword(AuthForms.resetPasswordForm, tokenId))
+
+        case None =>
+          Redirect(AuthRoutes.login())
+            .flashing("error" -> Messages("invalid.reset.link"))
+      }
+    }
+  }
+
+  /** Resets the password.
+   * @param tokenId The id of the token that identifies a user. */
+  def submitResetPassword(tokenId: Id) = Action.async { implicit request =>
+    Future {
+      AuthTokens.findById(tokenId) match {
+        case Some(authToken) =>
+          AuthForms.resetPasswordForm.bindFromRequest.fold(
+            formWithErrors => { BadRequest(resetPassword(formWithErrors, tokenId)) },
+            changePasswordData => {
+                users.findById(Some(authToken.uid)) match {
+                case Some(user) =>
+                  users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
+                  Redirect(AuthRoutes.login())
+                    .flashing("success" -> Messages("password.reset"))
+
+                case None =>
+                  Redirect(AuthRoutes.login())
+                    .flashing("error" -> Messages("invalid.reset.link"))
+              }
+            }
+          )
+
+        case None =>
+          Redirect(AuthRoutes.login())
+            .flashing("error" -> Messages("invalid.reset.link"))
+      }
+    }
   }
 }
 

@@ -6,6 +6,8 @@ import play.api.data.Forms._
 
 case class ChangePasswordData(newPassword: ClearTextPassword)
 
+case class ForgotPasswordData(userId: UserId)
+
 case class LoginData(userId: UserId, password: ClearTextPassword)
 
 case class SignUpData(
@@ -22,11 +24,21 @@ object AuthForms extends FormFormatterLike {
     )(ChangePasswordData.apply)(ChangePasswordData.unapply)
   )
 
+  val forgotPasswordForm: Form[ForgotPasswordData] = Form(mapping(
+      "userId" -> userId
+    )(ForgotPasswordData.apply)(ForgotPasswordData.unapply)
+  )
+
   val loginForm: Form[LoginData] = Form(
     mapping(
       "userId"   -> userId,
       "password" -> clearTextPasswordMapping
     )(LoginData.apply)(LoginData.unapply)
+  )
+
+  val resetPasswordForm: Form[ChangePasswordData] = Form(mapping(
+      "password" -> clearTextPasswordMapping
+    )(ChangePasswordData.apply)(ChangePasswordData.unapply)
   )
 
   val signUpForm: Form[SignUpData] = Form(

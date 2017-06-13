@@ -18,8 +18,9 @@ object menu {
             |    ${listItem(AppRoutes.index(),                   "Front page")}
             |    ${listItem(AuthRoutes.signUp(),                 "Sign up")}
             |    ${listItem(AuthRoutes.login(),                  "Log in")}
-            |    ${listItem(AuthRoutes.showAccountDetails(),     "Account Information")}
+            |    ${listItem(AuthRoutes.showAccountDetails(),     "Accounts")}
             |    ${listItem(AuthRoutes.showChangePasswordView(), "Change Password")}
+            |    ${listItem(AuthRoutes.showForgetPasswordView(), "Forgot Password")}
             |    ${listItem(AuthRoutes.logout(),                 "Log out")}
             |  </ul>
             |</nav>""".stripMargin)
