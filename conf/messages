@@ -54,8 +54,11 @@ activate.account.text1 = You can''t log in yet. We previously sent an activation
 activate.account.text2 = Please follow the instructions in that email to activate your account.
 activate.account.text3 = Click <a href="{0}">here</a> to send the activation email again.
 
-sign.up.email.sent = You''re almost done! We sent an activation mail to {0}. Please follow the instructions in the email to activate your account. If it doesn''t arrive, check your spam folder, or try to log in again to send another activation mail.
-activation.email.sent = We sent another activation email to you at {0}. It might take a few minutes for it to arrive; be sure to check your spam folder.
+sign.up.email.sent = You''re almost done! We sent an activation mail to {0}. \
+Please follow the instructions in the email to activate your account. \
+If it doesn''t arrive, check your spam folder, or try to log in again to send another activation mail.
+activation.email.sent = {1} sent an activation email to you at {0}. \
+It might take a few minutes for it to arrive; be sure to check your spam folder.
 reset.email.sent = We have sent you an email with further instructions to reset your password, on condition that the address was found in our system. If you do not receive an email within the next 5 minutes, then please recheck your entered email address and try it again.
 
 invalid.activation.link = The link isn't valid anymore! Please sign in to send the activation email again.
@@ -90,7 +93,7 @@ email.reset.password.html.text = Please follow <a href="{0}">this link</a> to re
 email.reset.password.txt.text = Please follow the link to reset your password: {0}
 
 # Activate Account
-email.activate.account.subject = Activate account
+email.activate.account.subject = Please Activate Your New {0} Account
 email.activate.account.hello = Hello {0},
-email.activate.account.html.text = Please follow <a href="{0}">this link</a> to confirm and activate your new account.
+email.activate.account.html.text = Please follow <a href="{0}">this link</a> to confirm and activate your new account. The link will expire on {1}.
 email.activate.account.txt.text = Please follow the link to confirm and activate your new account: {0}

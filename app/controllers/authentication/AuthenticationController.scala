@@ -1,20 +1,19 @@
 package controllers.authentication
 
 import java.net.URL
-import auth.{Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
+import javax.inject.Inject
 import auth.AuthForms._
+import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
+import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
-import javax.inject.Inject
-import com.micronautics.Smtp
-import model.EMail.emailConfig
-import model.{EMail, Id, User, UserId}
 import model.dao.{AuthTokens, Users}
+import model.{AuthToken, EMail, Id, User, UserId}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
-import views.html.changePassword
+import views.html.{changePassword, login}
 import views.html.htmlForm.CSRFHelper
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -23,7 +22,7 @@ object AuthenticationController {
                          (implicit messages: Messages, smtp: Smtp): Unit = {
     val completeBody = s"""<html>
                           |  <body>
-                          |    <p>Dear ${ toUser.fullName }},</p>
+                          |    <p>Dear ${ toUser.fullName },</p>
                           |    $bodyFragment
                           |    <p>Thank you,<br/>
                           |      ${ smtp.smtpFrom }</p>
@@ -35,36 +34,33 @@ object AuthenticationController {
       to = toUser.email,
       cc = Nil, // todo add cc to conf
       bcc = Nil,
-      subject = Messages("email.activate.account.subject")
+      subject = subject
     )(body = completeBody)
   }
 
-  def activateAccountEmail(toUser: User, url: URL)
-                          (implicit messages: Messages, smtp: Smtp): Unit =
-    sendEmail(toUser=toUser, subject=messages("email.activate.account.subject")) {
-      s"""    <p>${ messages("email.activate.account.html.text", url) }</p>
-         |""".stripMargin
+  def sendActivateAccountEmail(toUser: User, url: URL)
+                              (implicit messages: Messages, smtp: Smtp): Unit =
+    sendEmail(toUser=toUser, subject=messages("email.activate.account.subject", url.getHost, AuthToken.expires)) {
+      val message = messages("email.activate.account.html.text", url)
+      s"<p>$message</p>\n"
     }
 
-  def alreadySignUpEMail(toUser: User, url: URL)
-                        (implicit messages: Messages, smtp: Smtp): Unit =
+  def sendAlreadySignUpEMail(toUser: User, url: URL)
+                            (implicit messages: Messages, smtp: Smtp): Unit =
     sendEmail(toUser=toUser, subject=messages("email.already.signed.up.subject")) {
-      s"""    <p>${ messages("email.already.signed.up.html.text", url) }</p>
-         |""".stripMargin
+      s"<p>${ messages("email.already.signed.up.html.text", url) }</p>\n"
     }
 
-  def resetPasswordEMail(toUser: User, url: URL)
-                        (implicit messages: Messages, smtp: Smtp): Unit =
+  def sendResetPasswordEMail(toUser: User, url: URL)
+                            (implicit messages: Messages, smtp: Smtp): Unit =
      sendEmail(toUser=toUser, subject=messages("email.reset.password.subject")) {
-       s"""    <p>${ messages("email.reset.password.html.text", url) }</p>
-          |""".stripMargin
+       s"<p>${ messages("email.reset.password.html.text", url) }</p>\n"
      }
 
-  def signUpEMail(toUser: User, url: URL)
-                 (implicit messages: Messages, smtp: Smtp): Unit =
+  def sendSignUpEMail(toUser: User, url: URL)
+                     (implicit messages: Messages, smtp: Smtp): Unit =
      sendEmail(toUser=toUser, subject=messages("email.sign.up.subject")) {
-       s"""    <p>${ messages("email.sign.up.html.text", url) }</p>
-          |""".stripMargin
+       s"<p>${ messages("email.sign.up.html.text", url, AuthToken.expires) }</p>\n"
      }
 }
 
@@ -82,15 +78,15 @@ class AuthenticationController @Inject()(
   implicit lazy val smtp: Smtp = EMail.smtp
 
   /** Activates a User account; triggered when a user clicks on a link in an activation email.
-   * @param token The token to identify a user.
-   * @return The result to display. */
-  def activate(token: Id) = Action.async { implicit request =>
+   * @param tokenId The token that identifies a user. */
+  def activate(tokenId: Id) = Action.async { implicit request =>
     Future {
       val result = for {
-        validToken <- AuthTokens.validate(token)
-        user <- users.findById(Some(validToken.uid))
+        token <- AuthTokens.findById(tokenId)
+        user  <- users.findById(Some(token.uid))
       } yield {
         users.update(user.copy(activated=true))
+        AuthTokens.delete(token)
         Redirect(AuthRoutes.login())
           .flashing("success" -> Messages("account.activated"))
       }
@@ -148,8 +144,8 @@ class AuthenticationController @Inject()(
           firstName = userData.firstName,
           lastName  = userData.lastName
         ) match {
-          case (k, _) if k=="success" =>
-            Redirect(AuthRoutes.awaitConfirmation())
+          case (k, v) if k=="success" =>
+            Redirect(AuthRoutes.send(userData.userId))
               .withSession("userId" -> userData.userId.value)
 
           case (k, v) =>
@@ -170,14 +166,23 @@ class AuthenticationController @Inject()(
       formWithErrors =>
         BadRequest(loginView(formWithErrors)),
       loginData => {
-        val maybeUser = users.findByUserId(loginData.userId)
-        val result: Result = maybeUser
+        users
+          .findByUserId(loginData.userId)
           .filter(_.passwordMatches(loginData.password))
-          .map { u => Redirect(AuthRoutes.showAccountDetails()).withSession(("userId", u.userId.value)) }
-          .getOrElse {
+          .map {
+            case user if user.activated =>
+              Redirect(AuthRoutes.showAccountDetails())
+                .withSession("userId" -> user.userId.value)
+
+            case user =>
+              val formWithError = AuthForms.loginForm.withError("error",
+                s"""You have not yet activated this account.
+                   |Please find the email sent to ${ user.email } from ${ smtp.smtpFrom },
+                   |and click on the link in the email so this account will be activated.""".stripMargin)
+              Unauthorized(views.html.login(formWithError))
+          }.getOrElse {
             unauthorizedHandler.onUnauthorized(request)
           }
-        result
       }
     )
   }
@@ -193,8 +198,12 @@ class AuthenticationController @Inject()(
    * @return The result to display. */
   def send(userId: UserId) = Action.async { implicit request =>
     def successResult(email: EMail, key: String, value: String) =
-      Redirect(AuthRoutes.login())
+      Redirect(AuthRoutes.awaitConfirmation())
         .flashing(key -> value)
+
+    def errorResult(userId: UserId) =
+      Redirect(AuthRoutes.signUp())
+        .flashing("error" -> s"No User found with ID $userId")
 
     val result: Future[Result] = Future.successful {
       users.findByUserId(userId) match {
@@ -202,20 +211,16 @@ class AuthenticationController @Inject()(
           user.id.map { id =>
             val (key, value, maybeAuthToken) = AuthTokens.create(uid=id)
             maybeAuthToken.map { authToken =>
-              AuthenticationController.activateAccountEmail(
-                toUser = user,
-                url = new java.net.URL(AuthRoutes.activate(authToken.id).absoluteURL)
-              )
-              successResult(user.email, key, value)
+              val urlStr = routes.AuthenticationController.activate(authToken.id).absoluteURL()
+              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr))
+              successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
             } getOrElse {
-              successResult(user.email, "success", Messages("activation.email.sent", user.email.value))
+              successResult(user.email, key, value)
             }
-          }.getOrElse(Redirect(AuthRoutes.signUp())
-            .flashing("error" -> Messages("activation.email.not.sent", user.email)))
+          }.getOrElse(errorResult(userId))
 
         case None =>
-          Redirect(AuthRoutes.signUp())
-            .flashing("error" -> Messages("no user with userID", userId))
+          errorResult(userId)
       }
     }
     result
