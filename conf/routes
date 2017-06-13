@@ -18,8 +18,8 @@ POST    /login          controllers.authentication.AuthenticationController.perf
 #POST        /password/forgot                 controllers.authentication.PasswordController.submitForgetPassword
 #GET         /password/reset/:token           controllers.authentication.PasswordController.showResetPasswordView(token: model.Id)
 #POST        /password/reset/:token           controllers.authentication.PasswordController.submitResetPassword(token: model.Id)
-GET         /password/change                 controllers.authentication.PasswordController.showChangePasswordView
-POST        /password/change                 controllers.authentication.PasswordController.submitNewPassword
+GET         /password/change                 controllers.authentication.AuthenticationController.showChangePasswordView
+POST        /password/change                 controllers.authentication.AuthenticationController.submitNewPassword
 GET         /account/email/:userId           controllers.authentication.AuthenticationController.send(userId: model.UserId)
 GET         /account/activate/:token         controllers.authentication.AuthenticationController.activate(token: model.Id)
 

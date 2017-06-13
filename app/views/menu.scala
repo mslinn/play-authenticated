@@ -1,8 +1,7 @@
 package views.html
 
 import controllers.routes.{ApplicationController => AppRoutes}
-import controllers.authentication.routes.{AuthenticationController => AccountRoutes}
-import controllers.authentication.routes.{PasswordController => PasswordRoutes}
+import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import play.api.mvc.{Call, RequestHeader}
 import play.twirl.api.Html
 
@@ -16,12 +15,12 @@ object menu {
   def apply(implicit request: RequestHeader) =
     Html(s"""<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
             |  <ul class="nav navbar-nav">
-            |    ${listItem(AppRoutes.index(),                       "Front page")}
-            |    ${listItem(AccountRoutes.signUp(),                  "Sign up")}
-            |    ${listItem(AccountRoutes.login(),                   "Log in")}
-            |    ${listItem(AccountRoutes.showAccountDetails(),      "Account Information")}
-            |    ${listItem(PasswordRoutes.showChangePasswordView(), "Change Password")}
-            |    ${listItem(AccountRoutes.logout(),                  "Log out")}
+            |    ${listItem(AppRoutes.index(),                   "Front page")}
+            |    ${listItem(AuthRoutes.signUp(),                 "Sign up")}
+            |    ${listItem(AuthRoutes.login(),                  "Log in")}
+            |    ${listItem(AuthRoutes.showAccountDetails(),     "Account Information")}
+            |    ${listItem(AuthRoutes.showChangePasswordView(), "Change Password")}
+            |    ${listItem(AuthRoutes.logout(),                 "Log out")}
             |  </ul>
             |</nav>""".stripMargin)
 }

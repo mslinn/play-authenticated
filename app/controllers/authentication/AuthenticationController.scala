@@ -1,7 +1,7 @@
 package controllers.authentication
 
 import java.net.URL
-import auth.{Authentication, SignUpData, UnauthorizedHandler}
+import auth.{Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
 import auth.AuthForms._
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
@@ -14,6 +14,8 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import views.html.changePassword
+import views.html.htmlForm.CSRFHelper
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticationController {
@@ -70,6 +72,7 @@ class AuthenticationController @Inject()(
   authentication: Authentication,
   unauthorizedHandler: UnauthorizedHandler
 )(implicit
+  csrfHelper: CSRFHelper,
   ec: ExecutionContext,
   val messagesApi: MessagesApi,
   users: Users,
@@ -101,6 +104,25 @@ class AuthenticationController @Inject()(
   /** Not really part of the library, should be shuffled off somewhere */
   def showAccountDetails = SecuredAction { implicit request =>
     Ok(views.html.showAccountDetails(request.user))
+  }
+
+  /** Displays the `Change EncryptedPassword` page. */
+  def showChangePasswordView = SecuredAction { implicit request =>
+    implicit val maybeUser = Some(request.user)
+    Ok(changePassword(changePasswordForm, request.user))
+  }
+
+  /** Changes the password. */
+  def submitNewPassword = SecuredAction { implicit request =>
+    changePasswordForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
+      changePasswordData => {
+        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
+        users.update(request.user.copy(password = hashedPassword))
+        Redirect(AuthRoutes.showChangePasswordView())
+          .flashing("success" -> Messages("password.changed"))
+      }
+    )
   }
 
   def signUp = Action { implicit request =>
