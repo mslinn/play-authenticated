@@ -4,8 +4,10 @@ An experiment with using Play 2.5's [AuthenticatedBuilder](https://www.playframe
 [Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition#Composing-actions)
 to create user ID / password authentication.
 
-Extensively modified from [David Keen's repo](https://gitlab.com/davidkeen/play-authenticated) of the same name,
-with enhancements inspired by Jorge Aliss's [SecureSocial](http://www.securesocial.ws/).
+This project is inspired by Jorge Aliss's [SecureSocial](http://www.securesocial.ws/), but instead of supporting 
+authentication via social providers, it only addresses user id / password authentication.
+Functionality includes sign up (registration), log in, log out, password reset for when the user forgets their password, 
+and the ability for authenticated users to change their password.
 
 Uses [Quill](http://getquill.io/) and an in-memory [H2](http://www.h2database.com/html/main.html) database.
 
