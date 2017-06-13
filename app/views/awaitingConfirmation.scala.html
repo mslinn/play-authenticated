@@ -1,0 +1,12 @@
+@import com.micronautics.Smtp
+@()(implicit request: RequestHeader, smtp: Smtp, webJarAssets: WebJarAssets)
+@main("Please Check Your Email") {
+  <div class="right">
+    <img src='@routes.Assets.at("images/favicon.png")' />
+  </div>
+  <h2>Almost Done!</h2>
+  <p>You should already have received an email from @smtp.smtpFrom welcoming you to this site.
+    Please click on the link in the email to verify your account.
+    You will be directed to the log in page for this site after that.</p>
+  <p>Thanks for registering!</p>
+}

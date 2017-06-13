@@ -98,6 +98,10 @@ class AuthenticationController @Inject()(
     }
   }
 
+  def awaitConfirmation = Action { implicit request =>
+    Ok(views.html.awaitingConfirmation())
+  }
+
   /** Not really part of the library, should be shuffled off somewhere */
   def showAccountDetails = SecuredAction { implicit request =>
     Ok(views.html.showAccountDetails(request.user))
@@ -124,7 +128,7 @@ class AuthenticationController @Inject()(
           lastName  = userData.lastName
         ) match {
           case (k, _) if k=="success" =>
-            Redirect(AuthRoutes.showAccountDetails())
+            Redirect(AuthRoutes.awaitConfirmation())
               .withSession("userId" -> userData.userId.value)
 
           case (k, v) =>
