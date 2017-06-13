@@ -108,7 +108,6 @@ class AuthenticationController @Inject()(
 
   /** Displays the `Change EncryptedPassword` page. */
   def showChangePasswordView = SecuredAction { implicit request =>
-    implicit val maybeUser = Some(request.user)
     Ok(changePassword(changePasswordForm, request.user))
   }
 
