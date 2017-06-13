@@ -1,14 +1,14 @@
 GET     /                        controllers.ApplicationController.index
 
-GET     /signUp                  controllers.authentication.AuthenticationController.signUp
-POST    /signUp                  controllers.authentication.AuthenticationController.saveUser
+GET     /signUp                  controllers.authentication.AuthenticationController.showSignUpView
+POST    /signUp                  controllers.authentication.AuthenticationController.saveNewUser
 
 GET     /account/confirm         controllers.authentication.AuthenticationController.awaitConfirmation
 GET     /account                 controllers.authentication.AuthenticationController.showAccountDetails
 
 GET     /logout                  controllers.authentication.AuthenticationController.logout
 
-GET     /login                   controllers.authentication.AuthenticationController.login
+GET     /login                   controllers.authentication.AuthenticationController.showLoginView
 POST    /login                   controllers.authentication.AuthenticationController.performLogin
 
 GET     /password/forgot         controllers.authentication.AuthenticationController.showForgetPasswordView
@@ -17,8 +17,8 @@ GET     /password/reset/:token   controllers.authentication.AuthenticationContro
 POST    /password/reset/:token   controllers.authentication.AuthenticationController.submitResetPassword(token: model.Id)
 GET     /password/change         controllers.authentication.AuthenticationController.showChangePasswordView
 POST    /password/change         controllers.authentication.AuthenticationController.submitNewPassword
-GET     /account/email/:userId   controllers.authentication.AuthenticationController.send(userId: model.UserId)
-GET     /account/activate/:token controllers.authentication.AuthenticationController.activate(token: model.Id)
+GET     /account/email/:userId   controllers.authentication.AuthenticationController.sendAccountActivationEmail(userId: model.UserId)
+GET     /account/activate/:token controllers.authentication.AuthenticationController.activateUser(token: model.Id)
 
 GET     /assets/*file            controllers.Assets.at(path="/public", file)
 GET     /webjars/*file           controllers.WebJarAssets.at(file)

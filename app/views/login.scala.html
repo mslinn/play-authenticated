@@ -10,9 +10,9 @@
     @Html(inputter(loginForm("password"), maybePlaceholder=Some("password"), isPassword=true))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Login" class="btn btn-primary">
-      <a href="@AuthRoutes.login()" class="btn btn-default">Cancel</a>
+      <a href="@AuthRoutes.showLoginView()" class="btn btn-default">Cancel</a>
     </div>
   }
   <p class="spaceAbove">Did you forget your password? <a href="@AuthRoutes.showForgetPasswordView()">Reset it!</a></p>
-  <p>Not registered yet? <a href="@AuthRoutes.signUp()">Sign up now!</a></p>
+  <p>Not registered yet? <a href="@AuthRoutes.showSignUpView()">Sign up now!</a></p>
 }

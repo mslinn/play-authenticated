@@ -80,7 +80,7 @@ class AuthenticationController @Inject()(
 
   /** Activates a User account; triggered when a user clicks on a link in an activation email.
    * @param tokenId The token that identifies a user. */
-  def activate(tokenId: Id) = Action.async { implicit request =>
+  def activateUser(tokenId: Id) = Action.async { implicit request =>
     Future {
       val result = for {
         token <- AuthTokens.findById(tokenId)
@@ -88,11 +88,11 @@ class AuthenticationController @Inject()(
       } yield {
         users.update(user.copy(activated=true))
         AuthTokens.delete(token)
-        Redirect(AuthRoutes.login())
+        Redirect(AuthRoutes.showLoginView())
           .flashing("success" -> Messages("account.activated"))
       }
       result.getOrElse(
-        Redirect(AuthRoutes.signUp())
+        Redirect(AuthRoutes.showSignUpView())
           .flashing("error" -> Messages("invalid.activation.link"))
       )
     }
@@ -125,7 +125,7 @@ class AuthenticationController @Inject()(
     )
   }
 
-  def signUp = Action { implicit request =>
+  def showSignUpView = Action { implicit request =>
     val form: Form[SignUpData] = request.session
       .get("error")
       .map(error => signUpForm.withError("error", error))
@@ -133,7 +133,7 @@ class AuthenticationController @Inject()(
     Ok(views.html.signup(form))
   }
 
-  def saveUser = Action { implicit request =>
+  def saveNewUser = Action { implicit request =>
     signUpForm.bindFromRequest.fold(
       formWithErrors =>
         BadRequest(views.html.signup(formWithErrors)),
@@ -146,18 +146,18 @@ class AuthenticationController @Inject()(
           lastName  = userData.lastName
         ) match {
           case (k, v) if k=="success" =>
-            Redirect(AuthRoutes.send(userData.userId))
+            Redirect(AuthRoutes.sendAccountActivationEmail(userData.userId))
               .withSession("userId" -> userData.userId.value)
 
           case (k, v) =>
-            Redirect(AuthRoutes.signUp())
+            Redirect(AuthRoutes.showSignUpView())
               .withSession(k -> v)
         }
       }
     )
   }
 
-  def login = Action { implicit request =>
+  def showLoginView = Action { implicit request =>
     Ok(views.html.login(loginForm))
   }
 
@@ -189,7 +189,7 @@ class AuthenticationController @Inject()(
   }
 
   def logout = Action { implicit request =>
-    Redirect(routes.AuthenticationController.login())
+    Redirect(routes.AuthenticationController.showLoginView())
       .withNewSession
       .flashing("warning" -> "You've been logged out. Log in again below:")
   }
@@ -197,13 +197,13 @@ class AuthenticationController @Inject()(
   /** Sends an account activation email to the user with the given userId.
    * @param userId The userId of the user to send the activation mail to.
    * @return The result to display. */
-  def send(userId: UserId) = Action.async { implicit request =>
+  def sendAccountActivationEmail(userId: UserId) = Action.async { implicit request =>
     def successResult(email: EMail, key: String, value: String) =
       Redirect(AuthRoutes.awaitConfirmation())
         .flashing(key -> value)
 
     def errorResult(userId: UserId) =
-      Redirect(AuthRoutes.signUp())
+      Redirect(AuthRoutes.showSignUpView())
         .flashing("error" -> s"No User found with ID $userId")
 
     val result: Future[Result] = Future.successful {
@@ -212,7 +212,7 @@ class AuthenticationController @Inject()(
           user.id.map { id =>
             val (key, value, maybeAuthToken) = AuthTokens.create(uid=id)
             maybeAuthToken.map { authToken =>
-              val urlStr = AuthRoutes.activate(authToken.id).absoluteURL()
+              val urlStr = AuthRoutes.activateUser(authToken.id).absoluteURL()
               AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr))
               successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
             } getOrElse {
@@ -243,6 +243,7 @@ class AuthenticationController @Inject()(
             case Some(user) =>
               val (key, value, maybeAuthToken) = AuthTokens.create(user.id.get)
               maybeAuthToken.map { authToken =>
+                AuthTokens.delete(authToken)
                 val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
                 EMail.send(
                   to = user.email,
@@ -256,15 +257,15 @@ class AuthenticationController @Inject()(
                      |</html>
                      |""".stripMargin
                 }
-                Redirect(AuthRoutes.login())
+                Redirect(AuthRoutes.showLoginView())
                   .flashing("success" -> Messages("reset.email.sent"))
               }.getOrElse {
-                Redirect(AuthRoutes.login())
+                Redirect(AuthRoutes.showLoginView())
                   .flashing(key -> value)
               }
 
             case None =>
-              Redirect(AuthRoutes.login())
+              Redirect(AuthRoutes.showLoginView())
                 .flashing("error" -> "No user is associated with that userId")
           }
         }
@@ -281,7 +282,7 @@ class AuthenticationController @Inject()(
           Ok(resetPassword(AuthForms.resetPasswordForm, tokenId))
 
         case None =>
-          Redirect(AuthRoutes.login())
+          Redirect(AuthRoutes.showLoginView())
             .flashing("error" -> Messages("invalid.reset.link"))
       }
     }
@@ -293,24 +294,25 @@ class AuthenticationController @Inject()(
     Future {
       AuthTokens.findById(tokenId) match {
         case Some(authToken) =>
+          AuthTokens.delete(authToken)
           AuthForms.resetPasswordForm.bindFromRequest.fold(
             formWithErrors => { BadRequest(resetPassword(formWithErrors, tokenId)) },
             changePasswordData => {
                 users.findById(Some(authToken.uid)) match {
                 case Some(user) =>
                   users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
-                  Redirect(AuthRoutes.login())
+                  Redirect(AuthRoutes.showLoginView())
                     .flashing("success" -> Messages("password.reset"))
 
                 case None =>
-                  Redirect(AuthRoutes.login())
+                  Redirect(AuthRoutes.showLoginView())
                     .flashing("error" -> Messages("invalid.reset.link"))
               }
             }
           )
 
         case None =>
-          Redirect(AuthRoutes.login())
+          Redirect(AuthRoutes.showLoginView())
             .flashing("error" -> Messages("invalid.reset.link"))
       }
     }
