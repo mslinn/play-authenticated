@@ -21,7 +21,13 @@ object EMail {
   lazy val emailConfig: EMailConfig = EMailConfig(smtp)
 
   def send(to: EMail, subject: String, cc: List[EMail]=Nil, bcc: List[EMail]=Nil)(body: String=""): Unit = {
-    emailConfig.smtp.send(mailTo=to.value, mailCc = bcc.map(_.value), mailBcc = bcc.map(_.value), subjectLine=subject, mailBody=body)
+    emailConfig.smtp.send(
+      mailTo = to.value,
+      mailCc = bcc.map(_.value),
+      mailBcc = bcc.map(_.value),
+      subjectLine = subject,
+      mailBody = body
+    )
     ()
   }
 }

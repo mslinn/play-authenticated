@@ -20,4 +20,6 @@ Set environment variables that establish email server settings, then run the pro
     $ export SMTP_FROM="Santa Claus <santa@claus.com>"
     $ export SMTP_HOST=smtp.claus.com
     $ export SMTP_PORT=465
+    $ export EMAIL_LOGO_URL="http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
+    $ export EMAIL_SIGNATURE="<p>Thank you,<br/></p>\n<p>The ScalaCourses mailbot</p>"
     $ sbt run
