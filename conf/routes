@@ -1,17 +1,15 @@
-# This file defines all application routes (Higher priority routes first)
+GET     /                        controllers.ApplicationController.index
 
-GET     /               controllers.ApplicationController.index
+GET     /signUp                  controllers.authentication.AuthenticationController.signUp
+POST    /signUp                  controllers.authentication.AuthenticationController.saveUser
 
-GET     /signUp         controllers.authentication.AuthenticationController.signUp
-POST    /signUp         controllers.authentication.AuthenticationController.saveUser
+GET     /account/confirm         controllers.authentication.AuthenticationController.awaitConfirmation
+GET     /account                 controllers.authentication.AuthenticationController.showAccountDetails
 
-GET     /confirmation   controllers.authentication.AuthenticationController.awaitConfirmation
-GET     /account        controllers.authentication.AuthenticationController.showAccountDetails
+GET     /logout                  controllers.authentication.AuthenticationController.logout
 
-GET     /logout         controllers.authentication.AuthenticationController.logout
-
-GET     /login          controllers.authentication.AuthenticationController.login
-POST    /login          controllers.authentication.AuthenticationController.performLogin
+GET     /login                   controllers.authentication.AuthenticationController.login
+POST    /login                   controllers.authentication.AuthenticationController.performLogin
 
 GET     /password/forgot         controllers.authentication.AuthenticationController.showForgetPasswordView
 POST    /password/forgot         controllers.authentication.AuthenticationController.submitForgetPassword
@@ -22,6 +20,5 @@ POST    /password/change         controllers.authentication.AuthenticationContro
 GET     /account/email/:userId   controllers.authentication.AuthenticationController.send(userId: model.UserId)
 GET     /account/activate/:token controllers.authentication.AuthenticationController.activate(token: model.Id)
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file   controllers.Assets.at(path="/public", file)
-GET     /webjars/*file  controllers.WebJarAssets.at(file)
+GET     /assets/*file            controllers.Assets.at(path="/public", file)
+GET     /webjars/*file           controllers.WebJarAssets.at(file)

@@ -1,12 +1,12 @@
 package controllers.authentication
 
-import java.net.URL
-import javax.inject.Inject
 import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
 import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
+import java.net.URL
+import javax.inject.Inject
 import model.dao.{AuthTokens, Users}
 import model.{AuthToken, EMail, Id, User, UserId}
 import play.api.data.Form
