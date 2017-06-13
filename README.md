@@ -13,5 +13,11 @@ Uses [WebJars](http://webjars.org/) with [Twitter Bootstrap](http://getbootstrap
 and [HtmlForm](https://github.com/mslinn/html-form-scala)'s HTML5 widgets for Bootstrap.
 
 ## To Run
+Set environment variables that establish email server settings, then run the program.
 
+    $ export SMTP_PASSWORD=myPassword
+    $ export SMTP_USER=santa@claus.com
+    $ export SMTP_FROM="Santa Claus <santa@claus.com>"
+    $ export SMTP_HOST=smtp.claus.com
+    $ export SMTP_PORT=465
     $ sbt run

@@ -9,16 +9,16 @@ object EMail {
 
   val emailRegex: Pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
 
-  val empty = EMail("x@y.com")
+  lazy val empty = EMail("x@y.com")
 
   implicit val emailFormatter: OFormat[EMail] = Json.format[EMail]
 
   protected val emailLogoUrl = "http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
-  val smtp: Smtp = Smtp.apply.smtp.copy(
+  lazy val smtp: Smtp = Smtp.apply.smtp.copy(
     maybeEmailLogoUrl = Some(emailLogoUrl),
     maybeSignature = Some("<i><b>ScalaCourses</b><br/>World-class online training</i>")
   )
-  val emailConfig: EMailConfig = EMailConfig(smtp)
+  lazy val emailConfig: EMailConfig = EMailConfig(smtp)
 
   def send(to: EMail, subject: String, cc: List[EMail]=Nil, bcc: List[EMail]=Nil)(body: String=""): Unit =
     emailConfig.smtp.send(mailTo=to.value, mailCc = bcc.map(_.value), mailBcc = bcc.map(_.value), subjectLine=subject, mailBody=body)

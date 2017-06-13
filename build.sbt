@@ -51,7 +51,7 @@ libraryDependencies ++= Seq(
   jdbc, // todo delete this when evolutions are no longer required
   "com.h2database"    %  "h2"              % "1.4.192" withSources(),
   "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),
-  "com.micronautics"  %% "html-email"      % "0.1.0"   withSources(),
+  "com.micronautics"  %% "html-email"      % "0.1.1"   withSources(),
   "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
   "de.svenkubiak"     %  "jBCrypt"         % "0.4.1"   withSources(),
   "org.webjars"       %  "bootstrap"       % "3.3.7-1",
