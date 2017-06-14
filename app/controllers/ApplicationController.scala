@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject.Inject
 import auth.Authentication
+import model.User
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 
@@ -21,12 +22,12 @@ class ApplicationController @Inject() (implicit
   }
 
   def securedAction = SecuredAction { authenticatedRequest =>
-    val user = authenticatedRequest.user
+    val user: User = authenticatedRequest.user
     Ok(s"${ user.fullName } is secure.")
   }
 
   def userAwareAction = UserAwareAction { requestWithUser =>
-    val maybeUser = requestWithUser.user
+    val maybeUser: Option[User] = requestWithUser.user
     Ok(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security.")
   }
 }

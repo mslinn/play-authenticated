@@ -43,12 +43,12 @@ class ApplicationController @Inject() (implicit
   }
 
   def securedAction = SecuredAction { implicit authenticatedRequest =>
-    val user = authenticatedRequest.user
+    val user: User = authenticatedRequest.user
     Ok(s"${ user.fullName } is secure.")
   }
 
   def userAwareAction = UserAwareAction { implicit requestWithUser =>
-    val maybeUser = requestWithUser.user
+    val maybeUser: Option[User] = requestWithUser.user
     Ok(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security.")
   }
 }
