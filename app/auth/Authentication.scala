@@ -5,7 +5,7 @@ import javax.inject.Inject
 import model.{ClearTextPassword, User, UserId}
 import model.dao.Users
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, BodyParser, Request, RequestHeader, Result, WrappedRequest}
+import play.api.mvc.{Action, AnyContent, BodyParser, BodyParsers, Request, RequestHeader, Result, WrappedRequest}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.Security.AuthenticatedBuilder
 import scala.concurrent.Future
@@ -50,14 +50,16 @@ class Authentication @Inject() (
     onUnauthorized = unauthorizedHandler.onUnauthorized
   )
 
-  // todo not sure how to create an instance of this class, or if it even necessary
-  class UserAwareAction(action: Request[AnyContent] => Future[Result]) extends Action[AnyContent] {
-    override def parser: BodyParser[AnyContent] = ???
-
-    override def apply(request: Request[AnyContent]): Future[Result] = action(request)
+  /** An action that adds the current user in the request if its available */
+  def UserAwareAction[A](p: BodyParser[A])(f: RequestWithUser[A] => Result): Action[A] = Action(p) { implicit request =>
+    val maybeUser: Option[User] = Authentication.parseUserFromRequest(users, request)
+    f(RequestWithUser(maybeUser, request))
   }
+
+  /** An action that adds the current user in the request if its available */
+  def UserAwareAction(f: RequestWithUser[AnyContent] => Result): Action[AnyContent] =
+    UserAwareAction(BodyParsers.parse.anyContent)(f)
 }
 
-// todo not sure how to create an instance of this class, or if it even necessary
-case class UserAwareRequest(maybeUser: Option[User], request: RequestHeader)
-  extends WrappedRequest(request.asInstanceOf[Request[AnyContent]])
+/** A request that adds the User for the current call */
+case class RequestWithUser[A](user: Option[User], request: Request[A]) extends WrappedRequest(request)

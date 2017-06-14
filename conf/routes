@@ -1,4 +1,6 @@
 GET     /                        controllers.ApplicationController.index
+GET     /secure                  controllers.ApplicationController.securedAction
+GET     /aware                   controllers.ApplicationController.userAwareAction
 
 GET     /signUp                  controllers.authentication.AuthenticationController.showSignUpView
 POST    /signUp                  controllers.authentication.AuthenticationController.saveNewUser
