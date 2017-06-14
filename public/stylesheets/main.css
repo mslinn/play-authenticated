@@ -98,3 +98,11 @@ meter::-webkit-meter-optimum-value {
 .text-error {
   color: #a94442;
 }
+
+#new-password_container {
+  width: 100%;
+}
+
+#forgotPasswordForm #userId_container {
+  width: 100%;
+}
