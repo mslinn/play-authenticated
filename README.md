@@ -14,18 +14,6 @@ Uses [Quill](http://getquill.io/) and an in-memory [H2](http://www.h2database.co
 Uses [WebJars](http://webjars.org/) with [Twitter Bootstrap](http://getbootstrap.com/) 
 and [HtmlForm](https://github.com/mslinn/html-form-scala)'s HTML5 widgets for Bootstrap.
 
-## To Run
-Set environment variables that establish email server settings, then run the program.
-
-    $ export SMTP_PASSWORD=myPassword
-    $ export SMTP_USER=santa@claus.com
-    $ export SMTP_FROM="Santa Claus <santa@claus.com>"
-    $ export SMTP_HOST=smtp.claus.com
-    $ export SMTP_PORT=465
-    $ export EMAIL_LOGO_URL="http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
-    $ export EMAIL_SIGNATURE="<p>Thank you,<br/></p>\n<p>The ScalaCourses mailbot</p>"
-    $ sbt run
-
 ## Using Authentication-Aware Actions
 
 In addition to Play Framework's `Action` handlers, this project adds 
@@ -68,3 +56,15 @@ class ApplicationController @Inject() (implicit
 
 ## Scaladoc
 [Here](http://mslinn.github.io/play-authenticated/latest/api/index.html)
+
+## To Run
+Set environment variables that establish email server settings, then run the program.
+
+    $ export SMTP_PASSWORD=myPassword
+    $ export SMTP_USER=santa@claus.com
+    $ export SMTP_FROM="Santa Claus <santa@claus.com>"
+    $ export SMTP_HOST=smtp.claus.com
+    $ export SMTP_PORT=465
+    $ export EMAIL_LOGO_URL="http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
+    $ export EMAIL_SIGNATURE="<p>Thank you,<br/></p>\n<p>The ScalaCourses mailbot</p>"
+    $ sbt run
