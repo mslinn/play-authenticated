@@ -59,7 +59,7 @@ class Authentication @Inject() (
   /** An action that adds the current user in the request if its available */
   def UserAwareAction(f: RequestWithUser[AnyContent] => Result): Action[AnyContent] =
     UserAwareAction(BodyParsers.parse.anyContent)(f)
-
-  /** A request that adds the User for the current call */
-  case class RequestWithUser[A](user: Option[User], request: Request[A]) extends WrappedRequest(request)
 }
+
+/** A request that adds the User for the current call */
+case class RequestWithUser[A](user: Option[User], request: Request[A]) extends WrappedRequest(request)
