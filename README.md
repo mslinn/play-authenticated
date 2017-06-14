@@ -25,3 +25,46 @@ Set environment variables that establish email server settings, then run the pro
     $ export EMAIL_LOGO_URL="http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
     $ export EMAIL_SIGNATURE="<p>Thank you,<br/></p>\n<p>The ScalaCourses mailbot</p>"
     $ sbt run
+
+## Using Authentication-Aware Actions
+
+In addition to Play Framework's `Action` handlers, this project adds 
+[UserAwareAction](http://blog.mslinn.com/play-authenticated/latest/api/index.html#auth.Authentication@UserAwareAction(f:auth.RequestWithUser[play.api.mvc.AnyContent]=>play.api.mvc.Result):play.api.mvc.Action[play.api.mvc.AnyContent]) 
+and [SecuredAction](http://blog.mslinn.com/play-authenticated/latest/api/index.html#auth.Authentication@SecuredAction) handlers.
+If you are familiar with SecureSocial, these work exactly the same as similarly named handlers in SecureSocial. 
+Here is an example of a [Controller](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.Controller)
+containing all 3 types of `Action` handlers:
+
+```
+package controllers
+
+import javax.inject.Inject
+import auth.Authentication
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc._
+
+class ApplicationController @Inject() (implicit
+  val messagesApi: MessagesApi,
+  webJarAssets: WebJarAssets,
+  authentication: Authentication
+) extends Controller with I18nSupport {
+  import authentication._
+
+  def index() = Action { implicit request =>
+    Ok(views.html.index())
+  }
+
+  def securedAction = SecuredAction { authenticatedRequest =>
+    val user = authenticatedRequest.user
+    Ok(s"${ user.fullName } is secure.")
+  }
+
+  def userAwareAction = UserAwareAction { requestWithUser =>
+    val maybeUser = requestWithUser.user
+    Ok(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security.")
+  }
+}
+```
+
+## Scaladoc
+[Here](http://mslinn.github.io/play-authenticated/latest/api/index.html)
