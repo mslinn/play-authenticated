@@ -18,16 +18,16 @@ class ApplicationController @Inject() (implicit
   import authentication._
 
   def index() = Action { implicit request =>
-    Ok(views.html.index())
+    Ok(views.html.index("Don't Worry, Be Happy"))
   }
 
-  def securedAction = SecuredAction { authenticatedRequest =>
+  def securedAction = SecuredAction { implicit authenticatedRequest =>
     val user: User = authenticatedRequest.user
-    Ok(s"${ user.fullName } is secure.")
+    Ok(views.html.index(s"${ user.fullName } is secure."))
   }
 
-  def userAwareAction = UserAwareAction { requestWithUser =>
+  def userAwareAction = UserAwareAction { implicit requestWithUser =>
     val maybeUser: Option[User] = requestWithUser.user
-    Ok(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security.")
+    Ok(views.html.index(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security."))
   }
 }
