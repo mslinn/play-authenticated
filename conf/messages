@@ -1,5 +1,7 @@
 error.required = This field is required
 
+account.activated = Thank you for completing the registration process. Please sign in to use your new account.
+
 forgot.password.title = Forgot Password
 reset.password.title = Reset Password
 change.password.title = Change Password

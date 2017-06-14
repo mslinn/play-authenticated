@@ -2,18 +2,22 @@ package controllers.authentication
 
 import java.net.URL
 import javax.inject.Inject
+import akka.actor.ActorRef
 import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
+import com.google.inject.name.Named
 import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import model.dao.{AuthTokens, Users}
 import model.{AuthToken, EMail, Id, User, UserId}
+import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
+import service.AuthTokenScheduler
 import views.html.htmlForm.CSRFHelper
 import views.html.{changePassword, forgotPassword, resetPassword}
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,9 +43,9 @@ object AuthenticationController {
     )(body = completeBody)
   }
 
-  def sendActivateAccountEmail(toUser: User, url: URL)
+  def sendActivateAccountEmail(toUser: User, url: URL, expires: DateTime)
                               (implicit messages: Messages, smtp: Smtp): Unit =
-    sendEmail(toUser=toUser, subject=messages("email.activate.account.subject", url.getHost, AuthToken.expires)) {
+    sendEmail(toUser=toUser, subject=messages("email.activate.account.subject", url.getHost, expires)) {
       val message = messages("email.activate.account.html.text", url)
       s"<p>$message</p>\n"
     }
@@ -58,15 +62,16 @@ object AuthenticationController {
        s"<p>${ messages("email.reset.password.html.text", url) }</p>\n"
      }
 
-  def sendSignUpEMail(toUser: User, url: URL)
+  def sendSignUpEMail(toUser: User, url: URL, expires: DateTime)
                      (implicit messages: Messages, smtp: Smtp): Unit =
      sendEmail(toUser=toUser, subject=messages("email.sign.up.subject")) {
-       s"<p>${ messages("email.sign.up.html.text", url, AuthToken.expires) }</p>\n"
+       s"<p>${ messages("email.sign.up.html.text", url, expires) }</p>\n"
      }
 }
 
 class AuthenticationController @Inject()(
   authentication: Authentication,
+  authTokenScheduler: AuthTokenScheduler,
   unauthorizedHandler: UnauthorizedHandler
 )(implicit
   csrfHelper: CSRFHelper,
@@ -179,7 +184,8 @@ class AuthenticationController @Inject()(
               val formWithError = AuthForms.loginForm.withError("error",
                 s"""You have not yet activated this account.
                    |Please find the email sent to ${ user.email } from ${ smtp.smtpFrom },
-                   |and click on the link in the email so this account will be activated.""".stripMargin)
+                   |and click on the link in the email so this account will be activated.
+                   |""".stripMargin)
               Unauthorized(views.html.login(formWithError))
           }.getOrElse {
             unauthorizedHandler.onUnauthorized(request)
@@ -210,10 +216,10 @@ class AuthenticationController @Inject()(
       users.findByUserId(userId) match {
         case Some(user) =>
           user.id.map { id =>
-            val (key, value, maybeAuthToken) = AuthTokens.create(uid=id)
+            val (key, value, maybeAuthToken) = AuthTokens.create(uid=id, authTokenScheduler.expires)
             maybeAuthToken.map { authToken =>
               val urlStr = AuthRoutes.activateUser(authToken.id).absoluteURL()
-              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr))
+              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authTokenScheduler.expires)
               successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
             } getOrElse {
               successResult(user.email, key, value)
@@ -241,7 +247,7 @@ class AuthenticationController @Inject()(
         forgotPasswordData => {
           users.findByUserId(forgotPasswordData.userId) match {
             case Some(user) =>
-              val (key, value, maybeAuthToken) = AuthTokens.create(user.id.get)
+              val (key, value, maybeAuthToken) = AuthTokens.create(user.id.get, authTokenScheduler.expires)
               maybeAuthToken.map { authToken =>
                 AuthTokens.delete(authToken)
                 val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL

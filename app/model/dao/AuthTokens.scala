@@ -6,16 +6,16 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 object AuthTokens extends QuillImplicits {
-  import QuillImplicits.ctx._
+  import model.dao.QuillImplicits.ctx._
 
   /** Creates a new auth token and saves it in the backing store.
-     * @param uid The user ID for which the token should be created.
-     * @return The saved auth token. */
-  def create(uid: Id): (String, String, Option[AuthToken]) = {
+    * @param uid The user ID for which the token should be created.
+    * @return The saved auth token. */
+  def create(uid: Id, expiry: DateTime): (String, String, Option[AuthToken]) = {
     if (findByUid(uid).isDefined) {
       ("error", s"An AuthToken has already been assigned to you; TODO need to improve this error message.", None)
     } else {
-      run { quote { query[AuthToken].insert(lift(AuthToken(uid=uid))) } }
+      run { quote { query[AuthToken].insert(lift(AuthToken(uid=uid, expiry=expiry))) } }
       // Quill forces autoincrement if .returning is invoked
       val authToken: Option[AuthToken] = AuthTokens.findByUid(uid)
       println(s"authToken=$authToken")
