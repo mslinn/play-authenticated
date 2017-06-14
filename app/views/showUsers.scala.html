@@ -10,6 +10,7 @@
         <th>ID</th>
         <th>User ID</th>
         <th>Name</th>
+        <th>Activated</th>
         <th>EMail</th>
       </tr>
       @users.findAll.map { user =>
@@ -17,6 +18,7 @@
           <td>@user.id</td>
           <td><code>@user.userId</code></td>
           <td>@user.fullName</td>
+          <td align="center"><i class="glyphicon glyphicon-@{ if (user.activated) "ok" else "remove"}"></i></td>
           <td><code><a href="mailto:@user.email">@user.email</a></code></td>
         </tr>
       }
@@ -56,6 +58,10 @@
     <tr>
       <th>Name</th>
       <td>@user.fullName</td>
+    </tr>
+    <tr>
+      <th>Activated</th>
+      <td><i class="glyphicon glyphicon-@{ if (user.activated) "ok" else "remove"}"></i></td>
     </tr>
     <tr>
       <th>EMail</th>

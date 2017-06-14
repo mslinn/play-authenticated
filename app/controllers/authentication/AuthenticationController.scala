@@ -104,7 +104,7 @@ class AuthenticationController @Inject()(
 
   /** Not really part of the library, should be shuffled off somewhere */
   def showAccountDetails = SecuredAction { implicit request =>
-    Ok(views.html.showAccountDetails(request.user))
+    Ok(views.html.showUsers(request.user))
   }
 
   /** Displays the `Change EncryptedPassword` page. */

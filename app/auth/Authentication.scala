@@ -34,7 +34,7 @@ object Authentication {
   }
 
   def parseUserFromRequest(implicit users: Users, request: RequestHeader): Option[User] =
-    parseUserFromQueryString orElse parseUserFromCookie
+    (parseUserFromQueryString orElse parseUserFromCookie).filter(_.activated)
 }
 
 class Authentication @Inject() (
@@ -49,7 +49,7 @@ class Authentication @Inject() (
     onUnauthorized = unauthorizedHandler.onUnauthorized
   )
 
-  /** An action that adds the current user in the request if its available */
+  /** An action that adds the current activated user in the request if available */
   def UserAwareAction[A](p: BodyParser[A])(f: RequestWithUser[A] => Result): Action[A] = Action(p) { implicit request =>
     val maybeUser: Option[User] = Authentication.parseUserFromRequest(users, request)
     f(RequestWithUser(maybeUser, request))

@@ -1,14 +1,12 @@
 package model.dao
 
-import io.getquill.H2JdbcContext
 import model.{AuthToken, Id}
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
-object AuthTokens extends Implicits {
-  lazy val ctx: H2JdbcContext[TableNameSnakeCase] = new H2JdbcContext[TableNameSnakeCase]("quill")
-  import model.dao.AuthTokens.ctx._
+object AuthTokens extends QuillImplicits {
+  import QuillImplicits.ctx._
 
   /** Creates a new auth token and saves it in the backing store.
      * @param uid The user ID for which the token should be created.
