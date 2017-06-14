@@ -1,5 +1,5 @@
-import play.api.{ApplicationLoader, LoggerConfigurator}
 import play.api.inject.guice.{GuiceApplicationBuilder, GuiceApplicationLoader}
+import play.api.{ApplicationLoader, LoggerConfigurator}
 
 /** Bog standard Play Framework application loader that also creates the in-memory database. */
 class AppLoader extends GuiceApplicationLoader {

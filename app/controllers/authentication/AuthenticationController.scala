@@ -1,21 +1,21 @@
 package controllers.authentication
 
+import java.net.URL
+import javax.inject.Inject
 import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
 import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
-import java.net.URL
-import javax.inject.Inject
 import model.dao.{AuthTokens, Users}
 import model.{AuthToken, EMail, Id, User, UserId}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
-import play.api.mvc.{Action, Controller, RequestHeader, Result, WrappedRequest}
+import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
-import views.html.{changePassword, forgotPassword, login, resetPassword}
 import views.html.htmlForm.CSRFHelper
+import views.html.{changePassword, forgotPassword, resetPassword}
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticationController {

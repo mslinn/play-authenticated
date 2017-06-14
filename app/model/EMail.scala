@@ -3,8 +3,8 @@ package model
 import java.net.URLEncoder
 
 object EMail {
-  import com.micronautics.{EMailConfig, Smtp}
   import java.util.regex.Pattern
+  import com.micronautics.{EMailConfig, Smtp}
   import play.api.libs.json._
 
   val emailRegex: Pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)

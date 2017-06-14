@@ -1,8 +1,8 @@
-@import auth.SignUpData
 @import auth.AuthForms.changePasswordForm
+@import auth.SignUpData
 @import controllers.WebJarAssets
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
-@import helper._
+@import views.html.helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Sign Up") {

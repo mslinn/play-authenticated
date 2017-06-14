@@ -1,6 +1,6 @@
 @import auth.LoginData
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
-@import helper._
+@import views.html.helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
 @main("Log In") {

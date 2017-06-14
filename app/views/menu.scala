@@ -1,7 +1,7 @@
 package views.html
 
-import controllers.routes.{ApplicationController => AppRoutes}
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
+import controllers.routes.{ApplicationController => AppRoutes}
 import play.api.mvc.{Call, RequestHeader}
 import play.twirl.api.Html
 

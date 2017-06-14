@@ -1,8 +1,6 @@
 package model
 
 import com.micronautics.HasValue
-import io.getquill.H2JdbcContext
-import model.dao.TableNameSnakeCase
 import play.api.libs.json._
 
 /** To use, either import `IdImplicits._` or mix in IdImplicitLike */

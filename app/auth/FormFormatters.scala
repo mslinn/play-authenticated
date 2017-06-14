@@ -1,6 +1,6 @@
 package auth
 
-import model.{ClearTextPassword, EMail, EncryptedPassword, Id, UserId}
+import model.{ClearTextPassword, EMail, Id, UserId}
 import play.api.data.Forms.of
 import play.api.data.format.Formats.doubleFormat
 import play.api.data.format.Formatter

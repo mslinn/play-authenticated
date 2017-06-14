@@ -1,8 +1,6 @@
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
-@import model.User
-@import model.dao.Users
-@import model.dao.AuthTokens
-@import model.AuthToken
+@import model.{AuthToken, User}
+@import model.dao.{AuthTokens, Users}
 @(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets, users: Users)
 @main("User Information") {
   <div class="right">

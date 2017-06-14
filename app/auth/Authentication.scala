@@ -1,14 +1,13 @@
 package auth
 
-import controllers.WebJarAssets
 import javax.inject.Inject
-import model.{ClearTextPassword, User, UserId}
+import controllers.WebJarAssets
 import model.dao.Users
+import model.{ClearTextPassword, User, UserId}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, BodyParser, BodyParsers, Request, RequestHeader, Result, WrappedRequest}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.Security.AuthenticatedBuilder
-import scala.concurrent.Future
+import play.api.mvc.{Action, AnyContent, BodyParser, BodyParsers, Request, RequestHeader, Result, WrappedRequest}
 
 trait UnauthorizedHandler {
   /** Default value is the standard Play unauthorized page */
