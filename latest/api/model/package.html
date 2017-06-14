@@ -1,0 +1,393 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>model - model</title>
+          <meta name="description" content="model - model" />
+          <meta name="keywords" content="model model" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../lib/template.js"></script>
+      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'model.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../lib/package_big.png" />
+        
+        <h1>model</h1><span class="permalink">
+      <a href="../index.html#model.package" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">model</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="model.AuthToken" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="AuthTokenextendsProductwithSerializable"></a>
+      <a id="AuthToken:AuthToken"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="AuthToken.html"><span class="name">AuthToken</span></a><span class="params">(<span name="uid">uid: <a href="Id.html" class="extype" name="model.Id">Id</a></span>, <span name="expiry">expiry: <span class="extype" name="org.joda.time.DateTime">DateTime</span> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.expires</a></span></span></span>, <span name="id">id: <a href="Id.html" class="extype" name="model.Id">Id</a> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.nextId</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@AuthTokenextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A token to authenticate a user for a short time.</p><div class="fullcomment"><div class="comment cmt"><p>A token to authenticate a user for a short time.</p></div><dl class="paramcmts block"><dt class="param">uid</dt><dd class="cmt"><p>The unique ID of the user the token is associated with.</p></dd><dt class="param">expiry</dt><dd class="cmt"><p>The DateTime the token expires.</p></dd><dt class="param">id</dt><dd class="cmt"><p>Unique token ID.</p></dd></dl></div>
+    </li><li name="model.ClearTextPassword" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ClearTextPasswordextendsAnyValwithProductwithSerializable"></a>
+      <a id="ClearTextPassword:ClearTextPassword"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ClearTextPassword.html"><span class="name">ClearTextPassword</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.AnyVal">AnyVal</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@ClearTextPasswordextendsAnyValwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.EMail" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="EMailextendsAnyValwithProductwithSerializable"></a>
+      <a id="EMail:EMail"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="EMail.html"><span class="name">EMail</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.AnyVal">AnyVal</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@EMailextendsAnyValwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.EMailFullName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="EMailFullNameextendsProductwithSerializable"></a>
+      <a id="EMailFullName:EMailFullName"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="EMailFullName.html"><span class="name">EMailFullName</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="email">email: <a href="EMail.html" class="extype" name="model.EMail">EMail</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@EMailFullNameextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>only the user name if the email is invalid or missing</p></dd></dl></div>
+    </li><li name="model.EncryptedPassword" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="EncryptedPasswordextendsAnyValwithProductwithSerializable"></a>
+      <a id="EncryptedPassword:EncryptedPassword"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="EncryptedPassword.html"><span class="name">EncryptedPassword</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.AnyVal">AnyVal</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@EncryptedPasswordextendsAnyValwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.HasId" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="HasIdextendsIdImplicitLike"></a>
+      <a id="HasId:HasId"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="HasId.html"><span class="name">HasId</span></a><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@HasIdextendsIdImplicitLike" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.Id" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IdextendsHasValue[Long]withProductwithSerializable"></a>
+      <a id="Id:Id"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Id.html"><span class="name">Id</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <span class="extype" name="com.micronautics.HasValue">HasValue</span>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@IdextendsHasValue[Long]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.IdImplicitLike" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="IdImplicitLikeextendsAnyRef"></a>
+      <a id="IdImplicitLike:IdImplicitLike"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="IdImplicitLike.html"><span class="name">IdImplicitLike</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@IdImplicitLikeextendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">To use, either import <code>IdImplicits._</code> or mix in IdImplicitLike</p>
+    </li><li name="model.User" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="UserextendsHasIdwithProductwithSerializable"></a>
+      <a id="User:User"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="User.html"><span class="name">User</span></a><span class="params">(<span name="userId">userId: <a href="UserId.html" class="extype" name="model.UserId">UserId</a></span>, <span name="email">email: <a href="EMail.html" class="extype" name="model.EMail">EMail</a></span>, <span name="firstName">firstName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="lastName">lastName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="password">password: <a href="EncryptedPassword.html" class="extype" name="model.EncryptedPassword">EncryptedPassword</a></span>, <span name="activated">activated: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="id">id: <span class="extype" name="scala.Option">Option</span>[<a href="Id.html" class="extype" name="model.Id">Id</a>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <a href="HasId.html" class="extype" name="model.HasId">HasId</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@UserextendsHasIdwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">activated</dt><dd class="cmt"><p>set when the user clicks on a link in an activation email</p></dd></dl></div>
+    </li><li name="model.UserId" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="UserIdextendsAnyValwithProductwithSerializable"></a>
+      <a id="UserId:UserId"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="UserId.html"><span class="name">UserId</span></a><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.AnyVal">AnyVal</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@UserIdextendsAnyValwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="model.AuthToken" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="AuthToken"></a>
+      <a id="AuthToken:AuthToken"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="AuthToken$.html"><span class="name">AuthToken</span></a><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@AuthToken" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.EMail" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="EMail"></a>
+      <a id="EMail:EMail"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="EMail$.html"><span class="name">EMail</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@EMail" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.Id" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Id"></a>
+      <a id="Id:Id"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Id$.html"><span class="name">Id</span></a><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@Id" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.IdImplicits" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IdImplicits"></a>
+      <a id="IdImplicits:IdImplicits"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="IdImplicits$.html"><span class="name">IdImplicits</span></a><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@IdImplicits" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.PlayIdBinders" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PlayIdBinders"></a>
+      <a id="PlayIdBinders:PlayIdBinders"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="PlayIdBinders$.html"><span class="name">PlayIdBinders</span></a><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@PlayIdBinders" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.PlayUserIdBinders" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PlayUserIdBinders"></a>
+      <a id="PlayUserIdBinders:PlayUserIdBinders"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="PlayUserIdBinders$.html"><span class="name">PlayUserIdBinders</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@PlayUserIdBinders" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="model.dao" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="dao"></a>
+      <a id="dao:dao"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="dao/package.html"><span class="name">dao</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.package@dao" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
