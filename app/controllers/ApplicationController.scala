@@ -7,7 +7,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 
 object ApplicationController {
-  val title = "Play Authentication Experiment"
+  val title = "Play User Id / Password Authentication"
 }
 
 class ApplicationController @Inject() (implicit

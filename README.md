@@ -1,6 +1,9 @@
 # play-authenticated
 
-An experiment with using Play 2.5's [AuthenticatedBuilder](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.Security$$AuthenticatedBuilder) and
+[![Build Status](https://travis-ci.org/mslinn/play-authenticated.svg?branch=master)](https://travis-ci.org/mslinn/play-authenticated)
+[![GitHub version](https://badge.fury.io/gh/mslinn%2Fplay-authenticated.svg)](https://badge.fury.io/gh/mslinn%2Fplay-authenticated)
+
+This project uses Play 2.5's [AuthenticatedBuilder](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.Security$$AuthenticatedBuilder) and
 [Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition#Composing-actions)
 to create user ID / password authentication.
 
@@ -13,6 +16,9 @@ Uses [Quill](http://getquill.io/) and an in-memory [H2](http://www.h2database.co
 
 Uses [WebJars](http://webjars.org/) with [Twitter Bootstrap](http://getbootstrap.com/) 
 and [HtmlForm](https://github.com/mslinn/html-form-scala)'s HTML5 widgets for Bootstrap.
+
+It would be a lot of work to turn this into a library. 
+Instead, I will incorporate this code into a larger project as a subproject, and modify as required.
 
 ## Using Authentication-Aware Actions
 
