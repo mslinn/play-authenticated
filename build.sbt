@@ -2,7 +2,7 @@ import play.sbt.routes.RoutesKeys.routesImport
 
 name := "play-authenticated"
 organization := "com.micronautics"
-version := "0.1.0"
+version := "0.2.0"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -48,8 +48,9 @@ resolvers ++= List(
 
 libraryDependencies ++= Seq(
   evolutions, // todo delete this when application.conf is consolidated
-  jdbc, // todo delete this when evolutions are no longer required
+  jdbc,       // todo delete this when evolutions are no longer required
   "com.h2database"    %  "h2"              % "1.4.192" withSources(),
+  "com.micronautics"  %% "has-id"          % "1.2.0"   withSources(),
   "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),
   "com.micronautics"  %% "html-email"      % "0.1.1"   withSources(),
   "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),

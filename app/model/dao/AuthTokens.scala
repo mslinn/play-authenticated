@@ -1,6 +1,8 @@
 package model.dao
 
-import model.{AuthToken, Id}
+import java.util.UUID
+import model.AuthToken
+import model.persistence.Id
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
@@ -11,7 +13,7 @@ object AuthTokens extends QuillImplicits {
   /** Creates a new auth token and saves it in the backing store.
     * @param uid The user ID for which the token should be created.
     * @return The saved auth token. */
-  def create(uid: Id, expiry: DateTime): (String, String, Option[AuthToken]) = {
+  def create(uid: Id[Option[Long]], expiry: DateTime): (String, String, Option[AuthToken]) = {
     if (findByUid(uid).isDefined) {
       ("error", s"An AuthToken has already been assigned to you; TODO need to improve this error message.", None)
     } else {
@@ -31,10 +33,10 @@ object AuthTokens extends QuillImplicits {
 
   def findAll: Vector[AuthToken] = run { quote { query[AuthToken] } }.toVector
 
-  def findById(id: Id): Option[AuthToken] = run { queryById(id) }.headOption
+  def findById(id: Id[UUID]): Option[AuthToken] = run { queryById(id) }.headOption
 
   /** @return token for user with Id uid */
-  def findByUid(uid: Id): Option[AuthToken] =
+  def findByUid(uid: Id[Option[Long]]): Option[AuthToken] =
     run { query[AuthToken].filter(_.uid == lift(uid)) }.headOption
 
   def findExpired(dateTime: DateTime): Vector[AuthToken] = findAll.filter { _.expiry.isBefore(dateTime) }
@@ -46,12 +48,11 @@ object AuthTokens extends QuillImplicits {
 
   def update(authToken: AuthToken): Long = run { queryById(authToken.id).update(lift(authToken)) }
 
-  protected def queryById(id: Id): Quoted[EntityQuery[AuthToken]] =
+  protected def queryById(id: Id[UUID]): Quoted[EntityQuery[AuthToken]] =
     quote { query[AuthToken].filter(_.id == lift(id)) }
 
   /** Cleans expired tokens. */
-  def deleteExpiredTokens()
-                         (implicit ec: ExecutionContext): Unit = Future {
+  def deleteExpiredTokens()(implicit ec: ExecutionContext): Unit = Future {
     for {
       token <- findExpired(DateTime.now.withZone(DateTimeZone.UTC))
     } delete(token)

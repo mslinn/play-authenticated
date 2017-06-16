@@ -19,7 +19,7 @@ Uses [WebJars](http://webjars.org/) with [Twitter Bootstrap](http://getbootstrap
 and [HtmlForm](https://github.com/mslinn/html-form-scala)'s HTML5 widgets for Bootstrap.
 
 It would be a lot of work to turn this into a library. 
-Instead, I will incorporate this code into a larger project as a subproject, and modify as required.
+Instead, you could incorporate this code into a larger project as a subproject, and modify as required.
 
 ## Using Authentication-Aware Actions
 

@@ -1,6 +1,7 @@
 package model.dao
 
-import model.{EMail, EncryptedPassword, Id, User, UserId}
+import model.persistence.Id
+import model.{EMail, EncryptedPassword, User, UserId}
 import scala.language.postfixOps
 
 class Users extends QuillImplicits {
@@ -8,7 +9,7 @@ class Users extends QuillImplicits {
 
   def findAll: Vector[User] = run { quote { query[User] } }.toVector
 
-  def findById(id: Option[Id]): Option[User] = run { queryById(id) }.headOption
+  def findById(id: Id[Option[Long]]): Option[User] = run { queryById(id) }.headOption
 
   def findByUserId(userId: UserId): Option[User] =
     run { query[User].filter(_.userId == lift(userId)) }.headOption
@@ -20,7 +21,7 @@ class Users extends QuillImplicits {
       run { quote {
         query[User]
           .insert(lift(User(email=email, firstName=firstName, lastName=lastName, userId=userId, password=password)))
-          .returning(_.id.map(_.value))
+          .returning(_.id.value)
       } }
       "success" -> s"Created user $userId"
     }
@@ -33,6 +34,6 @@ class Users extends QuillImplicits {
     ()
   }
 
-  protected def queryById(id: Option[Id]): Quoted[EntityQuery[User]] =
+  protected def queryById(id: Id[Option[Long]]): Quoted[EntityQuery[User]] =
     quote { query[User].filter(_.id == lift(id)) }
 }

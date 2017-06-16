@@ -1,7 +1,7 @@
 # --- !Ups
 
 CREATE TABLE "auth_token" (
-  id BIGSERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY,
   expiry TIMESTAMP DEFAULT now(),
   uid BIGINT NOT NULL
 );

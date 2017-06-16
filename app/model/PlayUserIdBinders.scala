@@ -1,5 +1,6 @@
 package model
 
+import model.persistence.Id
 import play.api.mvc.{PathBindable, QueryStringBindable}
 
 object PlayUserIdBinders {

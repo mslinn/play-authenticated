@@ -1,16 +1,16 @@
 package controllers.authentication
 
 import java.net.URL
+import java.util.UUID
 import javax.inject.Inject
-import akka.actor.ActorRef
 import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
-import com.google.inject.name.Named
 import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import model.dao.{AuthTokens, Users}
-import model.{AuthToken, EMail, Id, User, UserId}
+import model.persistence.Id
+import model.{EMail, User, UserId}
 import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
@@ -85,11 +85,11 @@ class AuthenticationController @Inject()(
 
   /** Activates a User account; triggered when a user clicks on a link in an activation email.
    * @param tokenId The token that identifies a user. */
-  def activateUser(tokenId: Id) = Action.async { implicit request =>
+  def activateUser(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
       val result = for {
         token <- AuthTokens.findById(tokenId)
-        user  <- users.findById(Some(token.uid))
+        user  <- users.findById(token.uid)
       } yield {
         users.update(user.copy(activated=true))
         AuthTokens.delete(token)
@@ -215,8 +215,8 @@ class AuthenticationController @Inject()(
     val result: Future[Result] = Future.successful {
       users.findByUserId(userId) match {
         case Some(user) =>
-          user.id.map { id =>
-            val (key, value, maybeAuthToken) = AuthTokens.create(uid=id, authTokenScheduler.expires)
+          user.id.value.map { id =>
+            val (key, value, maybeAuthToken) = AuthTokens.create(uid=Id(Some(id)), authTokenScheduler.expires)
             maybeAuthToken.map { authToken =>
               val urlStr = AuthRoutes.activateUser(authToken.id).absoluteURL()
               AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authTokenScheduler.expires)
@@ -247,7 +247,7 @@ class AuthenticationController @Inject()(
         forgotPasswordData => {
           users.findByUserId(forgotPasswordData.userId) match {
             case Some(user) =>
-              val (key, value, maybeAuthToken) = AuthTokens.create(user.id.get, authTokenScheduler.expires)
+              val (key, value, maybeAuthToken) = AuthTokens.create(user.id, authTokenScheduler.expires)
               maybeAuthToken.map { authToken =>
                 AuthTokens.delete(authToken)
                 val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
@@ -281,7 +281,7 @@ class AuthenticationController @Inject()(
 
   /** Displays the `Reset Password` page.
    * @param tokenId The token id that identifies a user. */
-  def showResetPasswordView(tokenId: Id) = Action.async { implicit request =>
+  def showResetPasswordView(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId) match {
         case Some(_) =>
@@ -296,7 +296,7 @@ class AuthenticationController @Inject()(
 
   /** Resets the password.
    * @param tokenId The id of the token that identifies a user. */
-  def submitResetPassword(tokenId: Id) = Action.async { implicit request =>
+  def submitResetPassword(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId) match {
         case Some(authToken) =>
@@ -304,7 +304,7 @@ class AuthenticationController @Inject()(
           AuthForms.resetPasswordForm.bindFromRequest.fold(
             formWithErrors => { BadRequest(resetPassword(formWithErrors, tokenId)) },
             changePasswordData => {
-                users.findById(Some(authToken.uid)) match {
+                users.findById(authToken.uid) match {
                 case Some(user) =>
                   users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
                   Redirect(AuthRoutes.showLoginView())

@@ -15,7 +15,7 @@
       </tr>
       @users.findAll.map { user =>
         <tr>
-          <td>@user.id</td>
+          <td><code>@user.id</code></td>
           <td><code>@user.userId</code></td>
           <td>@user.fullName</td>
           <td align="center"><i class="glyphicon glyphicon-@{ if (user.activated) "ok" else "remove"}"></i></td>

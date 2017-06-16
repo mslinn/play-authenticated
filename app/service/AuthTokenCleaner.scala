@@ -19,7 +19,7 @@ class AuthTokenCleaner @Inject() (
   def receive: Receive = {
     case Clean =>
       val staleTokens: Vector[AuthToken] = AuthTokens.findExpired(authTokenScheduler.expired)
-      val staleUsers:  Vector[User]      = staleTokens.flatMap(token => users.findById(Some(token.uid)))
+      val staleUsers:  Vector[User]      = staleTokens.flatMap(token => users.findById(token.uid))
                                                       .filterNot(_.activated)
 
       staleTokens.foreach(AuthTokens.delete)
