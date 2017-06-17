@@ -45,13 +45,13 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">Modules</span><span class="result"> extends <span class="extype" name="com.google.inject.AbstractModule">AbstractModule</span> with <span class="extype" name="net.codingwell.scalaguice.ScalaModule">ScalaModule</span></span>
+        <span class="name">Modules</span><span class="result"> extends <span class="extype" name="com.google.inject.AbstractModule">AbstractModule</span> with <span class="extype" name="net.codingwell.scalaguice.ScalaModule">ScalaModule</span> with <span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport">AkkaGuiceSupport</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/Modules.scala" target="_blank">Modules.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="net.codingwell.scalaguice.ScalaModule">ScalaModule</span>, <span class="extype" name="net.codingwell.scalaguice.InternalModule">InternalModule</span>[<span class="extype" name="com.google.inject.Binder">Binder</span>], <span class="extype" name="com.google.inject.AbstractModule">AbstractModule</span>, <span class="extype" name="com.google.inject.Module">Module</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport">AkkaGuiceSupport</span>, <span class="extype" name="net.codingwell.scalaguice.ScalaModule">ScalaModule</span>, <span class="extype" name="net.codingwell.scalaguice.InternalModule">InternalModule</span>[<span class="extype" name="com.google.inject.Binder">Binder</span>], <span class="extype" name="com.google.inject.AbstractModule">AbstractModule</span>, <span class="extype" name="com.google.inject.Module">Module</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -69,7 +69,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="Modules"><span>Modules</span></li><li class="in" name="net.codingwell.scalaguice.ScalaModule"><span>ScalaModule</span></li><li class="in" name="net.codingwell.scalaguice.InternalModule"><span>InternalModule</span></li><li class="in" name="com.google.inject.AbstractModule"><span>AbstractModule</span></li><li class="in" name="com.google.inject.Module"><span>Module</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="Modules"><span>Modules</span></li><li class="in" name="play.api.libs.concurrent.AkkaGuiceSupport"><span>AkkaGuiceSupport</span></li><li class="in" name="net.codingwell.scalaguice.ScalaModule"><span>ScalaModule</span></li><li class="in" name="net.codingwell.scalaguice.InternalModule"><span>InternalModule</span></li><li class="in" name="com.google.inject.AbstractModule"><span>AbstractModule</span></li><li class="in" name="com.google.inject.Module"><span>Module</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -338,6 +338,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="com$google$inject.html" class="extype" name="com.google.inject">com.google.inject</a>] </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="play.api.libs.concurrent.AkkaGuiceSupport#bindActor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="bindActor[T&lt;:akka.actor.Actor](name:String,props:akka.actor.Props=&gt;akka.actor.Props)(implicitevidence$3:scala.reflect.ClassTag[T]):Unit"></a>
+      <a id="bindActor[T&lt;:Actor](String,(Props)⇒Props)(ClassTag[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bindActor</span><span class="tparams">[<span name="T">T &lt;: <span class="extype" name="akka.actor.Actor">Actor</span></span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="props">props: (<span class="extype" name="akka.actor.Props">Props</span>) ⇒ <span class="extype" name="akka.actor.Props">Props</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport.bindActor.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="index.html#Modules@bindActor[T&lt;:akka.actor.Actor](name:String,props:akka.actor.Props=&gt;akka.actor.Props)(implicitevidence$3:scala.reflect.ClassTag[T]):Unit" title="Permalink" target="_top">
+        <img src="lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AkkaGuiceSupport</dd></dl></div>
+    </li><li name="play.api.libs.concurrent.AkkaGuiceSupport#bindActorFactory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="bindActorFactory[ActorClass&lt;:&lt;?&gt;,FactoryClass&lt;:&lt;?&gt;](implicitevidence$4:&lt;?&gt;,implicitevidence$5:&lt;?&gt;):Unit"></a>
+      <a id="bindActorFactory[ActorClass&lt;:Actor,FactoryClass](ClassTag[ActorClass],ClassTag[FactoryClass]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bindActorFactory</span><span class="tparams">[<span name="ActorClass">ActorClass &lt;: <span class="extype" name="akka.actor.Actor">Actor</span></span>, <span name="FactoryClass">FactoryClass</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport.bindActorFactory.ActorClass">ActorClass</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport.bindActorFactory.FactoryClass">FactoryClass</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="index.html#Modules@bindActorFactory[ActorClass&lt;:akka.actor.Actor,FactoryClass](implicitevidence$4:scala.reflect.ClassTag[ActorClass],implicitevidence$5:scala.reflect.ClassTag[FactoryClass]):Unit" title="Permalink" target="_top">
+        <img src="lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AkkaGuiceSupport</dd></dl></div>
     </li><li name="com.google.inject.AbstractModule#bindConstant" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="bindConstant():com.google.inject.binder.AnnotatedConstantBindingBuilder"></a>
       <a id="bindConstant():AnnotatedConstantBindingBuilder"></a>
@@ -1057,7 +1091,9 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="net.codingwell.scalaguice.ScalaModule">
+        <div class="parent" name="play.api.libs.concurrent.AkkaGuiceSupport">
+              <h3>Inherited from <span class="extype" name="play.api.libs.concurrent.AkkaGuiceSupport">AkkaGuiceSupport</span></h3>
+            </div><div class="parent" name="net.codingwell.scalaguice.ScalaModule">
               <h3>Inherited from <span class="extype" name="net.codingwell.scalaguice.ScalaModule">ScalaModule</span></h3>
             </div><div class="parent" name="net.codingwell.scalaguice.InternalModule">
               <h3>Inherited from <span class="extype" name="net.codingwell.scalaguice.InternalModule">InternalModule</span>[<span class="extype" name="com.google.inject.Binder">Binder</span>]</h3>

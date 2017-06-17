@@ -47,13 +47,13 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">AuthToken</span><span class="result"> extends <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">AuthToken</span><span class="result"> extends <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/model/AuthToken.scala" target="_blank">AuthToken.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -71,7 +71,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="model.AuthToken"><span>AuthToken</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="model.IdImplicitLike"><span>IdImplicitLike</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="model.AuthToken"><span>AuthToken</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="model.persistence.IdImplicitLike"><span>IdImplicitLike</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -92,57 +92,23 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="model.IdImplicitLike.RichIntId" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="RichIntIdextendsAnyRef"></a>
-      <a id="RichIntId:RichIntId"></a>
+              <ol><li name="model.persistence.IdImplicitLike.ToId" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ToId[From]extendsAnyRef"></a>
+      <a id="ToId[From]:ToId[From]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">implicit </span>
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="IdImplicitLike$RichIntId.html"><span class="name">RichIntId</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">ToId</span><span class="tparams">[<span name="From">From</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../index.html#model.IdImplicitLike@RichIntIdextendsAnyRef" title="Permalink" target="_top">
+      <a href="../index.html#model.AuthToken$@ToId[From]extendsAnyRef" title="Permalink" target="_top">
         <img src="../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></dd></dl></div>
-    </li><li name="model.IdImplicitLike.RichLongId" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="RichLongIdextendsAnyRef"></a>
-      <a id="RichLongId:RichLongId"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">class</span>
-      </span>
-      <span class="symbol">
-        <a href="IdImplicitLike$RichLongId.html"><span class="name">RichLongId</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../index.html#model.IdImplicitLike@RichLongIdextendsAnyRef" title="Permalink" target="_top">
-        <img src="../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></dd></dl></div>
-    </li><li name="model.IdImplicitLike.RichStringId" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="RichStringIdextendsAnyRef"></a>
-      <a id="RichStringId:RichStringId"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">class</span>
-      </span>
-      <span class="symbol">
-        <a href="IdImplicitLike$RichStringId.html"><span class="name">RichStringId</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../index.html#model.IdImplicitLike@RichStringIdextendsAnyRef" title="Permalink" target="_top">
-        <img src="../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>IdImplicitLike</dd></dl></div>
     </li></ol>
             </div>
 
@@ -275,23 +241,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="model.AuthToken#expires" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="expires:org.joda.time.DateTime"></a>
-      <a id="expires:DateTime"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">expires</span><span class="result">: <span class="extype" name="org.joda.time.DateTime">DateTime</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../index.html#model.AuthToken$@expires:org.joda.time.DateTime" title="Permalink" target="_top">
-        <img src="../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -400,23 +349,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="model.AuthToken#nextId" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="nextId:model.Id"></a>
-      <a id="nextId:Id"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">nextId</span><span class="result">: <a href="Id.html" class="extype" name="model.Id">Id</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../index.html#model.AuthToken$@nextId:model.Id" title="Permalink" target="_top">
-        <img src="../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -567,8 +499,8 @@
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
-            </div><div class="parent" name="model.IdImplicitLike">
-              <h3>Inherited from <a href="IdImplicitLike.html" class="extype" name="model.IdImplicitLike">IdImplicitLike</a></h3>
+            </div><div class="parent" name="model.persistence.IdImplicitLike">
+              <h3>Inherited from <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">

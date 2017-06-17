@@ -47,11 +47,11 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">AuthToken</span><span class="params">(<span name="uid">uid: <a href="Id.html" class="extype" name="model.Id">Id</a></span>, <span name="expiry">expiry: <span class="extype" name="org.joda.time.DateTime">DateTime</span> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.expires</a></span></span></span>, <span name="id">id: <a href="Id.html" class="extype" name="model.Id">Id</a> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.nextId</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">AuthToken</span><span class="params">(<span name="uid">uid: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</span>, <span name="expiry">expiry: <span class="extype" name="org.joda.time.DateTime">DateTime</span> = <span class="symbol">DateTime.now + 3.hours</span></span>, <span name="id">id: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>] = <span class="symbol"><span class="name"><a href="package.html">Id(UUID.randomUUID)</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A token to authenticate a user for a short time.</p></div><dl class="paramcmts block"><dt class="param">uid</dt><dd class="cmt"><p>The unique ID of the user the token is associated with.</p></dd><dt class="param">expiry</dt><dd class="cmt"><p>The DateTime the token expires.</p></dd><dt class="param">id</dt><dd class="cmt"><p>Unique token ID.</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/model/AuthToken.scala" target="_blank">AuthToken.scala</a></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A token to authenticate a user for a short time.</p></div><dl class="paramcmts block"><dt class="param">uid</dt><dd class="cmt"><p>The unique ID of the user the token is associated with; type Id[Option[Long]\] is easier to work with than Id[Long]</p></dd><dt class="param">expiry</dt><dd class="cmt"><p>The DateTime the token expires.</p></dd><dt class="param">id</dt><dd class="cmt"><p>Unique token ID.</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/model/AuthToken.scala" target="_blank">AuthToken.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -91,7 +91,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="model.AuthToken#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(uid:model.Id,expiry:org.joda.time.DateTime,id:model.Id):model.AuthToken"></a>
+      <a id="&lt;init&gt;(uid:model.persistence.Id[Option[Long]],expiry:org.joda.time.DateTime,id:model.persistence.Id[java.util.UUID]):model.AuthToken"></a>
       <a id="&lt;init&gt;:AuthToken"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,14 +99,14 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">AuthToken</span><span class="params">(<span name="uid">uid: <a href="Id.html" class="extype" name="model.Id">Id</a></span>, <span name="expiry">expiry: <span class="extype" name="org.joda.time.DateTime">DateTime</span> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.expires</a></span></span></span>, <span name="id">id: <a href="Id.html" class="extype" name="model.Id">Id</a> = <span class="symbol"><span class="name"><a href="AuthToken$.html">AuthToken.nextId</a></span></span></span>)</span>
+        <span class="name">AuthToken</span><span class="params">(<span name="uid">uid: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</span>, <span name="expiry">expiry: <span class="extype" name="org.joda.time.DateTime">DateTime</span> = <span class="symbol">DateTime.now + 3.hours</span></span>, <span name="id">id: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>] = <span class="symbol"><span class="name"><a href="package.html">Id(UUID.randomUUID)</a></span></span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../index.html#model.AuthToken@&lt;init&gt;(uid:model.Id,expiry:org.joda.time.DateTime,id:model.Id):model.AuthToken" title="Permalink" target="_top">
+      <a href="../index.html#model.AuthToken@&lt;init&gt;(uid:model.persistence.Id[Option[Long]],expiry:org.joda.time.DateTime,id:model.persistence.Id[java.util.UUID]):model.AuthToken" title="Permalink" target="_top">
         <img src="../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">uid</dt><dd class="cmt"><p>The unique ID of the user the token is associated with.</p></dd><dt class="param">expiry</dt><dd class="cmt"><p>The DateTime the token expires.</p></dd><dt class="param">id</dt><dd class="cmt"><p>Unique token ID.</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">uid</dt><dd class="cmt"><p>The unique ID of the user the token is associated with; type Id[Option[Long]\] is easier to work with than Id[Long]</p></dd><dt class="param">expiry</dt><dd class="cmt"><p>The DateTime the token expires.</p></dd><dt class="param">id</dt><dd class="cmt"><p>Unique token ID.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -282,18 +282,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="model.AuthToken#id" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="id:model.Id"></a>
-      <a id="id:Id"></a>
+      <a id="id:model.persistence.Id[java.util.UUID]"></a>
+      <a id="id:Id[UUID]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">id</span><span class="result">: <a href="Id.html" class="extype" name="model.Id">Id</a></span>
+        <span class="name">id</span><span class="result">: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../index.html#model.AuthToken@id:model.Id" title="Permalink" target="_top">
+      <a href="../index.html#model.AuthToken@id:model.persistence.Id[java.util.UUID]" title="Permalink" target="_top">
         <img src="../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -401,22 +401,22 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="model.AuthToken">AuthToken</a> → AnyRef → Any</dd></dl></div>
     </li><li name="model.AuthToken#uid" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="uid:model.Id"></a>
-      <a id="uid:Id"></a>
+      <a id="uid:model.persistence.Id[Option[Long]]"></a>
+      <a id="uid:Id[Option[Long]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">uid</span><span class="result">: <a href="Id.html" class="extype" name="model.Id">Id</a></span>
+        <span class="name">uid</span><span class="result">: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../index.html#model.AuthToken@uid:model.Id" title="Permalink" target="_top">
+      <a href="../index.html#model.AuthToken@uid:model.persistence.Id[Option[Long]]" title="Permalink" target="_top">
         <img src="../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The unique ID of the user the token is associated with.</p>
+      <p class="shortcomment cmt">The unique ID of the user the token is associated with; type Id[Option[Long]\] is easier to work with than Id[Long]</p>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
