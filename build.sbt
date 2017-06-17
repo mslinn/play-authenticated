@@ -2,6 +2,7 @@ import play.sbt.routes.RoutesKeys.routesImport
 
 name := "play-authenticated"
 organization := "com.micronautics"
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 version := "0.2.0"
 
 lazy val root = (project in file("."))
