@@ -21,6 +21,7 @@ class ApplicationController @Inject() (implicit
     Ok(views.html.index("Don't Worry, Be Happy"))
   }
 
+  /** This action is invoked after a user logs in */
   def securedAction = SecuredAction { implicit authenticatedRequest =>
     val user: User = authenticatedRequest.user
     Ok(views.html.index(s"${ user.fullName } is secure."))
