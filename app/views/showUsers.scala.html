@@ -14,7 +14,7 @@
         </tr>
         @AuthTokens.findAll.map { token =>
           <tr>
-            <td>@token.id</td>
+            <td><code>@token.id</code></td>
             <td><code>@token.uid</code></td>
             <td>@AuthToken.fmt.print(token.expiry)</td>
           </tr>

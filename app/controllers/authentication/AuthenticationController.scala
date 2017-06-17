@@ -7,6 +7,7 @@ import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
 import com.micronautics.Smtp
 import controllers.WebJarAssets
+import controllers.routes.{ApplicationController => AppRoutes}
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import model.dao.{AuthTokens, Users}
 import model.persistence.Id
@@ -93,7 +94,7 @@ class AuthenticationController @Inject()(
       } yield {
         users.update(user.copy(activated=true))
         AuthTokens.delete(token)
-        Redirect(AuthRoutes.showLoginView())
+        Redirect(AppRoutes.securedAction())
           .flashing("success" -> Messages("account.activated"))
       }
       result.getOrElse(
@@ -219,7 +220,7 @@ class AuthenticationController @Inject()(
             val (key, value, maybeAuthToken) = AuthTokens.create(uid=Id(Some(id)), authTokenScheduler.expires)
             maybeAuthToken.map { authToken =>
               val urlStr = AuthRoutes.activateUser(authToken.id).absoluteURL()
-              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authTokenScheduler.expires)
+              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authToken.expiry)
               successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
             } getOrElse {
               successResult(user.email, key, value)
@@ -249,7 +250,6 @@ class AuthenticationController @Inject()(
             case Some(user) =>
               val (key, value, maybeAuthToken) = AuthTokens.create(user.id, authTokenScheduler.expires)
               maybeAuthToken.map { authToken =>
-//                AuthTokens.delete(authToken)
                 val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
                 EMail.send(
                   to = user.email,
@@ -258,7 +258,7 @@ class AuthenticationController @Inject()(
                   s"""<html>
                      |<body>
                      |  <p>${ messagesApi("email.reset.password.hello", user.fullName) }</p>
-                     |  <p>${ Html(messagesApi("email.reset.password.html.text", url)) }</p>
+                     |  <p>${ Html(messagesApi("email.reset.password.html.text", url, AuthToken.fmt.print(authToken.expiry))) }</p>
                      |</body>
                      |</html>
                      |""".stripMargin

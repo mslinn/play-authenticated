@@ -1,5 +1,6 @@
 package service
 
+import java.util.concurrent.TimeUnit
 import akka.actor.{ActorRef, ActorSystem}
 import com.github.nscala_time.time.Imports._
 import com.google.inject.Inject
@@ -32,10 +33,10 @@ class AuthTokenScheduler @Inject()(
   val startDelay: FiniteDuration = Duration.fromNanos(config.getDuration("startDelay").toNanos)
 
   /** AuthTokens and Unauthenticated Users that were created before this DateTime are stale and should be deleted */
-  def expired: DateTime = DateTime.now - staleTokenTimeout.length
+  def expired: DateTime = DateTime.now - staleTokenTimeout.toMillis
 
   /** DateTime for when AuthTokens and Unauthenticated Users that are created now will become stale */
-  def expires: DateTime = DateTime.now + staleTokenTimeout.length
+  def expires: DateTime = DateTime.now + staleTokenTimeout.toMillis
 
   actorSystem.scheduler.schedule(startDelay, staleTokenTimeout, authTokenCleanerRef, AuthTokenCleaner.Clean)
   Logger.info(s"AuthToken and abandoned User cleanup scheduled in ${ startDelay } at " +

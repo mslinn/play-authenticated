@@ -48,8 +48,9 @@ email.already.signed.up.html.text = You already have an account registered. \
 
 email.reset.password.subject = Reset password
 email.reset.password.hello = Hello {0},
-email.reset.password.html.text = Please follow <a href="{0}">this link</a> to reset your password.
-
+email.reset.password.html.text = Please follow <a href="{0}">this link</a> to reset your password.\
+  The link will expire on {1}.
+  
 email.activate.account.subject = Please Activate Your New {0} Account
 email.activate.account.hello = Hello {0},
 email.activate.account.html.text = Please follow <a href="{0}">this link</a> to confirm and activate your new account. \

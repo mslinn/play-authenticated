@@ -14,9 +14,9 @@ object AuthTokens extends QuillImplicits {
     * @param uid The user ID for which the token should be created.
     * @return The saved auth token. */
   def create(uid: Id[Option[Long]], expiry: DateTime): (String, String, Option[AuthToken]) = {
-    if (findByUid(uid).isDefined) {
-      ("error", s"An AuthToken has already been assigned to you; TODO need to improve this error message.", None)
-    } else {
+    findByUid(uid).map { authToken =>
+      ("error", s"An email with reset instructions was already sent to you; it will expire ${ AuthToken.fmt.print(authToken.expiry) }.", None)
+    } getOrElse {
       run { quote { query[AuthToken].insert(lift(AuthToken(uid=uid, expiry=expiry))) } }
       // Quill forces autoincrement if .returning is invoked
       val authToken: Option[AuthToken] = AuthTokens.findByUid(uid)
