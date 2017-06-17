@@ -283,7 +283,7 @@ class AuthenticationController @Inject()(
    * @param tokenId The token id that identifies a user. */
   def showResetPasswordView(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
-      AuthTokens.findById(tokenId) match {
+      AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(_) =>
           Ok(resetPassword(AuthForms.resetPasswordForm, tokenId))
 
@@ -298,7 +298,7 @@ class AuthenticationController @Inject()(
    * @param tokenId The id of the token that identifies a user. */
   def submitResetPassword(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
-      AuthTokens.findById(tokenId) match {
+      AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(authToken) =>
           AuthTokens.delete(authToken)
           AuthForms.resetPasswordForm.bindFromRequest.fold(

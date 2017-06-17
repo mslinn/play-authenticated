@@ -21,5 +21,7 @@ case class AuthToken(
   expiry: DateTime = DateTime.now + 3.hours,
   id: Id[UUID] = Id(UUID.randomUUID)
 ) {
+  val isValid: Boolean = expiry.isAfterNow
+
   override def toString = s"AuthToken: uid=$uid, expiry: ${ AuthToken.fmt.print(expiry) }, id='$id'"
 }
