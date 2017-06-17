@@ -249,7 +249,7 @@ class AuthenticationController @Inject()(
             case Some(user) =>
               val (key, value, maybeAuthToken) = AuthTokens.create(user.id, authTokenScheduler.expires)
               maybeAuthToken.map { authToken =>
-                AuthTokens.delete(authToken)
+//                AuthTokens.delete(authToken)
                 val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
                 EMail.send(
                   to = user.email,
@@ -307,6 +307,7 @@ class AuthenticationController @Inject()(
                 users.findById(authToken.uid) match {
                 case Some(user) =>
                   users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
+                  AuthTokens.delete(authToken)
                   Redirect(AuthRoutes.showLoginView())
                     .flashing("success" -> Messages("password.reset"))
 

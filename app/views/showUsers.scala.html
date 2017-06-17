@@ -3,9 +3,27 @@
 @import model.dao.{AuthTokens, Users}
 @(user: User)(implicit request: RequestHeader, webJarAssets: WebJarAssets, users: Users)
 @main("User Information") {
-  <div class="right">
+  <div class="right" style="margin-right: 3em">
+    <h2>AuthTokens</h2>
+    @if(AuthTokens.findAll.isEmpty) {<p>None</p>} else {
+      <table class="table table-bordered table-responsive table-striped table-hover">
+        <tr>
+          <th>ID</th>
+          <th>UID</th>
+          <th>Expiry</th>
+        </tr>
+        @AuthTokens.findAll.map { token =>
+          <tr>
+            <td>@token.id</td>
+            <td><code>@token.uid</code></td>
+            <td>@AuthToken.fmt.print(token.expiry)</td>
+          </tr>
+        }
+      </table>
+    }
+
     <h2>All Users</h2>
-    <table class="table table-bordered table-responsive table-striped table-hover" style="width: initial">
+    <table class="table table-bordered table-responsive table-striped table-hover">
       <tr>
         <th>ID</th>
         <th>User ID</th>
@@ -25,48 +43,30 @@
     </table>
   </div>
 
-  <div class="right" style="margin-right: 3em">
-    <h2>AuthTokens</h2>
-    @if(AuthTokens.findAll.isEmpty) {<p>None</p>} else {
-      <table class="table table-bordered table-responsive table-striped table-hover" style="width: initial">
-        <tr>
-          <th>ID</th>
-          <th>UID</th>
-          <th>Expiry</th>
-        </tr>
-        @AuthTokens.findAll.map { token =>
-          <tr>
-            <td>@token.id</td>
-            <td><code>@token.uid</code></td>
-            <td>@AuthToken.fmt.print(token.expiry)</td>
-          </tr>
-        }
-      </table>
-    }
+  <div>
+    <h2>This User</h2>
+    <table class="table table-bordered" style="width: initial">
+      <tr>
+        <th>ID</th>
+        <td><code>@user.id</code></td>
+      </tr>
+      <tr>
+        <th>User ID</th>
+        <td><code>@user.userId</code></td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <td>@user.fullName</td>
+      </tr>
+      <tr>
+        <th>Activated</th>
+        <td><i class="glyphicon glyphicon-@{ if (user.activated) "ok" else "remove"}"></i></td>
+      </tr>
+      <tr>
+        <th>EMail</th>
+        <td><code><a href="mailto:@user.email">@user.email</a></code></td>
+      </tr>
+    </table>
+    <p><a href="@AuthRoutes.logout()" class="btn btn-primary">Log out</a></p>
   </div>
-
-  <h2>This User</h2>
-  <table class="table table-bordered" style="width: initial">
-    <tr>
-      <th>ID</th>
-      <td><code>@user.id</code></td>
-    </tr>
-    <tr>
-      <th>User ID</th>
-      <td><code>@user.userId</code></td>
-    </tr>
-    <tr>
-      <th>Name</th>
-      <td>@user.fullName</td>
-    </tr>
-    <tr>
-      <th>Activated</th>
-      <td><i class="glyphicon glyphicon-@{ if (user.activated) "ok" else "remove"}"></i></td>
-    </tr>
-    <tr>
-      <th>EMail</th>
-      <td><code><a href="mailto:@user.email">@user.email</a></code></td>
-    </tr>
-  </table>
-  <p><a href="@AuthRoutes.logout()" class="btn btn-primary">Log out</a></p>
 }
