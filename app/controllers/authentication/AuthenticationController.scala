@@ -10,7 +10,7 @@ import controllers.WebJarAssets
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import model.dao.{AuthTokens, Users}
 import model.persistence.Id
-import model.{EMail, User, UserId}
+import model.{AuthToken, EMail, User, UserId}
 import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
@@ -46,7 +46,7 @@ object AuthenticationController {
   def sendActivateAccountEmail(toUser: User, url: URL, expires: DateTime)
                               (implicit messages: Messages, smtp: Smtp): Unit =
     sendEmail(toUser=toUser, subject=messages("email.activate.account.subject", url.getHost, expires)) {
-      val message = messages("email.activate.account.html.text", url)
+      val message = messages("email.activate.account.html.text", url, AuthToken.fmt.print(expires))
       s"<p>$message</p>\n"
     }
 
