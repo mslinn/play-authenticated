@@ -36,11 +36,15 @@ trait QuillImplicits {
         case None    => row.setNull(index, java.sql.Types.BIGINT)
       })
 
-  /** @see [[https://github.com/getquill/quill/issues/805#issuecomment-309304298]]
-    * @see [[https://github.com/getquill/quill/blob/master/quill-jdbc/src/main/scala/io/getquill/context/jdbc/UUIDObjectEncoding.scala]] */
-  implicit val idUuidDecoder: Decoder[Id[UUID]] = decoder(OTHER, (index, row) => Id(UUID.fromString(row.getObject(index).toString)))
+  /** @see [[https://github.com/getquill/quill/issues/805#issuecomment-309304298]] */
+  import io.getquill.MappedEncoding
 
-  implicit val idUuidEncoder: Encoder[Id[UUID]] = encoder(OTHER, (index, value, row) => row.setObject(index, value.value, OTHER))
+  implicit val encodeIdUUID: MappedEncoding[UUID, Id[UUID]] = MappedEncoding(Id.apply(_))
+  implicit val decodeIdUUID: MappedEncoding[Id[UUID], UUID] = MappedEncoding(_.value)
+
+  implicit val encodeIdOptionUUID: MappedEncoding[UUID, Id[Option[UUID]]] = MappedEncoding(x => Id(Some(x)))
+  implicit val decodeIdOptionUUID: MappedEncoding[Id[Option[UUID]], UUID] =
+    MappedEncoding(_.value.getOrElse(Id.empty[UUID].value))
 }
 
 /** Ensures that table names are quoted and snake_case but never start with a leading _. */

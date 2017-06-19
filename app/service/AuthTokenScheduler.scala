@@ -1,6 +1,5 @@
 package service
 
-import java.util.concurrent.TimeUnit
 import akka.actor.{ActorRef, ActorSystem}
 import com.github.nscala_time.time.Imports._
 import com.google.inject.Inject

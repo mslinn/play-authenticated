@@ -26,7 +26,7 @@ case class User(
   password: EncryptedPassword,
   activated: Boolean = false,
   override val id: Id[Option[Long]] = Id.empty
-) extends HasId[Option[Long]] {
+) extends HasId[User, Option[Long]] {
   lazy val fullName: String = s"$firstName $lastName"
 
   def passwordMatches(clearTextPassword: ClearTextPassword): Boolean = {
