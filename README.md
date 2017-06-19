@@ -1,4 +1,4 @@
-# Play Framework User Id / Password Seed Project
+# Play Framework User Id / Password Authentication Seed Project
 
 [![Build Status](https://travis-ci.org/mslinn/play-authenticated.svg?branch=master)](https://travis-ci.org/mslinn/play-authenticated)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fplay-authenticated.svg)](https://badge.fury.io/gh/mslinn%2Fplay-authenticated)
@@ -75,3 +75,12 @@ Set environment variables that establish email server settings, then run the pro
     $ export EMAIL_LOGO_URL="http://siteassets.scalacourses.com/images/ScalaCoursesHeadingLogo371x56.png"
     $ export EMAIL_SIGNATURE="<p>Thank you,<br/></p>\n<p>The ScalaCourses mailbot</p>"
     $ sbt run
+
+## Sponsor
+This project is sponsored by [Micronautics Research Corporation](http://www.micronauticsresearch.com/),
+the company that delivers online Scala and Play training via [ScalaCourses.com](http://www.ScalaCourses.com).
+You can learn how this project works by taking the [Introduction to Scala](http://www.ScalaCourses.com/showCourse/40),
+[Intermediate Scala](http://www.ScalaCourses.com/showCourse/45) and [Introduction to Play](http://www.ScalaCourses.com/showCourse/39) courses.
+
+## License
+This software is published under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
