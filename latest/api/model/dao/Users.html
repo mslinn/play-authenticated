@@ -223,35 +223,69 @@
     </span>
       
     </li><li name="model.dao.QuillImplicits#dateTimeDecoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="dateTimeDecoder:model.dao.QuillImplicits.ctx.Decoder[org.joda.time.DateTime]"></a>
-      <a id="dateTimeDecoder:io.getquill.H2JdbcContext.Decoder[DateTime]"></a>
+      <a id="dateTimeDecoder:model.dao.QuillImplicits.ctx.Decoder[com.github.nscala_time.time.Imports.DateTime]"></a>
+      <a id="dateTimeDecoder:io.getquill.H2JdbcContext.Decoder[com.github.nscala_time.time.Imports.DateTime]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">implicit </span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">dateTimeDecoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Decoders.Decoder">io.getquill.H2JdbcContext.Decoder</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>]</span>
+        <span class="name">dateTimeDecoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Decoders.Decoder">io.getquill.H2JdbcContext.Decoder</span>[<span class="extype" name="com.github.nscala_time.time.TypeImports.DateTime">com.github.nscala_time.time.Imports.DateTime</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#model.dao.Users@dateTimeDecoder:model.dao.QuillImplicits.ctx.Decoder[org.joda.time.DateTime]" title="Permalink" target="_top">
+      <a href="../../index.html#model.dao.Users@dateTimeDecoder:model.dao.QuillImplicits.ctx.Decoder[com.github.nscala_time.time.Imports.DateTime]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
     </li><li name="model.dao.QuillImplicits#dateTimeEncoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="dateTimeEncoder:model.dao.QuillImplicits.ctx.Encoder[org.joda.time.DateTime]"></a>
-      <a id="dateTimeEncoder:io.getquill.H2JdbcContext.Encoder[DateTime]"></a>
+      <a id="dateTimeEncoder:model.dao.QuillImplicits.ctx.Encoder[com.github.nscala_time.time.Imports.DateTime]"></a>
+      <a id="dateTimeEncoder:io.getquill.H2JdbcContext.Encoder[com.github.nscala_time.time.Imports.DateTime]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">implicit </span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">dateTimeEncoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Encoders.Encoder">io.getquill.H2JdbcContext.Encoder</span>[<span class="extype" name="org.joda.time.DateTime">DateTime</span>]</span>
+        <span class="name">dateTimeEncoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Encoders.Encoder">io.getquill.H2JdbcContext.Encoder</span>[<span class="extype" name="com.github.nscala_time.time.TypeImports.DateTime">com.github.nscala_time.time.Imports.DateTime</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#model.dao.Users@dateTimeEncoder:model.dao.QuillImplicits.ctx.Encoder[org.joda.time.DateTime]" title="Permalink" target="_top">
+      <a href="../../index.html#model.dao.Users@dateTimeEncoder:model.dao.QuillImplicits.ctx.Encoder[com.github.nscala_time.time.Imports.DateTime]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
+    </li><li name="model.dao.QuillImplicits#decodeIdOptionUUID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="decodeIdOptionUUID:io.getquill.MappedEncoding[model.persistence.Id[Option[java.util.UUID]],java.util.UUID]"></a>
+      <a id="decodeIdOptionUUID:MappedEncoding[Id[Option[UUID]],UUID]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">decodeIdOptionUUID</span><span class="result">: <span class="extype" name="io.getquill.MappedEncoding">MappedEncoding</span>[<span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.UUID">UUID</span>]], <span class="extype" name="java.util.UUID">UUID</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#model.dao.Users@decodeIdOptionUUID:io.getquill.MappedEncoding[model.persistence.Id[Option[java.util.UUID]],java.util.UUID]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
+    </li><li name="model.dao.QuillImplicits#decodeIdUUID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="decodeIdUUID:io.getquill.MappedEncoding[model.persistence.Id[java.util.UUID],java.util.UUID]"></a>
+      <a id="decodeIdUUID:MappedEncoding[Id[UUID],UUID]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">decodeIdUUID</span><span class="result">: <span class="extype" name="io.getquill.MappedEncoding">MappedEncoding</span>[<span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>], <span class="extype" name="java.util.UUID">UUID</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#model.dao.Users@decodeIdUUID:io.getquill.MappedEncoding[model.persistence.Id[java.util.UUID],java.util.UUID]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -273,6 +307,40 @@
       </a>
     </span>
       
+    </li><li name="model.dao.QuillImplicits#encodeIdOptionUUID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="encodeIdOptionUUID:io.getquill.MappedEncoding[java.util.UUID,model.persistence.Id[Option[java.util.UUID]]]"></a>
+      <a id="encodeIdOptionUUID:MappedEncoding[UUID,Id[Option[UUID]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">encodeIdOptionUUID</span><span class="result">: <span class="extype" name="io.getquill.MappedEncoding">MappedEncoding</span>[<span class="extype" name="java.util.UUID">UUID</span>, <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.util.UUID">UUID</span>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#model.dao.Users@encodeIdOptionUUID:io.getquill.MappedEncoding[java.util.UUID,model.persistence.Id[Option[java.util.UUID]]]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
+    </li><li name="model.dao.QuillImplicits#encodeIdUUID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="encodeIdUUID:io.getquill.MappedEncoding[java.util.UUID,model.persistence.Id[java.util.UUID]]"></a>
+      <a id="encodeIdUUID:MappedEncoding[UUID,Id[UUID]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">encodeIdUUID</span><span class="result">: <span class="extype" name="io.getquill.MappedEncoding">MappedEncoding</span>[<span class="extype" name="java.util.UUID">UUID</span>, <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#model.dao.Users@encodeIdUUID:io.getquill.MappedEncoding[java.util.UUID,model.persistence.Id[java.util.UUID]]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -479,40 +547,6 @@
       </span>
       </h4><span class="permalink">
       <a href="../../index.html#model.dao.Users@idOptionLongEncoder:model.dao.QuillImplicits.ctx.Encoder[model.persistence.Id[Option[Long]]]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
-    </li><li name="model.dao.QuillImplicits#idUuidDecoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="idUuidDecoder:model.dao.QuillImplicits.ctx.Decoder[model.persistence.Id[java.util.UUID]]"></a>
-      <a id="idUuidDecoder:io.getquill.H2JdbcContext.Decoder[Id[UUID]]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">idUuidDecoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Decoders.Decoder">io.getquill.H2JdbcContext.Decoder</span>[<span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#model.dao.Users@idUuidDecoder:model.dao.QuillImplicits.ctx.Decoder[model.persistence.Id[java.util.UUID]]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="QuillImplicits.html" class="extype" name="model.dao.QuillImplicits">QuillImplicits</a></dd></dl></div>
-    </li><li name="model.dao.QuillImplicits#idUuidEncoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="idUuidEncoder:model.dao.QuillImplicits.ctx.Encoder[model.persistence.Id[java.util.UUID]]"></a>
-      <a id="idUuidEncoder:io.getquill.H2JdbcContext.Encoder[Id[UUID]]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">idUuidEncoder</span><span class="result">: <span class="extype" name="io.getquill.context.jdbc.Encoders.Encoder">io.getquill.H2JdbcContext.Encoder</span>[<span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#model.dao.Users@idUuidEncoder:model.dao.QuillImplicits.ctx.Encoder[model.persistence.Id[java.util.UUID]]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

@@ -45,13 +45,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">User</span><span class="params">(<span name="userId">userId: <a href="UserId.html" class="extype" name="model.UserId">UserId</a></span>, <span name="email">email: <a href="EMail.html" class="extype" name="model.EMail">EMail</a></span>, <span name="firstName">firstName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="lastName">lastName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="password">password: <a href="EncryptedPassword.html" class="extype" name="model.EncryptedPassword">EncryptedPassword</a></span>, <span name="activated">activated: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="id">id: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]] = <span class="symbol"><span class="name"><a href="package.html">Id.empty</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="model.persistence.HasId">HasId</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">User</span><span class="params">(<span name="userId">userId: <a href="UserId.html" class="extype" name="model.UserId">UserId</a></span>, <span name="email">email: <a href="EMail.html" class="extype" name="model.EMail">EMail</a></span>, <span name="firstName">firstName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="lastName">lastName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="password">password: <a href="EncryptedPassword.html" class="extype" name="model.EncryptedPassword">EncryptedPassword</a></span>, <span name="activated">activated: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="id">id: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]] = <span class="symbol"><span class="name"><a href="package.html">Id.empty</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="model.persistence.HasId">HasId</span>[<a href="" class="extype" name="model.User">User</a>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">activated</dt><dd class="cmt"><p>set when the user clicks on a link in an activation email</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/model/Model.scala" target="_blank">Model.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="model.persistence.HasId">HasId</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]], <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="model.persistence.HasId">HasId</span>[<a href="" class="extype" name="model.User">User</a>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]], <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -486,6 +486,23 @@
       </a>
     </span>
       
+    </li><li name="model.persistence.HasId#setId" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setId(newId:&lt;?&gt;):T"></a>
+      <a id="setId(Id[Option[Long]]):User"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setId</span><span class="params">(<span name="newId">newId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="model.User">User</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#model.User@setId(newId:model.persistence.Id[A]):T" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasId</dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -607,7 +624,7 @@
             </div><div class="parent" name="scala.Equals">
               <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
             </div><div class="parent" name="model.persistence.HasId">
-              <h3>Inherited from <span class="extype" name="model.persistence.HasId">HasId</span>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</h3>
+              <h3>Inherited from <span class="extype" name="model.persistence.HasId">HasId</span>[<a href="" class="extype" name="model.User">User</a>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Long">Long</span>]]</h3>
             </div><div class="parent" name="model.persistence.IdImplicitLike">
               <h3>Inherited from <span class="extype" name="model.persistence.IdImplicitLike">IdImplicitLike</span></h3>
             </div><div class="parent" name="scala.AnyRef">
