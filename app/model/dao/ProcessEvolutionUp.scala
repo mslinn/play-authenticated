@@ -14,7 +14,7 @@ object ProcessEvolutionUp {
     line.toLowerCase.replaceAll("\\s+", " ") contains target
 
   def apply(file: File): Unit = {
-    val upString: String = scala.io.Source.fromFile(file).getLines.toList
+    val upString: String = scala.io.Source.fromFile(file).getLines
       .dropWhile(!contains(_, "# --- !Ups".toLowerCase))
       .drop(1)
       .takeWhile(!contains(_, "# --- !Downs".toLowerCase))
