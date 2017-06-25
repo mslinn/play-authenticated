@@ -9,15 +9,16 @@ object ProcessEvolutionUp {
   lazy val ctx = new H2JdbcContext[TableNameSnakeCase]("quill")
   import ctx._
 
+  /** @param target must be lower case */
   protected def contains(line: String, target: String): Boolean =
     line.toLowerCase.replaceAll("\\s+", " ") contains target
 
   def apply(file: File): Unit = {
     val evolutionLines = scala.io.Source.fromFile(file).getLines.toList
     val upString: String = evolutionLines
-      .dropWhile(!contains(_, "# --- !ups"))
+      .dropWhile(!contains(_, "# --- !Ups".toLowerCase))
       .drop(1)
-      .takeWhile(!contains(_, "# --- !downs"))
+      .takeWhile(!contains(_, "# --- !Downs".toLowerCase))
       .mkString("\n")
     executeAction(upString)
     ()
