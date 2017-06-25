@@ -48,8 +48,6 @@ resolvers ++= List(
 )
 
 libraryDependencies ++= Seq(
-  evolutions, // todo delete this when application.conf is consolidated
-  jdbc,       // todo delete this when evolutions are no longer required
   "com.h2database"    %  "h2"              % "1.4.192" withSources(),
   "com.micronautics"  %% "has-id"          % "1.2.3"   withSources(),
   "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),

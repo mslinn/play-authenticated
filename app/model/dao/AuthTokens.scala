@@ -52,9 +52,12 @@ object AuthTokens extends QuillImplicits {
     quote { query[AuthToken].filter(_.id == lift(id)) }
 
   /** Cleans expired tokens. */
-  def deleteExpiredTokens()(implicit ec: ExecutionContext): Unit = Future {
-    for {
-      token <- findExpired(DateTime.now.withZone(DateTimeZone.UTC))
-    } delete(token)
+  def deleteExpiredTokens()(implicit ec: ExecutionContext): Unit = {
+    Future {
+      for {
+        token <- findExpired(DateTime.now.withZone(DateTimeZone.UTC))
+      } delete(token)
+    }
+    ()
   }
 }

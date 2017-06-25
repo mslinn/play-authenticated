@@ -9,7 +9,7 @@ class AppLoader extends GuiceApplicationLoader {
       _.configure(context.environment)
     }
 
-    //models.dao.createDatabase(context.environment.getFile("conf/evolutions/default/1.sql"))
+    model.dao.ProcessEvolutionUp(context.environment.getFile("conf/evolutions/default/1.sql"))
 
     initialBuilder
       .in(context.environment)
