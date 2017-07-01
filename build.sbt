@@ -3,7 +3,7 @@ import play.sbt.routes.RoutesKeys.routesImport
 name := "play-authenticated"
 organization := "com.micronautics"
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-version := "0.2.1"
+version := "0.2.2"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -49,7 +49,7 @@ resolvers ++= List(
 
 libraryDependencies ++= Seq(
   "com.h2database"    %  "h2"              % "1.4.192" withSources(),
-  "com.micronautics"  %% "has-id"          % "1.2.3"   withSources(),
+  "com.micronautics"  %% "has-id"          % "1.2.6"   withSources(),
   "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),
   "com.micronautics"  %% "html-email"      % "0.1.1"   withSources(),
   "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
