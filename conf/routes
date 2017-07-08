@@ -1,18 +1,17 @@
 GET     /                          controllers.ApplicationController.index
-GET     /secure                    controllers.ApplicationController.securedAction
+GET     /account                   controllers.authentication.AuthenticationController.showAccountDetails
 GET     /aware                     controllers.ApplicationController.userAwareAction
+GET     /secure                    controllers.ApplicationController.securedAction
 
 GET     /signUp                    controllers.authentication.AuthenticationController.signUpShow
 POST    /signUp                    controllers.authentication.AuthenticationController.signUpSave
 GET     /signUp/confirm            controllers.authentication.AuthenticationController.signUpAwaitConfirmation
 GET     /signUp/activate/:token    controllers.authentication.AuthenticationController.signUpActivateUser(token: model.persistence.Id[java.util.UUID])
 
-GET     /account                   controllers.authentication.AuthenticationController.showAccountDetails
-
-GET     /logout                    controllers.authentication.AuthenticationController.logout
-
 GET     /login                     controllers.authentication.AuthenticationController.loginShow
 POST    /login                     controllers.authentication.AuthenticationController.loginSubmit
+
+GET     /logout                    controllers.authentication.AuthenticationController.logout
 
 GET     /password/change           controllers.authentication.AuthenticationController.passwordChangeShow
 POST    /password/change           controllers.authentication.AuthenticationController.passwordChangeSubmit

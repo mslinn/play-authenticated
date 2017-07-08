@@ -3,8 +3,8 @@ package controllers.authentication
 import java.net.URL
 import java.util.UUID
 import javax.inject.Inject
-import auth.AuthForms._
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
+import auth.AuthForms._
 import com.micronautics.Smtp
 import controllers.WebJarAssets
 import controllers.routes.{ApplicationController => AppRoutes}
@@ -16,11 +16,11 @@ import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc.{Action, AnyContent, Controller, RequestHeader, Result}
 import play.twirl.api.Html
 import service.AuthTokenScheduler
+import views.html._
 import views.html.htmlForm.CSRFHelper
-import views.html.{changePassword, forgotPassword, resetPassword}
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticationController {
@@ -109,16 +109,15 @@ class AuthenticationController @Inject()(
   implicit lazy val smtp: Smtp = EMail.smtp
 
   /** User login step 1/2 */
-  def loginShow = Action { implicit request =>
-    Ok(views.html.login(loginForm))
+  def loginShow: Action[AnyContent] = Action { implicit request =>
+    Ok(login(loginForm))
   }
 
   /** User login step 2/2 */
-  def loginSubmit = Action { implicit request =>
-    import views.html.{login => loginView}
+  def loginSubmit: Action[AnyContent] = Action { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors =>
-        BadRequest(loginView(formWithErrors)),
+        BadRequest(login(formWithErrors)),
       loginData => {
         users
           .findByUserId(loginData.userId)
@@ -134,7 +133,7 @@ class AuthenticationController @Inject()(
                    |Please find the email sent to ${ user.email } from ${ smtp.smtpFrom },
                    |and click on the link in the email so this account will be activated.
                    |""".stripMargin)
-              Unauthorized(views.html.login(formWithError))
+              Unauthorized(login(formWithError))
           }.getOrElse {
             unauthorizedHandler.onUnauthorized(request)
           }
@@ -142,21 +141,21 @@ class AuthenticationController @Inject()(
     )
   }
 
-  def logout = Action { implicit request =>
+  def logout: Action[AnyContent] = Action { implicit request =>
     Redirect(routes.AuthenticationController.loginShow())
       .withNewSession
       .flashing("warning" -> "You've been logged out. Log in again below:")
   }
 
   /** Password change step 1/2 */
-  def passwordChangeShow = SecuredAction { implicit request =>
-    Ok(changePassword(changePasswordForm, request.user))
+  def passwordChangeShow: Action[AnyContent] = SecuredAction { implicit request =>
+    Ok(passwordChange(changePasswordForm, request.user))
   }
 
   /** Password change step 2/2 */
-  def passwordChangeSubmit = SecuredAction { implicit request =>
+  def passwordChangeSubmit: Action[AnyContent] = SecuredAction { implicit request =>
     changePasswordForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
+      formWithErrors => BadRequest(passwordChange(formWithErrors, request.user)),
       changePasswordData => {
         val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
         users.update(request.user.copy(password = hashedPassword))
@@ -167,17 +166,17 @@ class AuthenticationController @Inject()(
   }
 
   /** Forgot Password step 1/2. */
-  def passwordForgotShow = Action.async { implicit request =>
-    Future.successful(Ok(forgotPassword(AuthForms.forgotPasswordForm)))
+  def passwordForgotShow: Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(passwordForgot(AuthForms.forgotPasswordForm)))
   }
 
   /** Forgot Password step 2/2.
-   * Sends an email with password reset instructions to the given address if it exists in the database.
+    * Sends an email with password reset instructions to the given address if it exists in the database.
     * If any failure, enforce security by not showing the user any existing `userIds`. */
-  def passwordForgotSubmit = Action.async { implicit request =>
+  def passwordForgotSubmit: Action[AnyContent] = Action.async { implicit request =>
     Future {
       AuthForms.forgotPasswordForm.bindFromRequest.fold(
-        formWithErrors => BadRequest(forgotPassword(formWithErrors)),
+        formWithErrors => BadRequest(passwordForgot(formWithErrors)),
         forgotPasswordData => {
           users.findByUserId(forgotPasswordData.userId) match {
             case Some(user) =>
@@ -214,11 +213,11 @@ class AuthenticationController @Inject()(
 
   /** Reset Password step 1/2.
    * @param tokenId The token id that identifies a user. */
-  def passwordResetShow(tokenId: Id[UUID]) = Action.async { implicit request =>
+  def passwordResetShow(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(_) =>
-          Ok(resetPassword(AuthForms.resetPasswordForm, tokenId))
+          Ok(passwordReset(AuthForms.resetPasswordForm, tokenId))
 
         case None =>
           Redirect(AuthRoutes.loginShow())
@@ -229,13 +228,13 @@ class AuthenticationController @Inject()(
 
   /** Reset Password step 2/2.
    * @param tokenId The id of the token that identifies a user. */
-  def passwordResetSubmit(tokenId: Id[UUID]) = Action.async { implicit request =>
+  def passwordResetSubmit(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(authToken) =>
           AuthTokens.delete(authToken)
           AuthForms.resetPasswordForm.bindFromRequest.fold(
-            formWithErrors => { BadRequest(resetPassword(formWithErrors, tokenId)) },
+            formWithErrors => { BadRequest(passwordReset(formWithErrors, tokenId)) },
             changePasswordData => {
                 users.findById(authToken.uid) match {
                 case Some(user) =>
@@ -259,24 +258,24 @@ class AuthenticationController @Inject()(
   }
 
   /** Not really part of any action sequence, should be shuffled off somewhere */
-  def showAccountDetails = SecuredAction { implicit request =>
-    Ok(views.html.showUsers(request.user))
+  def showAccountDetails: Action[AnyContent] = SecuredAction { implicit request =>
+    Ok(showUsers(request.user))
   }
 
   /** New user sign up step 1/4 */
-  def signUpShow = Action { implicit request =>
+  def signUpShow: Action[AnyContent] = Action { implicit request =>
     val form: Form[SignUpData] = request.session
       .get("error")
       .map(error => signUpForm.withError("error", error))
       .getOrElse(signUpForm)
-    Ok(views.html.signup(form))
+    Ok(signUp(form))
   }
 
   /** New user sign up step 2/4 */
-  def signUpSave = Action { implicit request =>
+  def signUpSave: Action[AnyContent] = Action { implicit request =>
     signUpForm.bindFromRequest.fold(
       formWithErrors =>
-        BadRequest(views.html.signup(formWithErrors)),
+        BadRequest(signUp(formWithErrors)),
       userData => {
         users.create(
           email     = userData.email,
@@ -298,14 +297,14 @@ class AuthenticationController @Inject()(
   }
 
   /** New user sign up step 3/4 */
-  def signUpAwaitConfirmation = Action { implicit request =>
-    Ok(views.html.awaitingConfirmation())
+  def signUpAwaitConfirmation: Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.signUpAwaitConfirmation())
   }
 
   /** New user sign up step 4/4.
     * Activates a User account; triggered when a user clicks on a link in an activation email.
     * @param tokenId The token that identifies a user. */
-  def signUpActivateUser(tokenId: Id[UUID]) = Action.async { implicit request =>
+  def signUpActivateUser(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
     Future {
       val result = for {
         token <- AuthTokens.findById(tokenId)
@@ -325,8 +324,7 @@ class AuthenticationController @Inject()(
   /** Sends an account activation email to the user with the given userId.
    * @param userId The userId of the user to send the activation mail to.
    * @return The result to display. */
-
-  protected def sendAccountActivationEmail(userId: UserId)(implicit request: RequestHeader) = {
+  protected def sendAccountActivationEmail(userId: UserId)(implicit request: RequestHeader): Result = {
     def successResult(email: EMail, key: String, value: String) =
       Redirect(AuthRoutes.signUpAwaitConfirmation())
         .flashing(key -> value)
@@ -361,7 +359,6 @@ class MyUnauthorizedHandler @Inject() (implicit
   override val onUnauthorized: RequestHeader => Result =
     request => {
       import auth.AuthForms
-      import views.html.login
       implicit val req = request
       Unauthorized(login(AuthForms.loginForm.withError("error", "Invalid login credentials. Please try logging in again.")))
     }
