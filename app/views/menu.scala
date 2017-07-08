@@ -15,15 +15,15 @@ object menu {
   def apply(implicit request: RequestHeader) =
     Html(s"""<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
             |  <ul class="nav navbar-nav">
-            |    ${listItem(AppRoutes.index(),                   "Front page")}
-            |    ${listItem(AppRoutes.userAwareAction(),         "UserAwareAction")}
-            |    ${listItem(AppRoutes.securedAction(),           "SecuredAction")}
-            |    ${listItem(AuthRoutes.showSignUpView(),         "Sign up")}
-            |    ${listItem(AuthRoutes.showLoginView(),          "Log in")}
-            |    ${listItem(AuthRoutes.showAccountDetails(),     "Accounts")}
-            |    ${listItem(AuthRoutes.showChangePasswordView(), "Change Password")}
-            |    ${listItem(AuthRoutes.showForgetPasswordView(), "Forgot Password")}
-            |    ${listItem(AuthRoutes.logout(),                 "Log out")}
+            |    ${listItem(AppRoutes.index(),               "Front page")}
+            |    ${listItem(AppRoutes.userAwareAction(),     "UserAwareAction")}
+            |    ${listItem(AppRoutes.securedAction(),       "SecuredAction")}
+            |    ${listItem(AuthRoutes.signUpShow(),         "Sign up")}
+            |    ${listItem(AuthRoutes.loginShow(),          "Log in")}
+            |    ${listItem(AuthRoutes.showAccountDetails(), "Accounts")}
+            |    ${listItem(AuthRoutes.passwordChangeShow(), "Change Password")}
+            |    ${listItem(AuthRoutes.passwordForgotShow(), "Forgot Password")}
+            |    ${listItem(AuthRoutes.logout(),             "Log out")}
             |  </ul>
             |</nav>""".stripMargin)
 }

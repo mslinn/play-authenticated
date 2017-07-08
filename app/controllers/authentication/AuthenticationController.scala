@@ -70,6 +70,30 @@ object AuthenticationController {
      }
 }
 
+/** Signup steps:
+  *   - `signUpShow`
+  *   - `signUpSave`
+  *   - `signUpAwaitConfirmation`
+  *   - `signUpActivateUser` (user is logged in and redirected to welcome page)
+  *
+  * Login steps:
+  *   - `loginShow`
+  *   - `loginSubmit`
+  *
+  * Logout steps:
+  *   - `logout`
+  *
+  * Change password steps:
+  *   - `passwordChangeShow`
+  *   - `passwordChangeSubmit`
+  *
+  * Reset password steps:
+  *   - `passwordResetShow`
+  *   - `passwordResetSubmit`
+  *
+  * Forgot password steps:
+  *   - `passwordForgotShow`
+  *   - `passwordForgotSubmit` */
 class AuthenticationController @Inject()(
   authentication: Authentication,
   authTokenScheduler: AuthTokenScheduler,
@@ -84,90 +108,13 @@ class AuthenticationController @Inject()(
   import authentication._
   implicit lazy val smtp: Smtp = EMail.smtp
 
-  /** Activates a User account; triggered when a user clicks on a link in an activation email.
-   * @param tokenId The token that identifies a user. */
-  def activateUser(tokenId: Id[UUID]) = Action.async { implicit request =>
-    Future {
-      val result = for {
-        token <- AuthTokens.findById(tokenId)
-        user  <- users.findById(token.uid)
-      } yield {
-        users.update(user.copy(activated=true))
-        AuthTokens.delete(token)
-        Redirect(AppRoutes.securedAction())
-          .flashing("success" -> Messages("account.activated"))
-      }
-      result.getOrElse(
-        Redirect(AuthRoutes.showSignUpView())
-          .flashing("error" -> Messages("invalid.activation.link"))
-      )
-    }
-  }
-
-  def awaitConfirmation = Action { implicit request =>
-    Ok(views.html.awaitingConfirmation())
-  }
-
-  /** Not really part of the library, should be shuffled off somewhere */
-  def showAccountDetails = SecuredAction { implicit request =>
-    Ok(views.html.showUsers(request.user))
-  }
-
-  /** Displays the `Change EncryptedPassword` page. */
-  def showChangePasswordView = SecuredAction { implicit request =>
-    Ok(changePassword(changePasswordForm, request.user))
-  }
-
-  /** Changes the password. */
-  def submitNewPassword = SecuredAction { implicit request =>
-    changePasswordForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
-      changePasswordData => {
-        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
-        users.update(request.user.copy(password = hashedPassword))
-        Redirect(AuthRoutes.showChangePasswordView())
-          .flashing("success" -> Messages("password.changed"))
-      }
-    )
-  }
-
-  def showSignUpView = Action { implicit request =>
-    val form: Form[SignUpData] = request.session
-      .get("error")
-      .map(error => signUpForm.withError("error", error))
-      .getOrElse(signUpForm)
-    Ok(views.html.signup(form))
-  }
-
-  def saveNewUser = Action { implicit request =>
-    signUpForm.bindFromRequest.fold(
-      formWithErrors =>
-        BadRequest(views.html.signup(formWithErrors)),
-      userData => {
-        users.create(
-          email     = userData.email,
-          userId    = userData.userId,
-          password  = userData.clearTextPassword.encrypt,
-          firstName = userData.firstName,
-          lastName  = userData.lastName
-        ) match {
-          case (k, v) if k=="success" =>
-            Redirect(AuthRoutes.sendAccountActivationEmail(userData.userId))
-              .withSession("userId" -> userData.userId.value)
-
-          case (k, v) =>
-            Redirect(AuthRoutes.showSignUpView())
-              .withSession(k -> v)
-        }
-      }
-    )
-  }
-
-  def showLoginView = Action { implicit request =>
+  /** User login step 1/2 */
+  def loginShow = Action { implicit request =>
     Ok(views.html.login(loginForm))
   }
 
-  def performLogin = Action { implicit request =>
+  /** User login step 2/2 */
+  def loginSubmit = Action { implicit request =>
     import views.html.{login => loginView}
     loginForm.bindFromRequest.fold(
       formWithErrors =>
@@ -196,52 +143,38 @@ class AuthenticationController @Inject()(
   }
 
   def logout = Action { implicit request =>
-    Redirect(routes.AuthenticationController.showLoginView())
+    Redirect(routes.AuthenticationController.loginShow())
       .withNewSession
       .flashing("warning" -> "You've been logged out. Log in again below:")
   }
 
-  /** Sends an account activation email to the user with the given userId.
-   * @param userId The userId of the user to send the activation mail to.
-   * @return The result to display. */
-  def sendAccountActivationEmail(userId: UserId) = Action.async { implicit request =>
-    def successResult(email: EMail, key: String, value: String) =
-      Redirect(AuthRoutes.awaitConfirmation())
-        .flashing(key -> value)
-
-    def errorResult(userId: UserId) =
-      Redirect(AuthRoutes.showSignUpView())
-        .flashing("error" -> s"No User found with ID $userId")
-
-    val result: Future[Result] = Future.successful {
-      users.findByUserId(userId) match {
-        case Some(user) =>
-          user.id.value.map { id =>
-            val (key, value, maybeAuthToken) = AuthTokens.create(uid=Id(Some(id)), authTokenScheduler.expires)
-            maybeAuthToken.map { authToken =>
-              val urlStr = AuthRoutes.activateUser(authToken.id).absoluteURL()
-              AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authToken.expiry)
-              successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
-            } getOrElse {
-              successResult(user.email, key, value)
-            }
-          }.getOrElse(errorResult(userId))
-
-        case None =>
-          errorResult(userId)
-      }
-    }
-    result
+  /** Password change step 1/2 */
+  def passwordChangeShow = SecuredAction { implicit request =>
+    Ok(changePassword(changePasswordForm, request.user))
   }
 
-  /** Displays the `Forgot Password` page. */
-  def showForgetPasswordView = Action.async { implicit request =>
+  /** Password change step 2/2 */
+  def passwordChangeSubmit = SecuredAction { implicit request =>
+    changePasswordForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(changePassword(formWithErrors, request.user)),
+      changePasswordData => {
+        val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
+        users.update(request.user.copy(password = hashedPassword))
+        Redirect(AppRoutes.securedAction()) // redirect to any secured page to indicate success
+          .flashing("success" -> Messages("password.changed"))
+      }
+    )
+  }
+
+  /** Forgot Password step 1/2. */
+  def passwordForgotShow = Action.async { implicit request =>
     Future.successful(Ok(forgotPassword(AuthForms.forgotPasswordForm)))
   }
 
-  /** Sends an email with password reset instructions to the given address if it exists in the database.
+  /** Forgot Password step 2/2.
+   * Sends an email with password reset instructions to the given address if it exists in the database.
     * If any failure, enforce security by not showing the user any existing `userIds`. */
-  def submitForgetPassword = Action.async { implicit request =>
+  def passwordForgotSubmit = Action.async { implicit request =>
     Future {
       AuthForms.forgotPasswordForm.bindFromRequest.fold(
         formWithErrors => BadRequest(forgotPassword(formWithErrors)),
@@ -250,7 +183,7 @@ class AuthenticationController @Inject()(
             case Some(user) =>
               val (key, value, maybeAuthToken) = AuthTokens.create(user.id, authTokenScheduler.expires)
               maybeAuthToken.map { authToken =>
-                val url: String = AuthRoutes.showResetPasswordView(authToken.id).absoluteURL
+                val url: String = AuthRoutes.passwordResetShow(authToken.id).absoluteURL
                 EMail.send(
                   to = user.email,
                   subject = Messages("email.reset.password.subject")
@@ -263,15 +196,15 @@ class AuthenticationController @Inject()(
                      |</html>
                      |""".stripMargin
                 }
-                Redirect(AuthRoutes.showLoginView())
+                Redirect(AuthRoutes.loginShow())
                   .flashing("success" -> Messages("reset.email.sent"))
               }.getOrElse {
-                Redirect(AuthRoutes.showLoginView())
+                Redirect(AuthRoutes.loginShow())
                   .flashing(key -> value)
               }
 
             case None =>
-              Redirect(AuthRoutes.showLoginView())
+              Redirect(AuthRoutes.loginShow())
                 .flashing("error" -> "No user is associated with that userId")
           }
         }
@@ -279,24 +212,24 @@ class AuthenticationController @Inject()(
     }
   }
 
-  /** Displays the `Reset Password` page.
+  /** Reset Password step 1/2.
    * @param tokenId The token id that identifies a user. */
-  def showResetPasswordView(tokenId: Id[UUID]) = Action.async { implicit request =>
+  def passwordResetShow(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(_) =>
           Ok(resetPassword(AuthForms.resetPasswordForm, tokenId))
 
         case None =>
-          Redirect(AuthRoutes.showLoginView())
+          Redirect(AuthRoutes.loginShow())
             .flashing("error" -> Messages("invalid.reset.link"))
       }
     }
   }
 
-  /** Resets the password.
+  /** Reset Password step 2/2.
    * @param tokenId The id of the token that identifies a user. */
-  def submitResetPassword(tokenId: Id[UUID]) = Action.async { implicit request =>
+  def passwordResetSubmit(tokenId: Id[UUID]) = Action.async { implicit request =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(authToken) =>
@@ -308,20 +241,115 @@ class AuthenticationController @Inject()(
                 case Some(user) =>
                   users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
                   AuthTokens.delete(authToken)
-                  Redirect(AuthRoutes.showLoginView())
+                  Redirect(AuthRoutes.loginShow())
                     .flashing("success" -> Messages("password.reset"))
 
                 case None =>
-                  Redirect(AuthRoutes.showLoginView())
+                  Redirect(AuthRoutes.loginShow())
                     .flashing("error" -> Messages("invalid.reset.link"))
               }
             }
           )
 
         case None =>
-          Redirect(AuthRoutes.showLoginView())
+          Redirect(AuthRoutes.loginShow())
             .flashing("error" -> Messages("invalid.reset.link"))
       }
+    }
+  }
+
+  /** Not really part of any action sequence, should be shuffled off somewhere */
+  def showAccountDetails = SecuredAction { implicit request =>
+    Ok(views.html.showUsers(request.user))
+  }
+
+  /** New user sign up step 1/4 */
+  def signUpShow = Action { implicit request =>
+    val form: Form[SignUpData] = request.session
+      .get("error")
+      .map(error => signUpForm.withError("error", error))
+      .getOrElse(signUpForm)
+    Ok(views.html.signup(form))
+  }
+
+  /** New user sign up step 2/4 */
+  def signUpSave = Action { implicit request =>
+    signUpForm.bindFromRequest.fold(
+      formWithErrors =>
+        BadRequest(views.html.signup(formWithErrors)),
+      userData => {
+        users.create(
+          email     = userData.email,
+          userId    = userData.userId,
+          password  = userData.clearTextPassword.encrypt,
+          firstName = userData.firstName,
+          lastName  = userData.lastName
+        ) match {
+          case (k, _) if k=="success" =>
+            val result: Result = sendAccountActivationEmail(userData.userId)
+            result.withSession("userId" -> userData.userId.value)
+
+          case (k, v) =>
+            Redirect(AuthRoutes.signUpShow())
+              .withSession(k -> v)
+        }
+      }
+    )
+  }
+
+  /** New user sign up step 3/4 */
+  def signUpAwaitConfirmation = Action { implicit request =>
+    Ok(views.html.awaitingConfirmation())
+  }
+
+  /** New user sign up step 4/4.
+    * Activates a User account; triggered when a user clicks on a link in an activation email.
+    * @param tokenId The token that identifies a user. */
+  def signUpActivateUser(tokenId: Id[UUID]) = Action.async { implicit request =>
+    Future {
+      val result = for {
+        token <- AuthTokens.findById(tokenId)
+        user  <- users.findById(token.uid)
+      } yield {
+        users.update(user.copy(activated=true))
+        AuthTokens.delete(token)
+        Redirect(AppRoutes.securedAction())
+          .flashing("success" -> Messages("account.activated"))
+      }
+      result.getOrElse(
+        Redirect(AuthRoutes.signUpShow())
+          .flashing("error" -> Messages("invalid.activation.link"))
+      )
+    }
+  }
+  /** Sends an account activation email to the user with the given userId.
+   * @param userId The userId of the user to send the activation mail to.
+   * @return The result to display. */
+
+  protected def sendAccountActivationEmail(userId: UserId)(implicit request: RequestHeader) = {
+    def successResult(email: EMail, key: String, value: String) =
+      Redirect(AuthRoutes.signUpAwaitConfirmation())
+        .flashing(key -> value)
+
+    def errorResult(userId: UserId) =
+      Redirect(AuthRoutes.signUpShow())
+        .flashing("error" -> s"No User found with ID $userId")
+
+    users.findByUserId(userId) match {
+      case Some(user) =>
+        user.id.value.map { id =>
+          val (key, value, maybeAuthToken) = AuthTokens.create(uid=Id(Some(id)), authTokenScheduler.expires)
+          maybeAuthToken.map { authToken =>
+            val urlStr = AuthRoutes.signUpActivateUser(authToken.id).absoluteURL()
+            AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authToken.expiry)
+            successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
+          } getOrElse {
+            successResult(user.email, key, value)
+          }
+        }.getOrElse(errorResult(userId))
+
+      case None =>
+        errorResult(userId)
     }
   }
 }

@@ -5,14 +5,14 @@
 @(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
 @main("Log In") {
   @alertsFromForm(loginForm)
-  @form(action = AuthRoutes.performLogin()) {
+  @form(action = AuthRoutes.loginSubmit()) {
     @Html(inputter(loginForm("userId"), maybePlaceholder=Some("User ID")))
     @Html(inputter(loginForm("password"), maybePlaceholder=Some("password"), isPassword=true))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Login" class="btn btn-primary">
-      <a href="@AuthRoutes.showLoginView()" class="btn btn-default">Cancel</a>
+      <a href="@AuthRoutes.loginShow()" class="btn btn-default">Cancel</a>
     </div>
   }
-  <p class="spaceAbove">Did you forget your password? <a href="@AuthRoutes.showForgetPasswordView()">Reset it!</a></p>
-  <p>Not registered yet? <a href="@AuthRoutes.showSignUpView()">Sign up now!</a></p>
+  <p class="spaceAbove">Did you forget your password? <a href="@AuthRoutes.passwordForgotShow()">Reset it!</a></p>
+  <p>Not registered yet? <a href="@AuthRoutes.signUpShow()">Sign up now!</a></p>
 }

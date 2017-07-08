@@ -6,7 +6,7 @@
 @import views.html.htmlForm.bootstrap3.HtmlForm._
 @(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
 @main("Sign Up") {
-  @form(action = AuthRoutes.saveNewUser()) {
+  @form(action = AuthRoutes.signUpSave()) {
     @alertsFromForm(signupForm)
     @Html(inputter(signupForm("firstName"), maybePlaceholder=Some("First name")))
     @Html(inputter(signupForm("lastName"),  maybePlaceholder=Some("Last name")))
@@ -15,8 +15,8 @@
     @passwordStrength(changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
-      <a href="@AuthRoutes.showSignUpView()" class="btn btn-default">Cancel</a>
+      <a href="@AuthRoutes.signUpShow()" class="btn btn-default">Cancel</a>
     </div>
   }
-  <p class="spaceAbove">Already registered? <a href="@AuthRoutes.showLoginView()">Sign in!</a></p>
+  <p class="spaceAbove">Already registered? <a href="@AuthRoutes.loginShow()">Sign in!</a></p>
 }

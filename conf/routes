@@ -2,25 +2,24 @@ GET     /                          controllers.ApplicationController.index
 GET     /secure                    controllers.ApplicationController.securedAction
 GET     /aware                     controllers.ApplicationController.userAwareAction
 
-GET     /signUp                    controllers.authentication.AuthenticationController.showSignUpView
-POST    /signUp                    controllers.authentication.AuthenticationController.saveNewUser
+GET     /signUp                    controllers.authentication.AuthenticationController.signUpShow
+POST    /signUp                    controllers.authentication.AuthenticationController.signUpSave
+GET     /signUp/confirm            controllers.authentication.AuthenticationController.signUpAwaitConfirmation
+GET     /signUp/activate/:token    controllers.authentication.AuthenticationController.signUpActivateUser(token: model.persistence.Id[java.util.UUID])
 
-GET     /account/confirm           controllers.authentication.AuthenticationController.awaitConfirmation
 GET     /account                   controllers.authentication.AuthenticationController.showAccountDetails
 
 GET     /logout                    controllers.authentication.AuthenticationController.logout
 
-GET     /login                     controllers.authentication.AuthenticationController.showLoginView
-POST    /login                     controllers.authentication.AuthenticationController.performLogin
+GET     /login                     controllers.authentication.AuthenticationController.loginShow
+POST    /login                     controllers.authentication.AuthenticationController.loginSubmit
 
-GET     /password/forgot           controllers.authentication.AuthenticationController.showForgetPasswordView
-POST    /password/forgot           controllers.authentication.AuthenticationController.submitForgetPassword
-GET     /password/reset/:token     controllers.authentication.AuthenticationController.showResetPasswordView(token: model.persistence.Id[java.util.UUID])
-POST    /password/reset/:token     controllers.authentication.AuthenticationController.submitResetPassword(token: model.persistence.Id[java.util.UUID])
-GET     /password/change           controllers.authentication.AuthenticationController.showChangePasswordView
-POST    /password/change           controllers.authentication.AuthenticationController.submitNewPassword
-GET     /account/email/:userId     controllers.authentication.AuthenticationController.sendAccountActivationEmail(userId: model.UserId)
-GET     /account/activate/:token   controllers.authentication.AuthenticationController.activateUser(token: model.persistence.Id[java.util.UUID])
+GET     /password/change           controllers.authentication.AuthenticationController.passwordChangeShow
+POST    /password/change           controllers.authentication.AuthenticationController.passwordChangeSubmit
+GET     /password/forgot           controllers.authentication.AuthenticationController.passwordForgotShow
+POST    /password/forgot           controllers.authentication.AuthenticationController.passwordForgotSubmit
+GET     /password/reset/:token     controllers.authentication.AuthenticationController.passwordResetShow(token: model.persistence.Id[java.util.UUID])
+POST    /password/reset/:token     controllers.authentication.AuthenticationController.passwordResetSubmit(token: model.persistence.Id[java.util.UUID])
 
 GET     /assets/*file              controllers.Assets.at(path="/public", file)
 GET     /webjars/*file             controllers.WebJarAssets.at(file)
