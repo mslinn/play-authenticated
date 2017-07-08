@@ -51,7 +51,7 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/controllers/authentication/AuthenticationController.scala" target="_blank">AuthenticationController.scala</a></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Signup steps:</p><ul><li><code>signUpShow</code></li><li><code>signUpSave</code></li><li><code>signUpAwaitConfirmation</code></li><li><code>signUpActivateUser</code> (user is logged in and redirected to welcome page)</li></ul><p>Login steps:</p><ul><li><code>loginShow</code></li><li><code>loginSubmit</code></li></ul><p>Logout steps:</p><ul><li><code>logout</code></li></ul><p>Change password steps:</p><ul><li><code>passwordChangeShow</code></li><li><code>passwordChangeSubmit</code></li></ul><p>Reset password steps:</p><ul><li><code>passwordResetShow</code></li><li><code>passwordResetSubmit</code></li></ul><p>Forgot password steps:</p><ul><li><code>passwordForgotShow</code></li><li><code>passwordForgotSubmit</code></li></ul></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/mslinn/{name.value}/tree/master/app/controllers/authentication/AuthenticationController.scala" target="_blank">AuthenticationController.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="play.api.i18n.I18nSupport">I18nSupport</span>, <span class="extype" name="play.api.i18n.I18NSupportLowPriorityImplicits">I18NSupportLowPriorityImplicits</span>, <span class="extype" name="play.api.mvc.Controller">Controller</span>, <span class="extype" name="play.api.mvc.Rendering">Rendering</span>, <span class="extype" name="play.api.mvc.RequestExtractors">RequestExtractors</span>, <span class="extype" name="play.api.mvc.AcceptExtractors">AcceptExtractors</span>, <span class="extype" name="play.api.http.ContentTypes">ContentTypes</span>, <span class="extype" name="play.api.http.HeaderNames">HeaderNames</span>, <span class="extype" name="play.api.http.Status">play.api.http.Status</span>, <span class="extype" name="play.api.http.HttpProtocol">HttpProtocol</span>, <span class="extype" name="play.api.mvc.BodyParsers">BodyParsers</span>, <span class="extype" name="play.api.mvc.Results">Results</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -3165,23 +3165,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HeaderNames</dd></dl></div>
-    </li><li name="controllers.authentication.AuthenticationController#activateUser" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="activateUser(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="activateUser(Id[UUID]):Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">activateUser</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@activateUser(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Activates a User account; triggered when a user clicks on a link in an activation email.</p><div class="fullcomment"><div class="comment cmt"><p>Activates a User account; triggered when a user clicks on a link in an activation email.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The token that identifies a user.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -3199,23 +3182,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="controllers.authentication.AuthenticationController#awaitConfirmation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="awaitConfirmation:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="awaitConfirmation:Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">awaitConfirmation</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@awaitConfirmation:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -3364,6 +3330,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>I18NSupportLowPriorityImplicits</dd></dl></div>
+    </li><li name="controllers.authentication.AuthenticationController#loginShow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loginShow:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="loginShow:Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loginShow</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@loginShow:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">User login step 1/2</p>
+    </li><li name="controllers.authentication.AuthenticationController#loginSubmit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loginSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="loginSubmit:Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loginSubmit</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@loginSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">User login step 2/2</p>
     </li><li name="controllers.authentication.AuthenticationController#logout" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="logout:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
       <a id="logout:Action[AnyContent]"></a>
@@ -3466,23 +3466,110 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BodyParsers</dd></dl></div>
-    </li><li name="controllers.authentication.AuthenticationController#performLogin" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="performLogin:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="performLogin:Action[AnyContent]"></a>
+    </li><li name="controllers.authentication.AuthenticationController#passwordChangeShow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="passwordChangeShow:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordChangeShow:Action[AnyContent]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">performLogin</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">passwordChangeShow</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@performLogin:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordChangeShow:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Password change step 1/2</p>
+    </li><li name="controllers.authentication.AuthenticationController#passwordChangeSubmit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="passwordChangeSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordChangeSubmit:Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">passwordChangeSubmit</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordChangeSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Password change step 2/2</p>
+    </li><li name="controllers.authentication.AuthenticationController#passwordForgotShow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="passwordForgotShow:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordForgotShow:Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">passwordForgotShow</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordForgotShow:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Forgot Password step 1/2.</p>
+    </li><li name="controllers.authentication.AuthenticationController#passwordForgotSubmit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="passwordForgotSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordForgotSubmit:Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">passwordForgotSubmit</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordForgotSubmit:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Forgot Password step 2/2.</p><div class="fullcomment"><div class="comment cmt"><p>Forgot Password step 2/2.
+Sends an email with password reset instructions to the given address if it exists in the database.
+If any failure, enforce security by not showing the user any existing <code>userIds</code>.</p></div></div>
+    </li><li name="controllers.authentication.AuthenticationController#passwordResetShow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="passwordResetShow(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordResetShow(Id[UUID]):Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">passwordResetShow</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordResetShow(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Reset Password step 1/2.</p><div class="fullcomment"><div class="comment cmt"><p>Reset Password step 1/2.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The token id that identifies a user.</p></dd></dl></div>
+    </li><li name="controllers.authentication.AuthenticationController#passwordResetSubmit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="passwordResetSubmit(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="passwordResetSubmit(Id[UUID]):Action[AnyContent]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">passwordResetSubmit</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@passwordResetSubmit(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Reset Password step 2/2.</p><div class="fullcomment"><div class="comment cmt"><p>Reset Password step 2/2.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The id of the token that identifies a user.</p></dd></dl></div>
     </li><li name="play.api.i18n.I18nSupport#request2Messages" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="request2Messages(implicitrequest:play.api.mvc.RequestHeader):play.api.i18n.Messages"></a>
       <a id="request2Messages(RequestHeader):Messages"></a>
@@ -3551,40 +3638,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Controller</dd></dl></div>
-    </li><li name="controllers.authentication.AuthenticationController#saveNewUser" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="saveNewUser:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="saveNewUser:Action[AnyContent]"></a>
+    </li><li name="controllers.authentication.AuthenticationController#sendAccountActivationEmail" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="sendAccountActivationEmail(userId:model.UserId)(implicitrequest:play.api.mvc.RequestHeader):play.api.mvc.Result"></a>
+      <a id="sendAccountActivationEmail(UserId)(RequestHeader):Result"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveNewUser</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">sendAccountActivationEmail</span><span class="params">(<span name="userId">userId: <a href="../../model/UserId.html" class="extype" name="model.UserId">UserId</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="request">request: <span class="extype" name="play.api.mvc.RequestHeader">RequestHeader</span></span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Result">Result</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@saveNewUser:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@sendAccountActivationEmail(userId:model.UserId)(implicitrequest:play.api.mvc.RequestHeader):play.api.mvc.Result" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
-    </li><li name="controllers.authentication.AuthenticationController#sendAccountActivationEmail" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="sendAccountActivationEmail(userId:model.UserId):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="sendAccountActivationEmail(UserId):Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">sendAccountActivationEmail</span><span class="params">(<span name="userId">userId: <a href="../../model/UserId.html" class="extype" name="model.UserId">UserId</a></span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@sendAccountActivationEmail(userId:model.UserId):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Sends an account activation email to the user with the given userId.</p><div class="fullcomment"><div class="comment cmt"><p>Sends an account activation email to the user with the given userId.</p></div><dl class="paramcmts block"><dt class="param">userId</dt><dd class="cmt"><p>The userId of the user to send the activation mail to.</p></dd><dt>returns</dt><dd class="cmt"><p>The result to display.</p></dd></dl></div>
+      <p class="shortcomment cmt">Sends an account activation email to the user with the given userId.</p><div class="fullcomment"><div class="comment cmt"><p>Sends an account activation email to the user with the given userId.</p></div><dl class="paramcmts block"><dt class="param">userId</dt><dd class="cmt"><p>The userId of the user to send the activation mail to.</p></dd><dt>returns</dt><dd class="cmt"><p>The result to display.</p></dd></dl><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li name="controllers.authentication.AuthenticationController#showAccountDetails" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="showAccountDetails:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
       <a id="showAccountDetails:Action[AnyContent]"></a>
@@ -3601,92 +3671,76 @@
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Not really part of the library, should be shuffled off somewhere</p>
-    </li><li name="controllers.authentication.AuthenticationController#showChangePasswordView" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="showChangePasswordView:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="showChangePasswordView:Action[AnyContent]"></a>
+      <p class="shortcomment cmt">Not really part of any action sequence, should be shuffled off somewhere</p>
+    </li><li name="controllers.authentication.AuthenticationController#signUpActivateUser" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="signUpActivateUser(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="signUpActivateUser(Id[UUID]):Action[AnyContent]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">showChangePasswordView</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">signUpActivateUser</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@showChangePasswordView:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@signUpActivateUser(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Displays the <code>Change EncryptedPassword</code> page.</p>
-    </li><li name="controllers.authentication.AuthenticationController#showForgetPasswordView" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="showForgetPasswordView:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="showForgetPasswordView:Action[AnyContent]"></a>
+      <p class="shortcomment cmt">New user sign up step 4/4.</p><div class="fullcomment"><div class="comment cmt"><p>New user sign up step 4/4.
+Activates a User account; triggered when a user clicks on a link in an activation email.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The token that identifies a user.</p></dd></dl></div>
+    </li><li name="controllers.authentication.AuthenticationController#signUpAwaitConfirmation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="signUpAwaitConfirmation:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="signUpAwaitConfirmation:Action[AnyContent]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">showForgetPasswordView</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">signUpAwaitConfirmation</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@showForgetPasswordView:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@signUpAwaitConfirmation:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Displays the <code>Forgot Password</code> page.</p>
-    </li><li name="controllers.authentication.AuthenticationController#showLoginView" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="showLoginView:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="showLoginView:Action[AnyContent]"></a>
+      <p class="shortcomment cmt">New user sign up step 3/4</p>
+    </li><li name="controllers.authentication.AuthenticationController#signUpSave" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="signUpSave:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="signUpSave:Action[AnyContent]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">showLoginView</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">signUpSave</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@showLoginView:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@signUpSave:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
-    </li><li name="controllers.authentication.AuthenticationController#showResetPasswordView" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="showResetPasswordView(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="showResetPasswordView(Id[UUID]):Action[AnyContent]"></a>
+      <p class="shortcomment cmt">New user sign up step 2/4</p>
+    </li><li name="controllers.authentication.AuthenticationController#signUpShow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="signUpShow:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
+      <a id="signUpShow:Action[AnyContent]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">showResetPasswordView</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
+        <span class="name">signUpShow</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@showResetPasswordView(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
+      <a href="../../index.html#controllers.authentication.AuthenticationController@signUpShow:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
         <img src="../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Displays the <code>Reset Password</code> page.</p><div class="fullcomment"><div class="comment cmt"><p>Displays the <code>Reset Password</code> page.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The token id that identifies a user.</p></dd></dl></div>
-    </li><li name="controllers.authentication.AuthenticationController#showSignUpView" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="showSignUpView:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="showSignUpView:Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">showSignUpView</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@showSignUpView:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
+      <p class="shortcomment cmt">New user sign up step 1/4</p>
     </li><li name="controllers.authentication.AuthenticationController#smtp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="smtp:com.micronautics.Smtp"></a>
       <a id="smtp:Smtp"></a>
@@ -3704,58 +3758,6 @@
       </a>
     </span>
       
-    </li><li name="controllers.authentication.AuthenticationController#submitForgetPassword" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="submitForgetPassword:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="submitForgetPassword:Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">submitForgetPassword</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@submitForgetPassword:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Sends an email with password reset instructions to the given address if it exists in the database.</p><div class="fullcomment"><div class="comment cmt"><p>Sends an email with password reset instructions to the given address if it exists in the database.
-If any failure, enforce security by not showing the user any existing <code>userIds</code>.</p></div></div>
-    </li><li name="controllers.authentication.AuthenticationController#submitNewPassword" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="submitNewPassword:play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="submitNewPassword:Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">submitNewPassword</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@submitNewPassword:play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Changes the password.</p>
-    </li><li name="controllers.authentication.AuthenticationController#submitResetPassword" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="submitResetPassword(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]"></a>
-      <a id="submitResetPassword(Id[UUID]):Action[AnyContent]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">submitResetPassword</span><span class="params">(<span name="tokenId">tokenId: <span class="extype" name="model.persistence.Id">Id</span>[<span class="extype" name="java.util.UUID">UUID</span>]</span>)</span><span class="result">: <span class="extype" name="play.api.mvc.Action">Action</span>[<span class="extype" name="play.api.mvc.AnyContent">AnyContent</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../index.html#controllers.authentication.AuthenticationController@submitResetPassword(tokenId:model.persistence.Id[java.util.UUID]):play.api.mvc.Action[play.api.mvc.AnyContent]" title="Permalink" target="_top">
-        <img src="../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Resets the password.</p><div class="fullcomment"><div class="comment cmt"><p>Resets the password.</p></div><dl class="paramcmts block"><dt class="param">tokenId</dt><dd class="cmt"><p>The id of the token that identifies a user.</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
