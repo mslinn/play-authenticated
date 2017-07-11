@@ -7,7 +7,7 @@ import play.api.mvc.RequestHeader
 import views.html.htmlForm.bootstrap3.HtmlForm._
 
 object passwordStrength {
-  def apply(field: Field, label: String="", maybePlaceholder:Option[String]=None, style: String = "")
+  def apply(field: Field, label: String="", maybePlaceholder: Option[String]=None, style: String = "")
            (implicit request: RequestHeader, messages: Messages) = {
     val widget = inputter(
       field = field,

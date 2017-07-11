@@ -50,7 +50,7 @@ resolvers ++= List(
 libraryDependencies ++= Seq(
   "com.h2database"    %  "h2"              % "1.4.192" withSources(),
   "com.micronautics"  %% "has-id"          % "1.2.8"   withSources(),
-  "com.micronautics"  %% "html-form-scala" % "0.1.9"   withSources(),
+  "com.micronautics"  %% "html-form-scala" % "0.2.0"   withSources(),
   "com.micronautics"  %% "html-email"      % "0.1.1"   withSources(),
   "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
   "de.svenkubiak"     %  "jBCrypt"         % "0.4.1"   withSources(),
