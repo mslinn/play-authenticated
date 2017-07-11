@@ -1,4 +1,4 @@
-package views
+package views.html
 
 import controllers.routes.{Assets => AuthAssets}
 import play.api.data.Field

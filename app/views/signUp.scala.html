@@ -12,7 +12,7 @@
     @Html(inputter(signupForm("lastName"),  maybePlaceholder=Some("Last name")))
     @Html(inputter(signupForm("email"),     maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),    maybePlaceholder=Some("Desired user ID")))
-    @passwordStrength(changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
+    @passwordStrength(field = changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
       <a href="@AuthRoutes.signUpShow()" class="btn btn-default">Cancel</a>
