@@ -1,13 +1,14 @@
 package auth
 
 import javax.inject.Inject
-import controllers.WebJarAssets
+import akka.stream.Materializer
 import model.dao.Users
 import model.{ClearTextPassword, User, UserId}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.Unauthorized
 import play.api.mvc.Security.AuthenticatedBuilder
-import play.api.mvc.{Action, AnyContent, BodyParser, BodyParsers, Request, RequestHeader, Result, WrappedRequest}
+import play.api.mvc.{Action, AnyContent, BodyParser, BodyParsers, PlayBodyParsers, Request, RequestHeader, Result, WrappedRequest}
+import scala.concurrent.ExecutionContext
 
 trait UnauthorizedHandler {
   /** Default value is the standard Play unauthorized page */
@@ -38,14 +39,17 @@ object Authentication {
 }
 
 class Authentication @Inject() (
+  playBodyParsers: PlayBodyParsers,
   unauthorizedHandler: UnauthorizedHandler,
   users: Users
 )(implicit
   val messagesApi: MessagesApi,
-  webJarAssets: WebJarAssets
+  ec: ExecutionContext,
+  mat: Materializer
 ) extends UnauthorizedHandler with I18nSupport {
   object SecuredAction extends AuthenticatedBuilder[User](
     userinfo = req => Authentication.parseUserFromRequest(users, req),
+    defaultParser = new BodyParsers.Default,
     onUnauthorized = unauthorizedHandler.onUnauthorized
   )
 
@@ -57,7 +61,7 @@ class Authentication @Inject() (
 
   /** An action that adds the current user in the request if its available */
   def UserAwareAction(f: RequestWithUser[AnyContent] => Result): Action[AnyContent] =
-    UserAwareAction(BodyParsers.parse.anyContent)(f)
+    UserAwareAction(playBodyParsers.default)(f)
 }
 
 /** A request that adds the User for the current call */

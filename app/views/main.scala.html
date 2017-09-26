@@ -1,12 +1,12 @@
-@(subtitle: String)(content: Html)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(subtitle: String)(content: Html)(implicit request: RequestHeader, webJarsUtil: org.webjars.play.WebJarsUtil)
 <!DOCTYPE html>
 <html>
     <head>
       <title>@subtitle</title>
       <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-      <script src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
-      <script src='@routes.WebJarAssets.at(webJarAssets.locate("bootstrap.min.js"))'></script>
-      <link href='@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))' rel="stylesheet" />
+      @Html(webJarsUtil.script("jquery.min.js"))
+      @Html(webJarsUtil.script("bootstrap.min.js"))
+      @Html(webJarsUtil.css("css/bootstrap.min.css"))
       <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
     </head>
     <body>

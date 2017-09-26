@@ -7,15 +7,13 @@ import com.google.inject.name.Named
 import com.typesafe.config.{Config, ConfigFactory}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import play.api.{Configuration, Logger}
+import play.api.Logger
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.{Duration, FiniteDuration}
-import scala.language.postfixOps
 
 class AuthTokenScheduler @Inject()(
   actorSystem: ActorSystem,
-  @Named("auth-token-cleaner") authTokenCleanerRef: ActorRef,
-  configuration: Configuration
+  @Named("auth-token-cleaner") authTokenCleanerRef: ActorRef
 )(implicit
   executionContext: ExecutionContext
 ) {

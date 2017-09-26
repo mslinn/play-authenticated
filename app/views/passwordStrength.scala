@@ -2,13 +2,10 @@ package views.html
 
 import controllers.routes.{Assets => AuthAssets}
 import play.api.data.Field
-import play.api.i18n.Messages
-import play.api.mvc.RequestHeader
 import views.html.htmlForm.bootstrap3.HtmlForm._
 
 object passwordStrength {
-  def apply(field: Field, label: String="", maybePlaceholder: Option[String]=None, style: String = "")
-           (implicit request: RequestHeader, messages: Messages) = {
+  def apply(field: Field, label: String="", maybePlaceholder: Option[String]=None, style: String = ""): String = {
     val widget = inputter(
       field = field,
       label = label,

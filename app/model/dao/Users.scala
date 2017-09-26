@@ -4,7 +4,7 @@ import model.persistence.Id
 import model.{EMail, EncryptedPassword, User, UserId}
 import scala.language.postfixOps
 
-class Users extends QuillImplicits {
+class Users {
   import QuillImplicits.ctx._
 
   def findAll: Vector[User] = run { quote { query[User] } }.toVector

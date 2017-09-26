@@ -1,5 +1,4 @@
-@import com.micronautics.Smtp
-@()(implicit request: RequestHeader, smtp: Smtp, webJarAssets: WebJarAssets)
+@()(implicit request: RequestHeader, smtp: com.micronautics.Smtp, webJarsUtil: org.webjars.play.WebJarsUtil)
 @main("Please Check Your Email") {
   <div class="right">
     <img src='@routes.Assets.at("images/favicon.png")' />

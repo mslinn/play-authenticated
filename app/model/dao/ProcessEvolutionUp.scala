@@ -2,7 +2,7 @@ package model.dao
 
 import java.io.File
 import io.getquill.H2JdbcContext
-import scala.language.postfixOps
+import model.persistence.TableNameSnakeCase
 
 /** Extract the Up portion of Play Evolution file and execute those SQL statements */
 object ProcessEvolutionUp {
@@ -19,7 +19,13 @@ object ProcessEvolutionUp {
       .drop(1)
       .takeWhile(!contains(_, "# --- !Downs".toLowerCase))
       .mkString("\n")
-    executeAction(upString)
+    try {
+      executeAction(upString)
+    } catch {
+      case e: Exception =>
+        val iKnowThisOne = e.getMessage.contains("Table \"auth_token\" already exists")
+        if (!iKnowThisOne) throw e
+    }
     ()
   }
 }

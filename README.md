@@ -4,8 +4,8 @@
 [![Build Status](https://travis-ci.org/mslinn/play-authenticated.svg?branch=master)](https://travis-ci.org/mslinn/play-authenticated)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fplay-authenticated.svg)](https://badge.fury.io/gh/mslinn%2Fplay-authenticated)
 
-This project uses Play 2.5's [AuthenticatedBuilder](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.Security$$AuthenticatedBuilder) and
-[Action composition](https://www.playframework.com/documentation/2.5.x/ScalaActionsComposition#Composing-actions)
+This project uses Play 2.6's [AuthenticatedBuilder](https://www.playframework.com/documentation/2.6.x/api/scala/index.html#play.api.mvc.Security$$AuthenticatedBuilder) and
+[Action composition](https://www.playframework.com/documentation/2.6.x/ScalaActionsComposition#Composing-actions)
 to create user ID / password authentication.
 
 This project is inspired by Jorge Aliss's [SecureSocial](http://www.securesocial.ws/),
@@ -28,7 +28,7 @@ In addition to Play Framework's `Action` handlers, this project adds
 [UserAwareAction](http://blog.mslinn.com/play-authenticated/latest/api/index.html#auth.Authentication@UserAwareAction(f:auth.RequestWithUser[play.api.mvc.AnyContent]=>play.api.mvc.Result):play.api.mvc.Action[play.api.mvc.AnyContent])
 and [SecuredAction](http://blog.mslinn.com/play-authenticated/latest/api/index.html#auth.Authentication@SecuredAction) handlers.
 If you are familiar with SecureSocial, these work exactly the same as similarly named handlers in SecureSocial.
-Here is an example of a [Controller](https://www.playframework.com/documentation/2.5.x/api/scala/index.html#play.api.mvc.Controller)
+Here is an example of a [Controller](https://www.playframework.com/documentation/2.6.x/api/scala/index.html#play.api.mvc.Controller)
 containing all 3 types of `Action` handlers:
 
 ```

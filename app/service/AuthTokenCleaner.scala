@@ -6,15 +6,11 @@ import model.dao.{AuthTokens, Users}
 import model.{AuthToken, User}
 import play.api.Logger
 import service.AuthTokenCleaner.Clean
-import scala.concurrent.ExecutionContext
-import scala.language.postfixOps
 
 /** Delete stale AuthTokens and Users that never authenticated. */
 class AuthTokenCleaner @Inject() (
   authTokenScheduler: AuthTokenScheduler,
   users: Users
-)( implicit
-  executionContext: ExecutionContext
 ) extends Actor {
   def receive: Receive = {
     case Clean =>

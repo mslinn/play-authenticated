@@ -3,7 +3,8 @@ package controllers
 import javax.inject.Inject
 import auth.Authentication
 import model.User
-import play.api.i18n.{I18nSupport, MessagesApi}
+import org.webjars.play.WebJarAssets
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 
 object ApplicationController {
@@ -11,10 +12,10 @@ object ApplicationController {
 }
 
 class ApplicationController @Inject() (implicit
-  val messagesApi: MessagesApi,
-  webJarAssets: WebJarAssets,
-  authentication: Authentication
-) extends Controller with I18nSupport {
+  authentication: Authentication,
+  mcc: MessagesControllerComponents,
+  webJarsUtil: org.webjars.play.WebJarsUtil
+) extends MessagesAbstractController(mcc) with I18nSupport {
   import authentication._
 
   def index() = Action { implicit request =>
@@ -27,7 +28,7 @@ class ApplicationController @Inject() (implicit
     Ok(views.html.index(s"${ user.fullName } is secure."))
   }
 
-  def userAwareAction = UserAwareAction { implicit requestWithUser =>
+  def userAwareAction: Action[AnyContent] = UserAwareAction { implicit requestWithUser =>
     val maybeUser: Option[User] = requestWithUser.user
     Ok(views.html.index(s"${ maybeUser.map(_.fullName).getOrElse("No-one") } is aware of their lack of security."))
   }

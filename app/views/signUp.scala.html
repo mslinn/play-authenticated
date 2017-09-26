@@ -1,10 +1,9 @@
 @import auth.AuthForms.changePasswordForm
 @import auth.SignUpData
-@import controllers.WebJarAssets
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 @import views.html.helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
-@(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarAssets: WebJarAssets)
+@(signupForm: Form[SignUpData])(implicit messages: Messages, request: RequestHeader, webJarsUtil: org.webjars.play.WebJarsUtil)
 @main("Sign Up") {
   @form(action = AuthRoutes.signUpSave()) {
     @alertsFromForm(signupForm)
@@ -12,7 +11,7 @@
     @Html(inputter(signupForm("lastName"),  maybePlaceholder=Some("Last name")))
     @Html(inputter(signupForm("email"),     maybePlaceholder=Some("email"), isEmail=true))
     @Html(inputter(signupForm("userId"),    maybePlaceholder=Some("Desired user ID")))
-    @passwordStrength(field = changePasswordForm("password"), maybePlaceholder = Some(Messages("password")))
+    @Html(passwordStrength(field = changePasswordForm("password"), maybePlaceholder = Some(Messages("password"))))
     <div class="actions btn-group" role="group">
       <input type="submit" value="Signup" class="btn btn-primary">
       <a href="@AuthRoutes.signUpShow()" class="btn btn-default">Cancel</a>

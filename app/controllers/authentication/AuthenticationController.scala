@@ -6,7 +6,7 @@ import javax.inject.Inject
 import auth.{AuthForms, Authentication, PasswordHasher, SignUpData, UnauthorizedHandler}
 import auth.AuthForms._
 import com.micronautics.Smtp
-import controllers.WebJarAssets
+import org.webjars.play.WebJarAssets
 import controllers.routes.{ApplicationController => AppRoutes}
 import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 import model.dao.{AuthTokens, Users}
@@ -14,9 +14,9 @@ import model.persistence.Id
 import model.{AuthToken, EMail, User, UserId}
 import org.joda.time.DateTime
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, Messages, MessagesApi}
 import play.api.mvc.Results.Unauthorized
-import play.api.mvc.{Action, AnyContent, Controller, RequestHeader, Result}
+import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents, MessagesRequest, RequestHeader, Result}
 import play.twirl.api.Html
 import service.AuthTokenScheduler
 import views.html._
@@ -25,7 +25,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticationController {
   protected def sendEmail(toUser: User, subject: String)(bodyFragment: String)
-                         (implicit messages: Messages, smtp: Smtp): Unit = {
+                         (implicit smtp: Smtp): Unit = {
     val completeBody = s"""<html>
                           |  <body>
                           |    <p>Dear ${ toUser.fullName },</p>
@@ -97,24 +97,24 @@ object AuthenticationController {
 class AuthenticationController @Inject()(
   authentication: Authentication,
   authTokenScheduler: AuthTokenScheduler,
+  mcc: MessagesControllerComponents,
   unauthorizedHandler: UnauthorizedHandler
 )(implicit
   csrfHelper: CSRFHelper,
   ec: ExecutionContext,
-  val messagesApi: MessagesApi,
   users: Users,
-  webJarAssets: WebJarAssets
-) extends Controller with I18nSupport {
+  webJarsUtil: org.webjars.play.WebJarsUtil
+) extends MessagesAbstractController(mcc) with I18nSupport {
   import authentication._
   implicit lazy val smtp: Smtp = EMail.smtp
 
   /** User login step 1/2 */
-  def loginShow: Action[AnyContent] = Action { implicit request =>
+  def loginShow: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(login(loginForm))
   }
 
   /** User login step 2/2 */
-  def loginSubmit: Action[AnyContent] = Action { implicit request =>
+  def loginSubmit: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     loginForm.bindFromRequest.fold(
       formWithErrors =>
         BadRequest(login(formWithErrors)),
@@ -141,7 +141,7 @@ class AuthenticationController @Inject()(
     )
   }
 
-  def logout: Action[AnyContent] = Action { implicit request =>
+  def logout: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Redirect(routes.AuthenticationController.loginShow())
       .withNewSession
       .flashing("warning" -> "You've been logged out. Log in again below:")
@@ -149,13 +149,13 @@ class AuthenticationController @Inject()(
 
   /** Password change step 1/2 */
   def passwordChangeShow: Action[AnyContent] = SecuredAction { implicit request =>
-    Ok(passwordChange(changePasswordForm, request.user))
+    Ok(passwordChange(changePasswordForm))
   }
 
   /** Password change step 2/2 */
   def passwordChangeSubmit: Action[AnyContent] = SecuredAction { implicit request =>
     changePasswordForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(passwordChange(formWithErrors, request.user)),
+      formWithErrors => BadRequest(passwordChange(formWithErrors)),
       changePasswordData => {
         val hashedPassword = PasswordHasher.hash(changePasswordData.newPassword)
         users.update(request.user.copy(password = hashedPassword))
@@ -166,15 +166,17 @@ class AuthenticationController @Inject()(
   }
 
   /** Forgot Password step 1/2. */
-  def passwordForgotShow: Action[AnyContent] = Action.async { implicit request =>
+  def passwordForgotShow: Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     Future.successful(Ok(passwordForgot(AuthForms.forgotPasswordForm)))
   }
 
   /** Forgot Password step 2/2.
     * Sends an email with password reset instructions to the given address if it exists in the database.
     * If any failure, enforce security by not showing the user any existing `userIds`. */
-  def passwordForgotSubmit: Action[AnyContent] = Action.async { implicit request =>
+  def passwordForgotSubmit: Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     Future {
+      lazy implicit val lang: Lang = implicitly[Lang] // Uses Lang.defaultLang
+      val messages = implicitly[Messages] // Uses I18nSupport.lang2messages(Lang.defaultLang)
       AuthForms.forgotPasswordForm.bindFromRequest.fold(
         formWithErrors => BadRequest(passwordForgot(formWithErrors)),
         forgotPasswordData => {
@@ -185,18 +187,18 @@ class AuthenticationController @Inject()(
                 val url: String = AuthRoutes.passwordResetShow(authToken.id).absoluteURL
                 EMail.send(
                   to = user.email,
-                  subject = Messages("email.reset.password.subject")
+                  subject = request.messages("email.reset.password.subject")
                 ) {
                   s"""<html>
                      |<body>
-                     |  <p>${ messagesApi("email.reset.password.hello", user.fullName) }</p>
-                     |  <p>${ Html(messagesApi("email.reset.password.html.text", url, AuthToken.fmt.print(authToken.expiry))) }</p>
+                     |  <p>${ messages("email.reset.password.hello", user.fullName) }</p>
+                     |  <p>${ Html(messages("email.reset.password.html.text", url, AuthToken.fmt.print(authToken.expiry))) }</p>
                      |</body>
                      |</html>
                      |""".stripMargin
                 }
                 Redirect(AuthRoutes.loginShow())
-                  .flashing("success" -> Messages("reset.email.sent"))
+                  .flashing("success" -> request.messages("reset.email.sent"))
               }.getOrElse {
                 Redirect(AuthRoutes.loginShow())
                   .flashing(key -> value)
@@ -213,7 +215,7 @@ class AuthenticationController @Inject()(
 
   /** Reset Password step 1/2.
    * @param tokenId The token id that identifies a user. */
-  def passwordResetShow(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
+  def passwordResetShow(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(_) =>
@@ -221,14 +223,14 @@ class AuthenticationController @Inject()(
 
         case None =>
           Redirect(AuthRoutes.loginShow())
-            .flashing("error" -> Messages("invalid.reset.link"))
+            .flashing("error" -> request.messages("invalid.reset.link"))
       }
     }
   }
 
   /** Reset Password step 2/2.
    * @param tokenId The id of the token that identifies a user. */
-  def passwordResetSubmit(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
+  def passwordResetSubmit(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     Future {
       AuthTokens.findById(tokenId).filter(_.isValid) match {
         case Some(authToken) =>
@@ -241,18 +243,18 @@ class AuthenticationController @Inject()(
                   users.update(user.copy(password=PasswordHasher.hash(changePasswordData.newPassword)))
                   AuthTokens.delete(authToken)
                   Redirect(AuthRoutes.loginShow())
-                    .flashing("success" -> Messages("password.reset"))
+                    .flashing("success" -> request.messages("password.reset"))
 
                 case None =>
                   Redirect(AuthRoutes.loginShow())
-                    .flashing("error" -> Messages("invalid.reset.link"))
+                    .flashing("error" -> request.messages("invalid.reset.link"))
               }
             }
           )
 
         case None =>
           Redirect(AuthRoutes.loginShow())
-            .flashing("error" -> Messages("invalid.reset.link"))
+            .flashing("error" -> request.messages("invalid.reset.link"))
       }
     }
   }
@@ -263,7 +265,7 @@ class AuthenticationController @Inject()(
   }
 
   /** New user sign up step 1/4 */
-  def signUpShow: Action[AnyContent] = Action { implicit request =>
+  def signUpShow: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val form: Form[SignUpData] = request.session
       .get("error")
       .map(error => signUpForm.withError("error", error))
@@ -272,7 +274,7 @@ class AuthenticationController @Inject()(
   }
 
   /** New user sign up step 2/4 */
-  def signUpSave: Action[AnyContent] = Action { implicit request =>
+  def signUpSave: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     signUpForm.bindFromRequest.fold(
       formWithErrors =>
         BadRequest(signUp(formWithErrors)),
@@ -297,14 +299,14 @@ class AuthenticationController @Inject()(
   }
 
   /** New user sign up step 3/4 */
-  def signUpAwaitConfirmation: Action[AnyContent] = Action { implicit request =>
+  def signUpAwaitConfirmation: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.signUpAwaitConfirmation())
   }
 
   /** New user sign up step 4/4.
     * Activates a User account; triggered when a user clicks on a link in an activation email.
     * @param tokenId The token that identifies a user. */
-  def signUpActivateUser(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request =>
+  def signUpActivateUser(tokenId: Id[UUID]): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     Future {
       val result = for {
         token <- AuthTokens.findById(tokenId)
@@ -313,23 +315,24 @@ class AuthenticationController @Inject()(
         users.update(user.copy(activated=true))
         AuthTokens.delete(token)
         Redirect(AppRoutes.securedAction())
-          .flashing("success" -> Messages("account.activated"))
+          .flashing("success" -> request.messages("account.activated"))
       }
       result.getOrElse(
         Redirect(AuthRoutes.signUpShow())
-          .flashing("error" -> Messages("invalid.activation.link"))
+          .flashing("error" -> request.messages("invalid.activation.link"))
       )
     }
   }
+
   /** Sends an account activation email to the user with the given userId.
    * @param userId The userId of the user to send the activation mail to.
    * @return The result to display. */
   protected def sendAccountActivationEmail(userId: UserId)(implicit request: RequestHeader): Result = {
-    def successResult(email: EMail, key: String, value: String) =
+    @inline def successResult(key: String, value: String) =
       Redirect(AuthRoutes.signUpAwaitConfirmation())
         .flashing(key -> value)
 
-    def errorResult(userId: UserId) =
+    @inline def errorResult(userId: UserId) =
       Redirect(AuthRoutes.signUpShow())
         .flashing("error" -> s"No User found with ID $userId")
 
@@ -340,9 +343,9 @@ class AuthenticationController @Inject()(
           maybeAuthToken.map { authToken =>
             val urlStr = AuthRoutes.signUpActivateUser(authToken.id).absoluteURL()
             AuthenticationController.sendActivateAccountEmail(toUser = user, url = new java.net.URL(urlStr), authToken.expiry)
-            successResult(user.email, "success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
+            successResult("success", Messages("activation.email.sent", user.email.value, smtp.smtpFrom))
           } getOrElse {
-            successResult(user.email, key, value)
+            successResult(key, value)
           }
         }.getOrElse(errorResult(userId))
 
@@ -354,12 +357,12 @@ class AuthenticationController @Inject()(
 
 class MyUnauthorizedHandler @Inject() (implicit
   val messagesApi: MessagesApi,
-  webJarAssets: WebJarAssets
+  webJarsUtil: org.webjars.play.WebJarsUtil
 ) extends UnauthorizedHandler with I18nSupport {
   override val onUnauthorized: RequestHeader => Result =
     request => {
       import auth.AuthForms
-      implicit val req = request
+      implicit val req: RequestHeader = request
       Unauthorized(login(AuthForms.loginForm.withError("error", "Invalid login credentials. Please try logging in again.")))
     }
 }

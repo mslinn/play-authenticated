@@ -1,3 +1,5 @@
+->          /webjars                webjars.Routes
+
 GET     /                          controllers.ApplicationController.index
 GET     /account                   controllers.authentication.AuthenticationController.showAccountDetails
 GET     /aware                     controllers.ApplicationController.userAwareAction
@@ -21,4 +23,3 @@ GET     /password/reset/:token     controllers.authentication.AuthenticationCont
 POST    /password/reset/:token     controllers.authentication.AuthenticationController.passwordResetSubmit(token: model.persistence.Id[java.util.UUID])
 
 GET     /assets/*file              controllers.Assets.at(path="/public", file)
-GET     /webjars/*file             controllers.WebJarAssets.at(file)

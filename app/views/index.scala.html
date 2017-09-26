@@ -1,4 +1,4 @@
-@(msg: String)(implicit request: RequestHeader, webJarAssets: WebJarAssets)
+@(msg: String)(implicit request: RequestHeader, webJarsUtil: org.webjars.play.WebJarsUtil)
 @main("") {
   @if(msg.nonEmpty) { <h3>@msg</h3> }
   <div class="right">

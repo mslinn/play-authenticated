@@ -3,14 +3,14 @@ import play.sbt.routes.RoutesKeys.routesImport
 name := "play-authenticated"
 organization := "com.micronautics"
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-version := "0.2.2"
+version := "0.3.0"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(routesImport += "model.PlayUserIdBinders._")
   .settings(routesImport += "model.PlayIdBinders._")
 
-scalaVersion := "2.11.11"
+scalaVersion := "2.12.3"
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -48,15 +48,17 @@ resolvers ++= List(
 )
 
 libraryDependencies ++= Seq(
-  "com.h2database"    %  "h2"              % "1.4.192" withSources(),
+  guice withSources(),
+  "com.h2database"    %  "h2"              % "1.4.193" withSources(),
   "com.micronautics"  %% "has-id"          % "1.2.8"   withSources(),
-  "com.micronautics"  %% "html-form-scala" % "0.2.0"   withSources(),
-  "com.micronautics"  %% "html-email"      % "0.1.1"   withSources(),
-  "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
+  "com.micronautics"  %% "html-email"      % "0.1.2"   withSources(),
+  "com.micronautics"  %% "html-form-scala" % "0.2.1"   withSources(),
+  "com.micronautics"  %% "quill-cache"     % "3.3.1",  // defines lots of nice implicit conversions
   "de.svenkubiak"     %  "jBCrypt"         % "0.4.1"   withSources(),
+  "net.codingwell"    %% "scala-guice"     % "4.1.0"   withSources(),
   "org.webjars"       %  "bootstrap"       % "3.3.7-1",
-  "org.webjars"       %% "webjars-play"    % "2.5.0-4",
-  "io.getquill"       %% "quill-jdbc"      % "1.2.1"   withSources(),
+  "org.webjars"       %% "webjars-play"    % "2.6.2",
+  //
   specs2 % Test
 )
 

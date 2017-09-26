@@ -3,17 +3,17 @@ package model.dao
 import java.util.UUID
 import model.AuthToken
 import model.persistence.Id
+import model.persistence.Types.IdOptionLong
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.postfixOps
 
-object AuthTokens extends QuillImplicits {
-  import model.dao.QuillImplicits.ctx._
+object AuthTokens {
+  import QuillImplicits.ctx._
 
   /** Creates a new auth token and saves it in the backing store.
     * @param uid The user ID for which the token should be created.
     * @return The saved auth token. */
-  def create(uid: Id[Option[Long]], expiry: DateTime): (String, String, Option[AuthToken]) = {
+  def create(uid: IdOptionLong, expiry: DateTime): (String, String, Option[AuthToken]) = {
     findByUid(uid).map { authToken =>
       ("error", s"An email with reset instructions was already sent to you; it will expire ${ AuthToken.fmt.print(authToken.expiry) }.", None)
     } getOrElse {
@@ -36,7 +36,7 @@ object AuthTokens extends QuillImplicits {
   def findById(id: Id[UUID]): Option[AuthToken] = run { queryById(id) }.headOption
 
   /** @return token for user with Id uid */
-  def findByUid(uid: Id[Option[Long]]): Option[AuthToken] =
+  def findByUid(uid: IdOptionLong): Option[AuthToken] =
     run { query[AuthToken].filter(_.uid == lift(uid)) }.headOption
 
   def findExpired(dateTime: DateTime): Vector[AuthToken] = findAll.filter { _.expiry.isBefore(dateTime) }

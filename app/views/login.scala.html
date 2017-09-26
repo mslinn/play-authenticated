@@ -2,7 +2,7 @@
 @import controllers.authentication.routes.{AuthenticationController => AuthRoutes}
 @import views.html.helper._
 @import views.html.htmlForm.bootstrap3.HtmlForm._
-@(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarAssets: WebJarAssets)
+@(loginForm: Form[LoginData])(implicit request: RequestHeader, messages: Messages, webJarsUtil: org.webjars.play.WebJarsUtil)
 @main("Log In") {
   @alertsFromForm(loginForm)
   @form(action = AuthRoutes.loginSubmit()) {
