@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
   .settings(routesImport += "model.PlayUserIdBinders._")
   .settings(routesImport += "model.PlayIdBinders._")
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.4"
 
 scalacOptions ++= Seq(
   "-deprecation",
